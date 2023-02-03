@@ -1,0 +1,82 @@
+//font style
+$default-font-size: 1.8rem;
+$header-font-size: 3.5rem;
+
+//color
+
+$primary-color:#5f3dc4;
+$primary-color-light:#f3d9fa;
+
+$bg-black-primary:#f1f3f5;
+$bg-black-secondary:#f8f9fa;
+$font-light:#f8f9fa;
+
+//padding
+
+$padding-small: 3.5rem;
+$padding-medium: 5rem;
+$padding-big: 8rem;
+
+//border-radius
+$border-radius: 4px;
+$card-border-radius:12px;
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-size: 62.5%;
+}
+
+body{
+    min-height: 100vh;
+    background-color: $bg-black-primary;
+    position: relative;
+
+}
+.card{
+    position:absolute;
+    top: 50%;
+    left:50%;
+    transform: translate(-50%, -70%);
+    min-height: 300px;
+    max-width: 1000px;
+    min-width: 600px;
+    padding: $padding-small $padding-medium;
+    background-color: $bg-black-secondary;
+    border-radius: $card-border-radius;
+
+    &-heading-primary{
+        font-size: $header-font-size;
+        color: $primary-color;
+        text-align: center;
+        padding-bottom: $padding-small;
+    }
+    &-task-form{
+        display: flex;
+    }
+    &-task-container{
+
+    }
+}
+.form{
+    font-size: $default-font-size;
+    &-task-input{
+        padding: .75rem 1.5rem;
+        width: 100%;
+        border: 1px solid #e9ecef;
+        background: #e9ecef;
+        border-radius: 0;
+        border-top-left-radius: $border-radius;
+        border-bottom-left-radius: $border-radius;
+    }
+    &-btn{
+        width: 150px;
+        border-radius: 0;
+        border-color: transparent;
+        border-top-right-radius: $border-radius;
+        border-bottom-right-radius: $border-radius;
+        background-color: $primary-color;
+        color: $font-light;
+    }
+}
