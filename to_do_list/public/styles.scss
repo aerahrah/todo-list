@@ -13,13 +13,15 @@ $font-light:#f8f9fa;
 
 //padding
 
-$padding-small: 3.5rem;
+$padding-small: 3rem;
 $padding-medium: 5rem;
 $padding-big: 8rem;
 
 //border-radius
 $border-radius: 4px;
-$card-border-radius:12px;
+$card-border-radius:8px;
+
+$shadow-1: 0 2px 4px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.07);
 
 *{
     margin: 0;
@@ -36,15 +38,15 @@ body{
 }
 .card{
     position:absolute;
-    top: 50%;
+    top: 40%;
     left:50%;
     transform: translate(-50%, -70%);
-    min-height: 300px;
     max-width: 1000px;
     min-width: 600px;
     padding: $padding-small $padding-medium;
     background-color: $bg-black-secondary;
     border-radius: $card-border-radius;
+    box-shadow: $shadow-1;
 
     &-heading-primary{
         font-size: $header-font-size;
@@ -56,15 +58,17 @@ body{
         display: flex;
     }
     &-task-container{
-
+        visibility: hidden;
+        font-size: $default-font-size;
     }
 }
 .form{
     font-size: $default-font-size;
+    margin-bottom: $padding-small;
     &-task-input{
         padding: .75rem 1.5rem;
         width: 100%;
-        border: 1px solid #e9ecef;
+        border: 1px solid #ced4da;
         background: #e9ecef;
         border-radius: 0;
         border-top-left-radius: $border-radius;
