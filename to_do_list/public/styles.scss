@@ -19,6 +19,7 @@ $bg-black-1: #343a40;
 $padding-small: 3rem;
 $padding-medium: 5rem;
 $padding-big: 8rem;
+$padding-huge: 12rem;
 
 //border-radius
 $border-radius: 4px;
@@ -37,29 +38,36 @@ html{
 }
 
 body{
-    font-size: $default-font-size;
+    font-size: $default-font-size !important;
     min-height: 100vh;
     background-color: $bg-light-primary;
     position: relative;
+    font-family: 'Inter', sans-serif;
+    line-height: 1.5;
+    margin: 0 2rem;
 
 }
 .card{
-    position:absolute;
-    top: 40%;
-    left:50%;
-    transform: translate(-50%, -70%);
-    max-width: 1000px;
-    min-width: 600px;
+    // position:absolute;
+    // top: 40%;
+    // left:50%;
+    // transform: translate(-50%, -70%);
+    margin: $padding-huge auto;
+    max-width: 600px;
+    min-width: 400px;
     padding: $padding-small $padding-medium;
     background-color: $bg-light-secondary;
     border-radius: $card-border-radius;
     box-shadow: $shadow-1;
 
     &-heading-primary{
+        text-transform: capitalize;
         font-size: $header-font-size;
         color: $primary-color;
         text-align: center;
         padding-bottom: $padding-small;
+        letter-spacing: 3px;
+        font-family: 'Poppins', sans-serif;
     }
     &-task-form{
         display: flex;
@@ -104,7 +112,7 @@ body{
     }
     &-edit-name{
         width: 100%;
-        padding: .5rem 1rem;
+        padding: .75rem 1.5rem;
         
     }
     &-edit-completed{
@@ -113,6 +121,8 @@ body{
 }
 .edit-btn{
     display: block;
+    text-transform: capitalize;
+    color: $font-light;
     font-size: $default-font-size;
     background-color: $primary-color;
     border-radius: $border-radius;
@@ -128,7 +138,7 @@ body{
     text-decoration: none;
     display: block;
     text-align: center;
-    margin-top: $padding-medium;
+    margin-top: $padding-big;
     width: 200px;
     margin-left:  auto;
     margin-right: auto;
