@@ -1,5 +1,5 @@
 const getAllTask = (req, res)=>{
-
+    res.send("all items")
     res.status(200).json({ tasks })
 }
 const createTask = (req, res) =>{
