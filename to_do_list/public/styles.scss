@@ -16,16 +16,20 @@ $bg-black-1: #343a40;
 
 //padding
 
+$padding-input: .75rem 1.5rem;
 $padding-small: 3rem;
 $padding-medium: 5rem;
 $padding-big: 8rem;
-$padding-huge: 12rem;
+$padding-huge: 10rem;
 
 //border-radius
 $border-radius: 4px;
 $card-border-radius:8px;
 
+
 $shadow-1: 0 2px 4px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.07);
+$shadow-2: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+0 2px 4px -1px rgba(0, 0, 0, 0.06);
 
 html{
     font-size: 62.5%;
@@ -38,13 +42,13 @@ html{
 }
 
 body{
-    font-size: $default-font-size !important;
-    min-height: 100vh;
+    font-size: $default-font-size;
     background-color: $bg-light-primary;
     position: relative;
     font-family: 'Inter', sans-serif;
     line-height: 1.5;
     margin: 0 2rem;
+    overflow-y: hidden;
 
 }
 .card{
@@ -52,7 +56,7 @@ body{
     // top: 40%;
     // left:50%;
     // transform: translate(-50%, -70%);
-    margin: $padding-huge auto;
+    margin: $padding-big auto;
     max-width: 600px;
     min-width: 400px;
     padding: $padding-small $padding-medium;
@@ -65,7 +69,6 @@ body{
         font-size: $header-font-size;
         color: $primary-color;
         text-align: center;
-        padding-bottom: $padding-small;
         letter-spacing: 3px;
         font-family: 'Poppins', sans-serif;
     }
@@ -73,14 +76,15 @@ body{
         display: flex;
     }
     &-task-container{
-        visibility: hidden;
+        height: 400px;
+        overflow-y: scroll;
     }
 }
 .form{
 
     margin-bottom: $padding-small;
     &-task-input{
-        padding: .75rem 1.5rem;
+        padding: $padding-input;
         width: 100%;
         border: 1px solid #ced4da;
         background: #e9ecef;
@@ -98,6 +102,15 @@ body{
         color: $font-light;
     }
 }
+.form-alert, .loading-text{
+    text-align: center;
+}
+.loading-text{
+    padding: .25rem;
+}
+.text-success{
+    color: green;
+}
 .form-control{
     display: grid;
     grid-template-columns: 125px 1fr;
@@ -106,13 +119,14 @@ body{
     align-items: center;
     label{
         width: 150px;
+        color: $bg-black-1;
     }
     &-edit-id{
 
     }
     &-edit-name{
         width: 100%;
-        padding: .75rem 1.5rem;
+        padding: $padding-input;
         
     }
     &-edit-completed{
@@ -129,7 +143,7 @@ body{
     border: 1px solid transparent;
     margin-top: 2rem;
     width: 100%;
-    padding: .75rem 1.5rem;
+    padding: $padding-input;
 }
 .back-link{
     color: $bg-light-primary;
@@ -145,3 +159,37 @@ body{
     padding: 1rem 1.5rem;
     border-radius: $border-radius;
 }
+.tasks{
+    font-weight: 300;
+    color: $bg-black-1;
+    &-single{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1.5rem 2rem;
+        margin-bottom: $padding-small;
+        background-color: $bg-light-primary;
+        box-shadow: $shadow-2;
+        border-radius: $border-radius;
+    }
+}
+h5{
+    span{
+        margin-right: .5rem;
+    }
+}
+div::-webkit-scrollbar {
+    width: 0.3em;
+    background-color: #F5F5F5;
+  }
+  
+  div::-webkit-scrollbar-thumb {
+    height: .2rem;
+    background-color: $primary-color;
+  }
+  
+  div::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.02);
+    border-radius: 10px;
+    background-color: #F5F5F5;
+  }
