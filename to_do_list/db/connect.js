@@ -1,7 +1,8 @@
 const mongoose = require('mongoose')
 
 
-const connectionString = "mongodb+srv://Aerarah:Janedizon40@cluster0.2a76ezk.mongodb.net/?retryWrites=true&w=majority"
+const connectionDB = (url)=> {
+    return mongoose.connect(url).then(()=> console.log("connected to database")).catch((err)=>console.log(err))
+}
 
-
-mongoose.connect(connectionString).then(()=> console.log("connected to database")).catch((err)=>console.log(err))
+module.exports = connectionDB
