@@ -19,10 +19,11 @@ body {
 }
 
 .card {
-  margin: 8rem auto;
+  margin: 5rem auto;
   max-width: 600px;
   min-width: 400px;
   padding: 3rem 5rem;
+  padding-bottom: 5rem;
   background-color: #f8f9fa;
   border-radius: 8px;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.07);
@@ -43,9 +44,6 @@ body {
   overflow-y: scroll;
 }
 
-.form {
-  margin-bottom: 3rem;
-}
 .form-input {
   padding: 0.75rem 1.5rem;
   width: 100%;
@@ -56,6 +54,7 @@ body {
   border-bottom-left-radius: 4px;
 }
 .form-btn {
+  text-transform: capitalize;
   width: 150px;
   border-radius: 0;
   border-color: transparent;
@@ -64,9 +63,99 @@ body {
   background-color: #5f3dc4;
   color: #f8f9fa;
 }
+.form-btn:hover {
+  background-color: #6741d9;
+  transition: 200ms ease-in all;
+  cursor: pointer;
+}
 
-.form-alert, .loading-text {
+.form-control {
+  display: grid;
+  grid-template-columns: 125px 1fr;
+  margin-bottom: 1rem;
+  justify-items: start;
+  align-items: center;
+  color: #343a40;
+}
+.form-control label {
+  width: 150px;
+}
+.form-control-edit-id {
+  color: #495057;
+}
+.form-control-edit-name {
+  width: 100%;
+  padding: 0.75rem 1.5rem;
+  color: inherit;
+}
+
+.edit-btn {
+  margin: 2rem 0;
+  width: 100%;
+  padding: 0.75rem 1.5rem;
+}
+
+.back-link {
+  display: block;
+  margin: 8rem auto;
+  width: 200px;
+  padding: 1rem 1.5rem;
+  border-radius: 4px;
+  text-transform: capitalize;
+  text-decoration: none;
   text-align: center;
+  color: #f1f3f5;
+  background-color: #212529;
+}
+.back-link:hover {
+  background-color: #343a40;
+  transition: 200ms ease-in all;
+}
+
+.tasks {
+  font-weight: 300;
+  color: #343a40;
+}
+.tasks-single {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 2rem;
+  background-color: #f1f3f5;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  border-radius: 4px;
+  text-transform: capitalize;
+}
+.tasks-single:not(:last-child) {
+  margin-bottom: 3rem;
+}
+.tasks-single.task-completed {
+  text-decoration: line-through;
+  color: #2b8a3e !important;
+}
+
+h5 {
+  color: inherit;
+}
+h5 span {
+  margin-right: 0.5rem;
+  font-size: 1.5rem;
+}
+
+.relative-alert {
+  position: relative;
+  padding-top: 0.75rem;
+  height: 3rem;
+}
+
+.form-alert, .loading-text, .empty-list {
+  text-align: center;
+}
+
+.form-alert {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .loading-text {
@@ -89,73 +178,14 @@ body {
 .edit-link {
   color: #5f3dc4;
 }
+.edit-link:hover {
+  color: #6741d9;
+  transition: 200ms ease-in all;
+}
 
 .delete-btn {
   color: #c92a2a;
   transition: 0.3s ease-in-out all;
-}
-
-.form-control {
-  display: grid;
-  grid-template-columns: 125px 1fr;
-  margin-bottom: 1rem;
-  justify-items: start;
-  align-items: center;
-}
-.form-control label {
-  width: 150px;
-  color: #343a40;
-}
-.form-control-edit-name {
-  width: 100%;
-  padding: 0.75rem 1.5rem;
-}
-.edit-btn {
-  display: block;
-  text-transform: capitalize;
-  color: #f8f9fa;
-  font-size: 1.8rem;
-  background-color: #5f3dc4;
-  border-radius: 4px;
-  border: 1px solid transparent;
-  margin-top: 2rem;
-  width: 100%;
-  padding: 0.75rem 1.5rem;
-}
-
-.back-link {
-  color: #f1f3f5;
-  text-transform: capitalize;
-  background-color: #212529;
-  text-decoration: none;
-  display: block;
-  text-align: center;
-  margin-top: 8rem;
-  width: 200px;
-  margin-left: auto;
-  margin-right: auto;
-  padding: 1rem 1.5rem;
-  border-radius: 4px;
-}
-
-.tasks {
-  font-weight: 300;
-  color: #343a40;
-}
-.tasks-single {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1.5rem 2rem;
-  margin-bottom: 3rem;
-  background-color: #f1f3f5;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  border-radius: 4px;
-  transition: 0.3s ease-in-out all;
-}
-
-h5 span {
-  margin-right: 0.5rem;
 }
 
 div::-webkit-scrollbar {
