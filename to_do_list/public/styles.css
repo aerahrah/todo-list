@@ -39,14 +39,14 @@ body {
   display: flex;
 }
 .card-task-container {
-  height: 400px;
+  max-height: 400px;
   overflow-y: scroll;
 }
 
 .form {
   margin-bottom: 3rem;
 }
-.form-task-input {
+.form-input {
   padding: 0.75rem 1.5rem;
   width: 100%;
   border: 1px solid #ced4da;
@@ -74,7 +74,25 @@ body {
 }
 
 .text-success {
-  color: green;
+  color: #2b8a3e;
+}
+
+.delete-btn,
+.edit-link {
+  text-decoration: none;
+  background: transparent;
+  font-size: 1.8rem;
+  border: transparent;
+  cursor: pointer;
+}
+
+.edit-link {
+  color: #5f3dc4;
+}
+
+.delete-btn {
+  color: #c92a2a;
+  transition: 0.3s ease-in-out all;
 }
 
 .form-control {
@@ -133,6 +151,7 @@ body {
   background-color: #f1f3f5;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   border-radius: 4px;
+  transition: 0.3s ease-in-out all;
 }
 
 h5 span {
