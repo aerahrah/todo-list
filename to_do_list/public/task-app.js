@@ -16,9 +16,17 @@ const displayTask = async () =>{
             return
         }
         const allTasks = tasks.map((task) =>{
+            let circle =""
+
             const {completed, _id: taskID, name} = task 
+            if(completed && 'task-completed'){
+                circle = "fa-check-circle"
+            }else{
+                circle = "fa-circle"
+            }
+
             return `<div class="tasks-single ${completed && 'task-completed'}">
-            <h5><span><i class="far fa-check-circle"></i></span>${name}</h5>
+            <h5><span><i class="far ${circle}"></i></span>${name}</h5>
             <div class="task-links">
                 
             <!-- edit link -->

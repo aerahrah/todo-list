@@ -4,6 +4,7 @@ const taskCompletedDOM = document.querySelector('.form-control-edit-completed')
 const editFormDOM = document.querySelector('.card-single-task-form')
 const editBtnDOM = document.querySelector('.edit-btn')
 const textAlert = document.querySelector('.form-alert')
+const circleCheck = document.querySelector('.fa-circle')
 const params = window.location.search
 const id = new URLSearchParams(params).get('id')
 let tempName
