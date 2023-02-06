@@ -4,6 +4,7 @@ const connectionDB = require('./db/connect');
 const tasks = require('./routes/Tasks');
 require('./db/connect');
 
+app.use(express.json());
 app.use(express.static('./public'))
 app.use('/api/v1/tasks', tasks);
 const port = 3500
