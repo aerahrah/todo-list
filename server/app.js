@@ -8,10 +8,11 @@ require("dotenv").config();
 const auth = require("./routes/authRoute");
 app.use(express.json());
 app.use(express.static("./public"));
-app.use("/api/v1/tasks", tasks);
+
 app.use(cors());
 const port = 3500;
 
+app.use("/api/v1/tasks", tasks);
 app.use("/api/v1/auth", auth);
 
 console.log(process.env.MONGO_URI);
