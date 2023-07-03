@@ -9,9 +9,12 @@ export const deleteTask = async (url, id) => {
   }
 };
 
-export const updateTask = async (url, id) => {
+export const updateTask = async (url, id, name, isCompleted) => {
   try {
-    const response = await Axios.put(`${url}/tasks/${id}`);
+    const response = await Axios.patch(`${url}/tasks/${id}`, {
+      name: name,
+      completed: isCompleted,
+    });
     console.log(response);
   } catch (error) {
     console.log(error);

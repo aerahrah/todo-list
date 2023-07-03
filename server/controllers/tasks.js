@@ -23,10 +23,11 @@ const getSingleTask = tryCatch(async (req, res, next) => {
 const deleteTask = tryCatch(async (req, res, next) => {
   const { id: taskId } = req.params;
   const task = await Task.findOneAndDelete({ _id: taskId });
+  console.log(task);
   if (!task) {
     return next(createCustomError(`No task with id : ${taskId}`, 404));
   }
-  return res.status(200).json({ task });
+  return res.status(200).json("Successfully deleted task");
 });
 const updateTask = tryCatch(async (req, res, next) => {
   const { id: taskId } = req.params;
