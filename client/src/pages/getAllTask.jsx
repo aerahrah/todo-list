@@ -13,23 +13,25 @@ const GetAllTask = () => {
   const [tasksData, setTasksData] = useState([]);
   const [taskName, setTaskName] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [modalTaskData, setModalTaskData] = useState([]);
   const [finish, setFinish] = useState("");
   const [cookies] = useCookies(["user"]);
   const token = cookies.Token;
   const Axios = axiosInterceptor(token);
   console.log(token);
+
   useEffect(() => {
-    if (isModalOpen) {
-      handleGetAllTask();
-    }
+    handleGetAllTask();
   }, [isModalOpen, finish]);
 
   const handleGetAllTask = async () => {
+    setIsLoading(true);
     try {
       const response = await Axios.get(`${url}/tasks`);
       const { tasks } = response.data;
       setTasksData(tasks);
+      setIsLoading(false);
     } catch (error) {
       console.error(error);
     }
@@ -73,18 +75,21 @@ const GetAllTask = () => {
 
   return (
     <div>
-      <div>
-        <button onClick={handleGetAllTask}>Get all task</button>
-        {tasksData.length > 0 &&
-          tasksData.map((task) => (
-            <ul key={task._id}>
-              <li>{task._id}</li>
-              <li>{task.name}</li>
-              <li>{!task.completed ? "not completed" : "completed"}</li>
-              <li onClick={() => handleViewSpecificTask(task._id)}>edit</li>
-            </ul>
-          ))}
-      </div>
+      {!isLoading ? (
+        <div>
+          {tasksData.length > 0 &&
+            tasksData.map((task) => (
+              <ul key={task._id}>
+                <li>{task._id}</li>
+                <li>{task.name}</li>
+                <li>{!task.completed ? "not completed" : "completed"}</li>
+                <li onClick={() => handleViewSpecificTask(task._id)}>edit</li>
+              </ul>
+            ))}
+        </div>
+      ) : (
+        <p>is loading</p>
+      )}
       {isModalOpen && (
         <div>
           <h3>{modalTaskData.name}</h3>
