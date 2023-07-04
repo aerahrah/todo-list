@@ -1,7 +1,11 @@
 import { useState } from "react";
-import Axios from "axios";
+import axiosInterceptor from "../components/utils/axios";
+import { useCookies } from "react-cookie";
 
 const CreateTask = () => {
+  const [cookies] = useCookies(["user"]);
+  const token = cookies.Token;
+  const Axios = axiosInterceptor(token);
   const [taskName, setTaskName] = useState("");
   const url = "http://localhost:3500/api/v1";
 

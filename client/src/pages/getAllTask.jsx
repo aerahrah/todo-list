@@ -1,5 +1,7 @@
-import Axios from "axios";
 import { useState, useEffect } from "react";
+import { useCookies } from "react-cookie";
+import axiosInterceptor from "../components/utils/axios";
+
 import {
   deleteTask,
   updateTask,
@@ -10,11 +12,13 @@ const GetAllTask = () => {
   const url = "http://localhost:3500/api/v1";
   const [tasksData, setTasksData] = useState([]);
   const [taskName, setTaskName] = useState("");
-  const [isEditTask, setIsEditTask] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalTaskData, setModalTaskData] = useState([]);
   const [finish, setFinish] = useState("");
-
+  const [cookies] = useCookies(["user"]);
+  const token = cookies.Token;
+  const Axios = axiosInterceptor(token);
+  console.log(token);
   useEffect(() => {
     if (isModalOpen) {
       handleGetAllTask();
