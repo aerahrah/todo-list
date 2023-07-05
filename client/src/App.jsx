@@ -1,5 +1,3 @@
-import { useState } from "react";
-import "./App.css";
 import { Signin, Signup } from "./components/auth/auth";
 import { Routes, Route } from "react-router-dom";
 import GetAllTask from "./pages/getAllTask";

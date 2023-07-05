@@ -76,22 +76,37 @@ const GetAllTask = () => {
   return (
     <div>
       {!isLoading ? (
-        <div>
+        <div className="pt-4 px-2 gap-x-4 columns-2 sm:columns-3 md:columns-2 lg:columns-3 xl:columns-4 h-auto ">
           {tasksData.length > 0 &&
             tasksData.map((task) => (
-              <ul key={task._id}>
-                <li>{task._id}</li>
+              <ul
+                className="bg-gray-100 min-w-full max-w-md p-4 rounded-xl shadow-sm hover:shadow border-2 mb-4 overflow-hidden max-h-60 cursor-pointer"
+                key={task._id}
+                onClick={() => handleViewSpecificTask(task._id)}
+              >
+                <li>{task.title}</li>
                 <li>{task.name}</li>
                 <li>{!task.completed ? "not completed" : "completed"}</li>
-                <li onClick={() => handleViewSpecificTask(task._id)}>edit</li>
               </ul>
             ))}
         </div>
       ) : (
         <p>is loading</p>
       )}
-      {isModalOpen && (
-        <div>
+
+      <div>
+        <div
+          className={`fixed inset-0 bg-black/20 backdrop-blur-sm duration-500 ${
+            isModalOpen ? "opacity-100 visble" : "opacity-0 invisible"
+          }`}
+        ></div>
+        <div
+          className={`${
+            isModalOpen
+              ? "opacity-100 scale-100 visble"
+              : "opacity-0 scale-0 invisible"
+          } absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 p-4 transition-all duration-700`}
+        >
           <h3>{modalTaskData.name}</h3>
           <p>
             <textarea
@@ -113,7 +128,7 @@ const GetAllTask = () => {
           </button>
           <button onClick={() => setIsModalOpen(false)}>close</button>
         </div>
-      )}
+      </div>
     </div>
   );
 };
