@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { useCookies } from "react-cookie";
 import axiosInterceptor from "../components/utils/axios";
+import { Dialog, Transition } from "@headlessui/react";
+import { Fragment } from "react";
 
 import {
   deleteTask,
@@ -12,6 +14,7 @@ const GetAllTask = () => {
   const url = "http://localhost:3500/api/v1";
   const [tasksData, setTasksData] = useState([]);
   const [taskName, setTaskName] = useState("");
+  const [taskTitle, setTaskTitle] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [modalTaskData, setModalTaskData] = useState([]);
@@ -26,12 +29,10 @@ const GetAllTask = () => {
   }, [isModalOpen, finish]);
 
   const handleGetAllTask = async () => {
-    setIsLoading(true);
     try {
       const response = await Axios.get(`${url}/tasks`);
       const { tasks } = response.data;
       setTasksData(tasks);
-      setIsLoading(false);
     } catch (error) {
       console.error(error);
     }
@@ -42,7 +43,7 @@ const GetAllTask = () => {
       .then((data) => {
         const { task } = data;
         setTaskName(task.name);
-        console.log(task.name);
+        setTaskTitle(task.title);
         setModalTaskData(task);
         setFinish(task.completed);
       })
@@ -52,16 +53,13 @@ const GetAllTask = () => {
   const handleDeleteTask = (id) => {
     deleteTask(url, id)
       .then((data) => {
-        console.log(data);
         setIsModalOpen(false);
       })
       .catch((err) => console.log(err));
   };
 
   const handleUpdateTask = (id) => {
-    console.log(taskName);
-    console.log(finish);
-    updateTask(url, id, taskName, finish)
+    updateTask(url, id, taskName, taskTitle, finish)
       .then((data) => {
         console.log(data);
       })
@@ -80,12 +78,14 @@ const GetAllTask = () => {
           {tasksData.length > 0 &&
             tasksData.map((task) => (
               <ul
-                className="bg-gray-100 min-w-full max-w-md p-4 rounded-xl shadow-sm hover:shadow border-2 mb-4 overflow-hidden max-h-60 cursor-pointer"
+                className="bg-white min-w-full max-w-md p-4 rounded-xl border-[1px] shadow-sm hover:shadow mb-4 overflow-hidden max-h-60 cursor-pointer"
                 key={task._id}
                 onClick={() => handleViewSpecificTask(task._id)}
               >
-                <li>{task.title}</li>
-                <li>{task.name}</li>
+                <li className="outline-0 mb-2 text-lg font-semibold">
+                  {task.title}
+                </li>
+                <li className="outline-0 text-md">{task.name}</li>
                 <li>{!task.completed ? "not completed" : "completed"}</li>
               </ul>
             ))}
@@ -93,42 +93,64 @@ const GetAllTask = () => {
       ) : (
         <p>is loading</p>
       )}
-
-      <div>
-        <div
-          className={`fixed inset-0 bg-black/20 backdrop-blur-sm duration-500 ${
-            isModalOpen ? "opacity-100 visble" : "opacity-0 invisible"
-          }`}
-        ></div>
-        <div
-          className={`${
-            isModalOpen
-              ? "opacity-100 scale-100 visble"
-              : "opacity-0 scale-0 invisible"
-          } absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 p-4 transition-all duration-700`}
-        >
-          <h3>{modalTaskData.name}</h3>
-          <p>
-            <textarea
-              value={taskName}
-              onChange={(e) => setTaskName(e.target.value)}
-              placeholder={taskName}
-              rows={4}
-              cols={50}
-            />
-          </p>
-          <button onClick={() => setFinish(!finish)}>
-            {!finish ? "not completed" : "completed"}
-          </button>
-          <button onClick={() => handleUpdateTask(modalTaskData._id)}>
-            update
-          </button>
-          <button onClick={() => handleDeleteTask(modalTaskData._id)}>
-            delete
-          </button>
-          <button onClick={() => setIsModalOpen(false)}>close</button>
-        </div>
-      </div>
+      <Transition appear show={isModalOpen} as={Fragment}>
+        <Dialog as="div" onClose={() => setIsModalOpen(false)}>
+          <Transition.Child
+            as={Fragment}
+            enter="ease-out duration-200"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="ease-in duration-100"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
+          >
+            <div className="fixed inset-0 bg-black/20 backdrop-blur-sm" />
+          </Transition.Child>
+          <div className="fixed inset-0">
+            <div className="flex min-h-full items-center justify-center p-6 text-center">
+              <Transition.Child
+                as={Fragment}
+                enter="ease-out duration-200"
+                enterFrom="opacity-0 scale-95"
+                enterTo="opacity-100 scale-100"
+                leave="ease-in duration-100"
+                leaveFrom="opacity-100 scale-100"
+                leaveTo="opacity-0 scale-95"
+              >
+                <Dialog.Panel className="flex flex-col w-full max-w-[35rem] bg-white p-4 rounded-lg">
+                  <input
+                    type="text"
+                    value={taskTitle}
+                    placeholder={taskTitle}
+                    onChange={(e) => setTaskTitle(e.target.value)}
+                    className="outline-0 mb-2 text-lg font-semibold"
+                  />
+                  <textarea
+                    value={taskName}
+                    onChange={(e) => setTaskName(e.target.value)}
+                    placeholder={taskName}
+                    rows={4}
+                    cols={50}
+                    className="outline-0 text-md"
+                  />
+                  <div>
+                    <button onClick={() => setFinish(!finish)}>
+                      {!finish ? "not completed" : "completed"}
+                    </button>
+                    <button onClick={() => handleUpdateTask(modalTaskData._id)}>
+                      update
+                    </button>
+                    <button onClick={() => handleDeleteTask(modalTaskData._id)}>
+                      delete
+                    </button>
+                    <button onClick={() => setIsModalOpen(false)}>close</button>
+                  </div>
+                </Dialog.Panel>
+              </Transition.Child>
+            </div>
+          </div>
+        </Dialog>
+      </Transition>
     </div>
   );
 };

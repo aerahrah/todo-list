@@ -9,10 +9,11 @@ export const deleteTask = async (url, id) => {
   }
 };
 
-export const updateTask = async (url, id, name, isCompleted) => {
+export const updateTask = async (url, id, name, title, isCompleted) => {
   try {
     const response = await Axios.patch(`${url}/tasks/${id}`, {
       name: name,
+      title: title,
       completed: isCompleted,
     });
     console.log(response);
