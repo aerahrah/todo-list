@@ -18,7 +18,7 @@ export const updateTask = async (url, id, name, title, isCompleted) => {
     });
     console.log(response);
   } catch (error) {
-    console.log(error);
+    throw new Error(error.response.data.errors[0]);
   }
 };
 

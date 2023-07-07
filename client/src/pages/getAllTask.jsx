@@ -3,6 +3,7 @@ import { useCookies } from "react-cookie";
 import axiosInterceptor from "../components/utils/axios";
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment } from "react";
+import Toast from "../components/toast";
 
 import {
   deleteTask,
@@ -19,6 +20,8 @@ const GetAllTask = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [modalTaskData, setModalTaskData] = useState([]);
   const [finish, setFinish] = useState("");
+  const [toastMessage, setToastMessage] = useState("");
+  const [showToast, setShowToast] = useState(false);
   const [cookies] = useCookies(["user"]);
   const token = cookies.Token;
   const Axios = axiosInterceptor(token);
@@ -27,6 +30,13 @@ const GetAllTask = () => {
   useEffect(() => {
     handleGetAllTask();
   }, [isModalOpen, finish]);
+
+  useEffect(() => {
+    console.log(modalTaskData._id);
+    if (!isModalOpen && modalTaskData._id !== undefined) {
+      handleUpdateTask(modalTaskData._id);
+    }
+  }, [modalTaskData, isModalOpen]);
 
   const handleGetAllTask = async () => {
     try {
@@ -63,7 +73,11 @@ const GetAllTask = () => {
       .then((data) => {
         console.log(data);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        setToastMessage(err.message);
+        setShowToast(true);
+        <Toast message={err} />;
+      });
   };
 
   const handleViewSpecificTask = (id) => {
@@ -71,6 +85,9 @@ const GetAllTask = () => {
     setIsModalOpen(true);
   };
 
+  const handleCloseToast = () => {
+    setShowToast(false);
+  };
   return (
     <div>
       {!isLoading ? (
@@ -121,14 +138,14 @@ const GetAllTask = () => {
                   <input
                     type="text"
                     value={taskTitle}
-                    placeholder={taskTitle}
+                    placeholder={taskTitle ? taskTitle : "title"}
                     onChange={(e) => setTaskTitle(e.target.value)}
                     className="outline-0 mb-2 text-lg font-semibold"
                   />
                   <textarea
                     value={taskName}
                     onChange={(e) => setTaskName(e.target.value)}
-                    placeholder={taskName}
+                    placeholder={taskName ? taskName : "Start here..."}
                     rows={4}
                     cols={50}
                     className="outline-0 text-md"
@@ -151,6 +168,7 @@ const GetAllTask = () => {
           </div>
         </Dialog>
       </Transition>
+      {showToast && <Toast message={toastMessage} onClose={handleCloseToast} />}
     </div>
   );
 };
