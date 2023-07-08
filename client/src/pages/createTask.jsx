@@ -1,15 +1,22 @@
 import { useState } from "react";
 import axiosInterceptor from "../components/utils/axios";
 import { useCookies } from "react-cookie";
+import CreateTaskModal from "../components/create_taskModal";
 
-const CreateTask = () => {
+const CreateTask = ({
+  onTaskCreated,
+  finish,
+  setFinish,
+  url,
+  setToastMessage,
+  setShowToast,
+}) => {
   const [cookies] = useCookies(["user"]);
   const token = cookies.Token;
   const Axios = axiosInterceptor(token);
-  const [taskTitle, setTaskTitle] = useState("");
   const [taskName, setTaskName] = useState("");
-  const url = "http://localhost:3500/api/v1";
-
+  const [taskTitle, setTaskTitle] = useState("");
+  const [isModalCreateOpen, setIsModalCreateOpen] = useState(false);
   const handleCreateTask = async () => {
     const response = await Axios.post(`${url}/tasks`, {
       title: taskTitle,
@@ -17,9 +24,10 @@ const CreateTask = () => {
     });
     const { message } = response.data;
     console.log(message);
+    onTaskCreated();
   };
   return (
-    <div>
+    <div className="absolute bottom-8 right-8">
       <input
         type="text"
         value={taskTitle}
@@ -36,7 +44,20 @@ const CreateTask = () => {
           setTaskName(e.target.value);
         }}
       />
-      <button onClick={handleCreateTask}>submit</button>
+      <CreateTaskModal
+        isModalCreateOpen={isModalCreateOpen}
+        setIsModalCreateOpen={setIsModalCreateOpen}
+        url={url}
+        setTaskName={setTaskName}
+        setTaskTitle={setTaskTitle}
+        setFinish={setFinish}
+        taskName={taskName}
+        taskTitle={taskTitle}
+        finish={finish}
+        setToastMessage={setToastMessage}
+        setShowToast={setShowToast}
+        handleCreateTask={handleCreateTask}
+      ></CreateTaskModal>
     </div>
   );
 };

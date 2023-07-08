@@ -6,6 +6,7 @@ export default {
       0: 0,
       auto: "auto",
       "1/2": "50%",
+      8: "8%",
     },
     minWidth: {
       0: "0",
