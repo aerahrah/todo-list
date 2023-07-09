@@ -1,5 +1,6 @@
 import { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
+import TaskInputBox from "./taskInputBox";
 
 const CreateTaskModal = ({
   isModalCreateOpen,
@@ -18,7 +19,7 @@ const CreateTaskModal = ({
 }) => {
   return (
     <Transition appear show={isModalCreateOpen} as={Fragment}>
-      <Dialog as="div" onClose={() => setIsModalOpen(false)}>
+      <Dialog as="div" onClose={() => setIsModalCreateOpen(false)}>
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-200"
@@ -42,20 +43,11 @@ const CreateTaskModal = ({
               leaveTo="opacity-0 scale-95"
             >
               <Dialog.Panel className="flex flex-col w-full max-w-[35rem] bg-white p-4 rounded-lg">
-                <input
-                  type="text"
-                  value={taskTitle}
-                  placeholder={taskTitle ? taskTitle : "title"}
-                  onChange={(e) => setTaskTitle(e.target.value)}
-                  className="outline-0 mb-2 text-lg font-semibold"
-                />
-                <textarea
-                  value={taskName}
-                  onChange={(e) => setTaskName(e.target.value)}
-                  placeholder={taskName ? taskName : "Start here..."}
-                  rows={4}
-                  cols={50}
-                  className="outline-0 text-md"
+                <TaskInputBox
+                  taskTitle={taskTitle}
+                  setTaskTitle={setTaskTitle}
+                  taskName={taskName}
+                  setTaskName={setTaskName}
                 />
                 <button onClick={handleCreateTask}>submit</button>
               </Dialog.Panel>

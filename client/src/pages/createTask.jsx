@@ -1,7 +1,7 @@
 import { useState } from "react";
-import axiosInterceptor from "../components/utils/axios";
-import { useCookies } from "react-cookie";
 import CreateTaskModal from "../components/create_taskModal";
+import { FaPen } from "react-icons/fa";
+import { createTask } from "../components/utils/apiUtils";
 
 const CreateTask = ({
   onTaskCreated,
@@ -11,39 +11,31 @@ const CreateTask = ({
   setToastMessage,
   setShowToast,
 }) => {
-  const [cookies] = useCookies(["user"]);
-  const token = cookies.Token;
-  const Axios = axiosInterceptor(token);
   const [taskName, setTaskName] = useState("");
   const [taskTitle, setTaskTitle] = useState("");
   const [isModalCreateOpen, setIsModalCreateOpen] = useState(false);
-  const handleCreateTask = async () => {
-    const response = await Axios.post(`${url}/tasks`, {
-      title: taskTitle,
-      name: taskName,
-    });
-    const { message } = response.data;
-    console.log(message);
-    onTaskCreated();
+
+  const handleCreateTask = () => {
+    createTask(url, taskTitle, taskName)
+      .then((data) => {
+        console.log(data);
+        onTaskCreated();
+        setIsModalCreateOpen(false);
+        setTaskName("");
+        setTaskTitle("");
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   };
+
   return (
-    <div className="absolute bottom-8 right-8">
-      <input
-        type="text"
-        value={taskTitle}
-        placeholder="Title"
-        onChange={(e) => {
-          setTaskTitle(e.target.value);
-        }}
-      />
-      <input
-        type="text"
-        value={taskName}
-        placeholder="Name of the task"
-        onChange={(e) => {
-          setTaskName(e.target.value);
-        }}
-      />
+    <div className="fixed bottom-8 right-8">
+      <button onClick={() => setIsModalCreateOpen(!isModalCreateOpen)}>
+        <div className="bg-blue-600 p-4 rounded-full shadow-md shadow-gray-400">
+          <FaPen size="36px" color="white" />
+        </div>
+      </button>
       <CreateTaskModal
         isModalCreateOpen={isModalCreateOpen}
         setIsModalCreateOpen={setIsModalCreateOpen}

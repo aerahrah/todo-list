@@ -1,7 +1,7 @@
 import React from "react";
 import { deleteTask, updateTask } from "./utils/apiUtils";
-import Toast from "./toast";
 import { useEffect } from "react";
+import { FaTrash, FaCheck } from "react-icons/fa";
 
 const TaskButtons = ({
   url,
@@ -13,13 +13,14 @@ const TaskButtons = ({
   setToastMessage,
   setShowToast,
   setIsModalOpen,
+  isModalOpen,
 }) => {
   useEffect(() => {
-    console.log(modalTaskData._id);
     if (modalTaskData._id !== undefined) {
       handleUpdateTask(modalTaskData._id);
+      console.log(modalTaskData._id);
     }
-  }, [modalTaskData]);
+  }, [isModalOpen, modalTaskData]);
 
   const handleDeleteTask = (id) => {
     deleteTask(url, id)
@@ -45,13 +46,12 @@ const TaskButtons = ({
       <button onClick={() => setFinish(!finish)}>
         {!finish ? "not completed" : "completed"}
       </button>
-      <button onClick={() => handleUpdateTask(modalTaskData._id)}>
-        update
-      </button>
       <button onClick={() => handleDeleteTask(modalTaskData._id)}>
-        delete
+        <FaTrash />
       </button>
-      <button onClick={() => setIsModalOpen(false)}>close</button>
+      <button onClick={() => setIsModalOpen(false)}>
+        <FaCheck />
+      </button>
     </div>
   );
 };

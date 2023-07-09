@@ -61,19 +61,21 @@ const GetAllTask = () => {
   return (
     <div>
       {!isLoading ? (
-        <div className="pt-4 px-2 gap-x-4 columns-2 sm:columns-3 md:columns-2 lg:columns-3 xl:columns-4 h-auto ">
+        <div className="pt-4 px-2 gap-x-4 columns-2 sm:columns-3 md:columns-2 lg:columns-3 xl:columns-4 h-auto text-gray-800">
           {tasksData.length > 0 &&
             tasksData.map((task) => (
               <ul
-                className="bg-white min-w-full max-w-md p-4 rounded-xl border-[1px] shadow-sm hover:shadow mb-4 overflow-hidden max-h-60 cursor-pointer"
+                className="bg-white min-w-full max-w-md p-2 rounded-xl border-[1px] shadow-sm hover:shadow mb-4 overflow-hidden max-h-60 cursor-pointer relative"
                 key={task._id}
                 onClick={() => handleViewSpecificTask(task._id)}
               >
-                <li className="outline-0 mb-2 text-lg font-semibold">
-                  {task.title}
+                <li className="mb-2 text-lg font-semibold">{task.title}</li>
+                <li className="text-md break-words overflow-y-auto max-h-40">
+                  {task.name}
                 </li>
-                <li className="outline-0 text-md">{task.name}</li>
-                <li>{!task.completed ? "not completed" : "completed"}</li>
+                <li className="py-2">
+                  {!task.completed ? "not completed" : "completed"}
+                </li>
               </ul>
             ))}
         </div>
@@ -95,7 +97,7 @@ const GetAllTask = () => {
         setToastMessage={setToastMessage}
         setShowToast={setShowToast}
       ></TaskModal>
-      {showToast && <Toast message={toastMessage} onClose={handleCloseToast} />}
+
       <CreateTask
         url={url}
         modalTaskData={modalTaskData}
@@ -106,6 +108,7 @@ const GetAllTask = () => {
         setShowToast={setShowToast}
         onTaskCreated={handleTaskCreated}
       ></CreateTask>
+      {showToast && <Toast message={toastMessage} onClose={handleCloseToast} />}
     </div>
   );
 };

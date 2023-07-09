@@ -30,3 +30,15 @@ export const getSingleTask = async (url, id) => {
     console.log(error);
   }
 };
+
+export const createTask = async (url, title, name) => {
+  try {
+    const response = await Axios.post(`${url}/tasks`, {
+      title: title,
+      name: name,
+    });
+    return response.date;
+  } catch (error) {
+    console.log(error);
+  }
+};
