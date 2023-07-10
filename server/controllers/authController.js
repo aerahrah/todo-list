@@ -16,10 +16,10 @@ const signup = async (req, res) => {
 
     const newUser = Users({ username, password: hashPasword });
     newUser.save();
-    res.status(200).json({ message: "User registered successfully" });
+    return res.status(200).json({ message: "User registered successfully" });
   } catch (err) {
     console.error("Error signing up:", err);
-    res.status(500).json({ message: "An error occurred" });
+    return res.status(500).json({ message: "An error occurred" });
   }
 };
 const signin = async (req, res) => {
@@ -28,19 +28,19 @@ const signin = async (req, res) => {
 
     const userExists = await Users.findOne({ username });
     if (!userExists) {
-      res.status(401).json({ message: "Invalid username or password" });
+      return res.status(401).json({ message: "Invalid username or password" });
     }
 
     const isPasswordValid = await bcrypt.compare(password, userExists.password);
     if (!isPasswordValid) {
-      res.status(401).json({ message: "Invalid username or password" });
+      return res.status(401).json({ message: "Invalid username or password" });
     }
 
     const token = jwt.sign({ id: userExists._id }, SECRET_KEY);
-    res.status(200).json({ message: "Successfully signed in", token });
+    return res.status(200).json({ message: "Successfully signed in", token });
   } catch (err) {
     console.error("Error signing in:", err);
-    res.status(500).json({ message: "An error occurred" });
+    return res.status(500).json({ message: "An error occurred" });
   }
 };
 
