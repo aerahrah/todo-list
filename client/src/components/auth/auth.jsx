@@ -18,17 +18,6 @@ const AuthForm = ({
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    if (username.trim() === "") {
-      setError(true);
-      setMessage("Please enter a username");
-      return;
-    }
-
-    if (password.trim() === "") {
-      setError(true);
-      setMessage("Please enter a password");
-      return;
-    }
     handleSubmit(username, password);
   };
 
@@ -58,43 +47,45 @@ const AuthForm = ({
   return (
     <div className="flex min-h-screen w-full items-center justify-center text-gray-800">
       <div className="flex flex-col bg-white items-center p-8 rounded-xl shadow-md">
-        <h1 className="mb-10 text-6xl font-black uppercase tracking-tight text-blue-500 drop-shadow-md shadow-blue-md">
+        <h1 className="mb-14 text-6xl font-black uppercase tracking-tight text-blue-500 drop-shadow-md shadow-blue-md">
           TaskNote
         </h1>
-        <h1 className="mb-8 text-3xl font-bold uppercase ">{title}</h1>
+        {/* <h1 className="mb-8 text-3xl font-bold uppercase ">{title}</h1> */}
         <form className="flex flex-col " onSubmit={handleFormSubmit}>
           <input
-            className="mb-6 border-b-2 capitalize min-w-[14rem] w-[20vw] outline-0 focus:border-blue-500"
+            className="text-lg mb-6 border-b-2 capitalize min-w-[14rem] w-[20vw] outline-0 focus:border-blue-500"
             type="text"
             value={username}
             placeholder="username"
+            required={true}
             onChange={(e) => setUsername(e.target.value)}
           />
           <input
-            className="mb-8 border-b-2 capitalize min-w-[14rem] w-[20vw] outline-0 focus:border-blue-500"
+            className="text-lg mb-10 border-b-2 capitalize min-w-[14rem] w-[20vw] outline-0 focus:border-blue-500"
             type="password"
             value={password}
             placeholder="password"
+            required={true}
             onChange={(e) => setPassword(e.target.value)}
           />
           <button
-            className="mb-6 bg-blue-500 min-w-[12rem] uppercase font-semibold rounded-full py-2 px-4 mx-auto text-sky-100 hover:scale-[1.01] hover:shadow-md active:scale-[.98] active:shadow-none transition duration-100"
+            className="mb-6 bg-blue-500 min-w-[12rem] uppercase font-semibold rounded-full py-2 px-4 mx-auto text-white hover:scale-[1.01] hover:shadow-md active:scale-[.98] active:shadow-none transition duration-100 text-lg"
             type="submit"
           >
             {title}
           </button>
-          <p className="mx-auto mb-4">
+          <p className="mx-auto mb-4 text-md">
             {title == "Signup" ? (
               <span>
                 Already have an account?{" "}
-                <Link className="text-blue-500" to="/signin">
+                <Link className="text-blue-500 hover:underline" to="/signin">
                   Sign in
                 </Link>
               </span>
             ) : (
               <span>
                 Don't have an account?{" "}
-                <Link className="text-blue-500" to="/">
+                <Link className="text-blue-500 hover:underline" to="/">
                   Sign up
                 </Link>
               </span>
