@@ -14,6 +14,7 @@ const TaskButtons = ({
   setShowToast,
   setIsModalOpen,
   isModalOpen,
+  Axios
 }) => {
   useEffect(() => {
     if (modalTaskData._id !== undefined) {
@@ -23,7 +24,7 @@ const TaskButtons = ({
   }, [isModalOpen, modalTaskData]);
 
   const handleDeleteTask = (id) => {
-    deleteTask(url, id)
+    deleteTask(url, i, Axios)
       .then((data) => {
         setIsModalOpen(false);
       })
@@ -31,7 +32,7 @@ const TaskButtons = ({
   };
 
   const handleUpdateTask = (id) => {
-    updateTask(url, id, taskName, taskTitle, finish)
+    updateTask(url, id, taskName, taskTitle, finish, Axios)
       .then((data) => {
         console.log(data);
       })

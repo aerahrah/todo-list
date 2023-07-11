@@ -3,14 +3,24 @@ const tryCatch = require("../middleware/async");
 const { createCustomError } = require("../errors/custom-error");
 
 const getAllTask = tryCatch(async (req, res) => {
-  const tasks = await Task.find({});
+  const getId = req.user;
+  console.log(`get all task: ${getId}`);
+  const tasks = await Task.find({ user: getId });
   return res.status(200).json({ tasks });
 });
 const createTask = tryCatch(async (req, res) => {
-  const task = await Task.create(req.body);
+  const { title, name } = req.body;
+  const getId = req.user;
+  console.log(`Create task: ${getId}`);
+  const createtask = new Task({
+    user: getId,
+    title: title,
+    name: name,
+  });
+  await createtask.save();
   return res
     .status(201)
-    .json({ message: `Task: ${task} created successfully` });
+    .json({ message: `Task: ${title} created successfully` });
 });
 const getSingleTask = tryCatch(async (req, res, next) => {
   const { id: taskId } = req.params;

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useCookies } from "react-cookie";
-import axiosInterceptor from "../components/utils/axios";
+import createAxiosInstance from "../components/utils/axios";
 import Toast from "../components/toast";
 import TaskModal from "../components/taskModal";
 import { getSingleTask } from "../components/utils/apiUtils";
@@ -21,7 +21,8 @@ const GetAllTask = () => {
   const [updateTrigger, setUpdateTrigger] = useState(false);
 
   const token = cookies.Token;
-  const Axios = axiosInterceptor(token);
+  console.log(`load token: ${token}`);
+  const Axios = createAxiosInstance(token);
 
   useEffect(() => {
     handleGetAllTask();
@@ -40,7 +41,7 @@ const GetAllTask = () => {
     setUpdateTrigger((prevTrigger) => !prevTrigger);
   };
   const handleSingleTask = (id) => {
-    getSingleTask(url, id)
+    getSingleTask(url, id, Axios)
       .then((data) => {
         const { task } = data;
         setTaskName(task.name);
@@ -96,6 +97,7 @@ const GetAllTask = () => {
         finish={finish}
         setToastMessage={setToastMessage}
         setShowToast={setShowToast}
+        Axios={Axios}
       ></TaskModal>
 
       <CreateTask
@@ -107,6 +109,7 @@ const GetAllTask = () => {
         setToastMessage={setToastMessage}
         setShowToast={setShowToast}
         onTaskCreated={handleTaskCreated}
+        Axios={Axios}
       ></CreateTask>
       {showToast && <Toast message={toastMessage} onClose={handleCloseToast} />}
     </div>

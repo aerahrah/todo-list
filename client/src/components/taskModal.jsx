@@ -16,6 +16,7 @@ const TaskModal = ({
   modalTaskData,
   setToastMessage,
   setShowToast,
+  Axios,
 }) => {
   return (
     <Transition appear show={isModalOpen} as={Fragment}>
@@ -60,6 +61,7 @@ const TaskModal = ({
                   setShowToast={setShowToast}
                   isModalOpen={isModalOpen}
                   setIsModalOpen={setIsModalOpen}
+                  Axios={Axios}
                 />
               </Dialog.Panel>
             </Transition.Child>

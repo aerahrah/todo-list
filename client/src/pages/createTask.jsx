@@ -10,13 +10,14 @@ const CreateTask = ({
   url,
   setToastMessage,
   setShowToast,
+  Axios,
 }) => {
   const [taskName, setTaskName] = useState("");
   const [taskTitle, setTaskTitle] = useState("");
   const [isModalCreateOpen, setIsModalCreateOpen] = useState(false);
 
   const handleCreateTask = () => {
-    createTask(url, taskTitle, taskName)
+    createTask(url, taskTitle, taskName, Axios)
       .then((data) => {
         console.log(data);
         onTaskCreated();
