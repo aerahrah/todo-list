@@ -5,6 +5,7 @@ import Toast from "../components/toast";
 import TaskModal from "../components/taskModal";
 import { getSingleTask } from "../components/utils/apiUtils";
 import CreateTask from "./createTask";
+import SearchBar from "../components/serachBar";
 
 const GetAllTask = () => {
   const url = "http://localhost:3500/api/v1";
@@ -19,18 +20,21 @@ const GetAllTask = () => {
   const [showToast, setShowToast] = useState(false);
   const [cookies] = useCookies(["user"]);
   const [updateTrigger, setUpdateTrigger] = useState(false);
-
+  const [filteredTask, setFilteredTask] = useState("");
   const token = cookies.Token;
   console.log(`load token: ${token}`);
   const Axios = createAxiosInstance(token);
 
   useEffect(() => {
     handleGetAllTask();
+    console.log(filteredTask);
   }, [isModalOpen, finish, updateTrigger]);
 
   const handleGetAllTask = async () => {
     try {
-      const response = await Axios.get(`${url}/tasks`);
+      const response = await Axios.get(
+        `${url}/tasks?searchTerm=${filteredTask}`
+      );
       const { tasks } = response.data;
       setTasksData(tasks);
     } catch (error) {
@@ -61,6 +65,10 @@ const GetAllTask = () => {
   };
   return (
     <div>
+      <SearchBar
+        handleGetAllTask={handleGetAllTask}
+        setFilteredTask={setFilteredTask}
+      ></SearchBar>
       {!isLoading ? (
         <div className="pt-4 px-2 gap-x-4 columns-2 sm:columns-3 md:columns-2 lg:columns-3 xl:columns-4 h-auto text-gray-800">
           {tasksData.length > 0 &&
