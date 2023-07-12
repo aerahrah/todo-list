@@ -4,8 +4,16 @@ const { createCustomError } = require("../errors/custom-error");
 
 const getAllTask = tryCatch(async (req, res) => {
   const getId = req.user;
-  console.log(`get all task: ${getId}`);
-  const tasks = await Task.find({ user: getId });
+  const { searchTerm } = req.query;
+
+  const filter = { user: getId };
+  if (searchTerm) {
+    filter.$or = [
+      { title: { $regex: searchTerm, $options: "i" } },
+      { name: { $regex: searchTerm, $options: "i" } },
+    ];
+  }
+  let tasks = await Task.find(filter);
   return res.status(200).json({ tasks });
 });
 const createTask = tryCatch(async (req, res) => {
