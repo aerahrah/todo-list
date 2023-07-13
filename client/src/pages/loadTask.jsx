@@ -1,11 +1,12 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useCookies } from "react-cookie";
 import createAxiosInstance from "../components/utils/axios";
 import Toast from "../components/toast";
 import TaskModal from "../components/taskModal";
-import { getSingleTask } from "../components/utils/apiUtils";
 import CreateTask from "./createTask";
 import SearchBar from "../components/serachBar";
+import TaskCard from "../components/taskCardContainer";
+import { getSingleTask } from "../components/utils/apiUtils";
 
 const GetAllTask = () => {
   const url = "http://localhost:3500/api/v1";
@@ -13,7 +14,7 @@ const GetAllTask = () => {
   const [taskName, setTaskName] = useState("");
   const [taskTitle, setTaskTitle] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [modalTaskData, setModalTaskData] = useState([]);
   const [finish, setFinish] = useState("");
   const [toastMessage, setToastMessage] = useState("");
@@ -22,12 +23,10 @@ const GetAllTask = () => {
   const [updateTrigger, setUpdateTrigger] = useState(false);
   const [filteredTask, setFilteredTask] = useState("");
   const token = cookies.Token;
-  console.log(`load token: ${token}`);
   const Axios = createAxiosInstance(token);
 
   useEffect(() => {
     handleGetAllTask();
-    console.log(filteredTask);
   }, [isModalOpen, finish, updateTrigger]);
 
   const handleGetAllTask = async () => {
@@ -37,13 +36,16 @@ const GetAllTask = () => {
       );
       const { tasks } = response.data;
       setTasksData(tasks);
+      setIsLoading(false);
     } catch (error) {
       console.error(error);
     }
   };
+
   const handleTaskCreated = () => {
     setUpdateTrigger((prevTrigger) => !prevTrigger);
   };
+
   const handleSingleTask = (id) => {
     getSingleTask(url, id, Axios)
       .then((data) => {
@@ -55,6 +57,7 @@ const GetAllTask = () => {
       })
       .catch((err) => console.error(err));
   };
+
   const handleViewSpecificTask = (id) => {
     handleSingleTask(id);
     setIsModalOpen(true);
@@ -68,28 +71,56 @@ const GetAllTask = () => {
       <SearchBar
         handleGetAllTask={handleGetAllTask}
         setFilteredTask={setFilteredTask}
-      ></SearchBar>
-      {!isLoading ? (
-        <div className="pt-4 px-2 gap-x-4 columns-2 sm:columns-3 md:columns-2 lg:columns-3 xl:columns-4 h-auto text-gray-800">
-          {tasksData.length > 0 &&
-            tasksData.map((task) => (
-              <ul
-                className="bg-white min-w-full max-w-md p-2 rounded-xl border-[1px] shadow-sm hover:shadow mb-4 overflow-hidden max-h-60 cursor-pointer relative"
-                key={task._id}
-                onClick={() => handleViewSpecificTask(task._id)}
-              >
-                <li className="mb-2 text-lg font-semibold">{task.title}</li>
-                <li className="text-md break-words overflow-y-auto max-h-40">
-                  {task.name}
-                </li>
-                <li className="py-2">
-                  {!task.completed ? "not completed" : "completed"}
-                </li>
-              </ul>
-            ))}
-        </div>
+      />
+      {isLoading ? (
+        <p>Loading...</p>
       ) : (
-        <p>is loading</p>
+        <div className="py-4 px-6 text-gray-800">
+          {tasksData.some((task) => task.completed) && (
+            <div>
+              <h2 className="mb-4 px-1 uppercase font-semibold text-sm text-gray-500">
+                Completed tasks
+              </h2>
+              <div className="columns-2 sm:columns-3 md:columns-2 lg:columns-3 xl:columns-4  h-auto mb-8">
+                {tasksData
+                  .filter((task) => task.completed)
+                  .map((task) => (
+                    <TaskCard
+                      key={task._id}
+                      taskId={task._id}
+                      taskName={task.name}
+                      taskTitle={task.title}
+                      taskCompleted={task.completed}
+                      handleViewSpecificTask={handleViewSpecificTask}
+                    />
+                  ))}
+              </div>
+            </div>
+          )}
+          {tasksData.some((task) => !task.completed) && (
+            <div>
+              <h2 className="mb-4 px-1 uppercase font-semibold text-sm text-gray-500">
+                {tasksData.some((task) => task.completed)
+                  ? "Not completed tasks"
+                  : "All Tasks"}
+              </h2>
+              <div className="columns-2 sm:columns-3 md:columns-2 lg:columns-3 xl:columns-4  h-auto">
+                {tasksData
+                  .filter((task) => !task.completed)
+                  .map((task) => (
+                    <TaskCard
+                      key={task._id}
+                      taskId={task._id}
+                      taskName={task.name}
+                      taskTitle={task.title}
+                      taskCompleted={task.completed}
+                      handleViewSpecificTask={handleViewSpecificTask}
+                    />
+                  ))}
+              </div>
+            </div>
+          )}
+        </div>
       )}
       <TaskModal
         isModalOpen={isModalOpen}
@@ -106,7 +137,7 @@ const GetAllTask = () => {
         setToastMessage={setToastMessage}
         setShowToast={setShowToast}
         Axios={Axios}
-      ></TaskModal>
+      />
 
       <CreateTask
         url={url}
@@ -118,7 +149,7 @@ const GetAllTask = () => {
         setShowToast={setShowToast}
         onTaskCreated={handleTaskCreated}
         Axios={Axios}
-      ></CreateTask>
+      />
       {showToast && <Toast message={toastMessage} onClose={handleCloseToast} />}
     </div>
   );

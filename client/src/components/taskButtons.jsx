@@ -14,7 +14,7 @@ const TaskButtons = ({
   setShowToast,
   setIsModalOpen,
   isModalOpen,
-  Axios
+  Axios,
 }) => {
   useEffect(() => {
     if (modalTaskData._id !== undefined) {
@@ -24,8 +24,9 @@ const TaskButtons = ({
   }, [isModalOpen, modalTaskData]);
 
   const handleDeleteTask = (id) => {
-    deleteTask(url, i, Axios)
+    deleteTask(url, id, Axios)
       .then((data) => {
+        console.log(data);
         setIsModalOpen(false);
       })
       .catch((err) => console.log(err));

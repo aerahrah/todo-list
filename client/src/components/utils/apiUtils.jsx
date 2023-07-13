@@ -1,9 +1,9 @@
-export const deleteTask = async (url, id) => {
+export const deleteTask = async (url, id, Axios) => {
   try {
     const response = await Axios.delete(`${url}/tasks/${id}`);
     console.log(response);
   } catch (error) {
-    console.log(error);
+    throw new Error(error.response.data.errors[0]);
   }
 };
 
@@ -25,7 +25,7 @@ export const getSingleTask = async (url, id, Axios) => {
     const response = await Axios.get(`${url}/tasks/${id}`);
     return response.data;
   } catch (error) {
-    console.log(error);
+    throw new Error(error.response.data.errors[0]);
   }
 };
 
@@ -37,6 +37,6 @@ export const createTask = async (url, title, name, Axios) => {
     });
     return response.data;
   } catch (error) {
-    console.log(error);
+    throw new Error(error.response.data.errors[0]);
   }
 };
