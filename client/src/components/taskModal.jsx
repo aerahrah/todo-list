@@ -14,6 +14,7 @@ const TaskModal = ({
   setFinish,
   url,
   modalTaskData,
+  setModalTaskData,
   setToastMessage,
   setShowToast,
   Axios,
@@ -53,6 +54,7 @@ const TaskModal = ({
                 <TaskButtons
                   url={url}
                   modalTaskData={modalTaskData}
+                  setModalTaskData={setModalTaskData}
                   setFinish={setFinish}
                   taskName={taskName}
                   taskTitle={taskTitle}

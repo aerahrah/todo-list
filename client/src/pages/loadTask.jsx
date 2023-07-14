@@ -7,6 +7,7 @@ import CreateTask from "./createTask";
 import SearchBar from "../components/serachBar";
 import TaskCard from "../components/taskCardContainer";
 import { getSingleTask } from "../components/utils/apiUtils";
+import Spinner from "../components/spinner";
 
 const GetAllTask = () => {
   const url = "http://localhost:3500/api/v1";
@@ -15,7 +16,7 @@ const GetAllTask = () => {
   const [taskTitle, setTaskTitle] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [modalTaskData, setModalTaskData] = useState([]);
+  const [modalTaskData, setModalTaskData] = useState({});
   const [finish, setFinish] = useState("");
   const [toastMessage, setToastMessage] = useState("");
   const [showToast, setShowToast] = useState(false);
@@ -68,14 +69,14 @@ const GetAllTask = () => {
   };
   return (
     <div>
-      <SearchBar
-        handleGetAllTask={handleGetAllTask}
-        setFilteredTask={setFilteredTask}
-      />
       {isLoading ? (
-        <p>Loading...</p>
+        <Spinner />
       ) : (
         <div className="py-4 px-6 text-gray-800">
+          <SearchBar
+            handleGetAllTask={handleGetAllTask}
+            setFilteredTask={setFilteredTask}
+          />
           {tasksData.some((task) => task.completed) && (
             <div>
               <h2 className="mb-4 px-1 uppercase font-semibold text-sm text-gray-500">
@@ -120,6 +121,17 @@ const GetAllTask = () => {
               </div>
             </div>
           )}
+          <CreateTask
+            url={url}
+            modalTaskData={modalTaskData}
+            setModalTaskData={setModalTaskData}
+            setFinish={setFinish}
+            finish={finish}
+            setToastMessage={setToastMessage}
+            setShowToast={setShowToast}
+            onTaskCreated={handleTaskCreated}
+            Axios={Axios}
+          />
         </div>
       )}
       <TaskModal
@@ -139,17 +151,6 @@ const GetAllTask = () => {
         Axios={Axios}
       />
 
-      <CreateTask
-        url={url}
-        modalTaskData={modalTaskData}
-        setModalTaskData={setModalTaskData}
-        setFinish={setFinish}
-        finish={finish}
-        setToastMessage={setToastMessage}
-        setShowToast={setShowToast}
-        onTaskCreated={handleTaskCreated}
-        Axios={Axios}
-      />
       {showToast && <Toast message={toastMessage} onClose={handleCloseToast} />}
     </div>
   );

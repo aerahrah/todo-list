@@ -6,6 +6,7 @@ import { FaTrash, FaCheck } from "react-icons/fa";
 const TaskButtons = ({
   url,
   modalTaskData,
+  setModalTaskData,
   setFinish,
   taskName,
   taskTitle,
@@ -17,16 +18,16 @@ const TaskButtons = ({
   Axios,
 }) => {
   useEffect(() => {
-    if (modalTaskData._id !== undefined) {
+    if (modalTaskData?._id !== undefined) {
       handleUpdateTask(modalTaskData._id);
       console.log(modalTaskData._id);
     }
-  }, [isModalOpen, modalTaskData]);
+  }, [modalTaskData]);
 
   const handleDeleteTask = (id) => {
     deleteTask(url, id, Axios)
       .then((data) => {
-        console.log(data);
+        setModalTaskData({});
         setIsModalOpen(false);
       })
       .catch((err) => console.log(err));
