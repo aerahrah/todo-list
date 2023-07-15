@@ -45,7 +45,7 @@ const TaskButtons = ({
   };
 
   return (
-    <div className="flex justify-between items-center text-gray-800 ">
+    <div className="flex justify-between items-center text-gray-800 px-4">
       <div>
         <button onClick={() => setFinish(!finish)}>
           {!finish ? "not completed" : "completed"}

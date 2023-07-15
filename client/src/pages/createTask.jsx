@@ -26,7 +26,8 @@ const CreateTask = ({
         setTaskTitle("");
       })
       .catch((err) => {
-        console.error(err);
+        setToastMessage(err.message);
+        setShowToast(true);
       });
   };
 

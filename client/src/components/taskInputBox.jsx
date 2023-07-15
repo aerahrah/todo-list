@@ -14,7 +14,7 @@ const TaskInputBox = ({ taskTitle, setTaskTitle, taskName, setTaskName }) => {
         placeholder={taskName ? taskName : "Start here..."}
         rows={6}
         cols={60}
-        className="outline-0 text-md px-4"
+        className="outline-0 text-md mx-4 mb-2"
       />
     </div>
   );

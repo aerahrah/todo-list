@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { FaSearch } from "react-icons/fa";
-const SearchBar = ({ handleGetAllTask, setFilteredTask }) => {
+import SortBtn from "./sortBtn";
+
+const SearchBar = ({ handleGetAllTask, setFilteredTask, setSortByTask }) => {
   const [searchTerm, setSearchTerm] = useState("");
 
   const handleInputChange = (e) => {
@@ -12,7 +14,11 @@ const SearchBar = ({ handleGetAllTask, setFilteredTask }) => {
   }, [searchTerm]);
 
   return (
-    <div className="p-0 px-6 m-0 shadow-md flex items-center">
+    <div className="p-0 px-6 m-0 relative shadow-md flex items-center">
+      <SortBtn
+        setSortByTask={setSortByTask}
+        handleGetAllTask={handleGetAllTask}
+      />
       <FaSearch className="text-gray-600"></FaSearch>
       <input
         type="text"
