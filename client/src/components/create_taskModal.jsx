@@ -49,7 +49,12 @@ const CreateTaskModal = ({
                   taskName={taskName}
                   setTaskName={setTaskName}
                 />
-                <button onClick={handleCreateTask}>submit</button>
+                <button
+                  className="hover:text-sky-700 transform hover:scale-[1.02] "
+                  onClick={handleCreateTask}
+                >
+                  Create
+                </button>
               </Dialog.Panel>
             </Transition.Child>
           </div>

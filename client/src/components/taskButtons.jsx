@@ -18,11 +18,11 @@ const TaskButtons = ({
   Axios,
 }) => {
   useEffect(() => {
-    if (modalTaskData?._id !== undefined) {
+    if (!isModalOpen && modalTaskData?._id !== undefined) {
       handleUpdateTask(modalTaskData._id);
       console.log(modalTaskData._id);
     }
-  }, [modalTaskData]);
+  }, [modalTaskData, isModalOpen]);
 
   const handleDeleteTask = (id) => {
     deleteTask(url, id, Axios)
@@ -45,15 +45,18 @@ const TaskButtons = ({
   };
 
   return (
-    <div>
-      <button onClick={() => setFinish(!finish)}>
-        {!finish ? "not completed" : "completed"}
-      </button>
-      <button onClick={() => handleDeleteTask(modalTaskData._id)}>
-        <FaTrash />
-      </button>
+    <div className="flex justify-between items-center text-gray-800 ">
+      <div>
+        <button onClick={() => setFinish(!finish)}>
+          {!finish ? "not completed" : "completed"}
+        </button>
+        <button onClick={() => handleDeleteTask(modalTaskData._id)}>
+          <FaTrash className="hover:text-red-500" />
+        </button>
+      </div>
+
       <button onClick={() => setIsModalOpen(false)}>
-        <FaCheck />
+        <FaCheck className="hover:text-sky-500" />
       </button>
     </div>
   );

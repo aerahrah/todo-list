@@ -4,7 +4,7 @@ import createAxiosInstance from "../components/utils/axios";
 import Toast from "../components/toast";
 import TaskModal from "../components/taskModal";
 import CreateTask from "./createTask";
-import SearchBar from "../components/serachBar";
+import SearchBar from "../components/searchBar";
 import TaskCard from "../components/taskCardContainer";
 import { getSingleTask } from "../components/utils/apiUtils";
 import Spinner from "../components/spinner";
@@ -72,66 +72,68 @@ const GetAllTask = () => {
       {isLoading ? (
         <Spinner />
       ) : (
-        <div className="py-4 px-6 text-gray-800">
+        <div className="text-gray-800">
           <SearchBar
             handleGetAllTask={handleGetAllTask}
             setFilteredTask={setFilteredTask}
           />
-          {tasksData.some((task) => task.completed) && (
-            <div>
-              <h2 className="mb-4 px-1 uppercase font-semibold text-sm text-gray-500">
-                Completed tasks
-              </h2>
-              <div className="columns-2 sm:columns-3 md:columns-2 lg:columns-3 xl:columns-4  h-auto mb-8">
-                {tasksData
-                  .filter((task) => task.completed)
-                  .map((task) => (
-                    <TaskCard
-                      key={task._id}
-                      taskId={task._id}
-                      taskName={task.name}
-                      taskTitle={task.title}
-                      taskCompleted={task.completed}
-                      handleViewSpecificTask={handleViewSpecificTask}
-                    />
-                  ))}
+          <div className="py-4 px-6">
+            {tasksData.some((task) => task.completed) && (
+              <div>
+                <h2 className="mb-4 px-1 uppercase font-semibold text-sm text-gray-500">
+                  Completed tasks
+                </h2>
+                <div className="columns-2 sm:columns-3 md:columns-2 lg:columns-3 xl:columns-4  h-auto mb-8">
+                  {tasksData
+                    .filter((task) => task.completed)
+                    .map((task) => (
+                      <TaskCard
+                        key={task._id}
+                        taskId={task._id}
+                        taskName={task.name}
+                        taskTitle={task.title}
+                        taskCompleted={task.completed}
+                        handleViewSpecificTask={handleViewSpecificTask}
+                      />
+                    ))}
+                </div>
               </div>
-            </div>
-          )}
-          {tasksData.some((task) => !task.completed) && (
-            <div>
-              <h2 className="mb-4 px-1 uppercase font-semibold text-sm text-gray-500">
-                {tasksData.some((task) => task.completed)
-                  ? "Not completed tasks"
-                  : "All Tasks"}
-              </h2>
-              <div className="columns-2 sm:columns-3 md:columns-2 lg:columns-3 xl:columns-4  h-auto">
-                {tasksData
-                  .filter((task) => !task.completed)
-                  .map((task) => (
-                    <TaskCard
-                      key={task._id}
-                      taskId={task._id}
-                      taskName={task.name}
-                      taskTitle={task.title}
-                      taskCompleted={task.completed}
-                      handleViewSpecificTask={handleViewSpecificTask}
-                    />
-                  ))}
+            )}
+            {tasksData.some((task) => !task.completed) && (
+              <div>
+                <h2 className="mb-4 px-1 uppercase font-semibold text-sm text-gray-500">
+                  {tasksData.some((task) => task.completed)
+                    ? "Not completed tasks"
+                    : "All Tasks"}
+                </h2>
+                <div className="columns-2 sm:columns-3 md:columns-2 lg:columns-3 xl:columns-4  h-auto">
+                  {tasksData
+                    .filter((task) => !task.completed)
+                    .map((task) => (
+                      <TaskCard
+                        key={task._id}
+                        taskId={task._id}
+                        taskName={task.name}
+                        taskTitle={task.title}
+                        taskCompleted={task.completed}
+                        handleViewSpecificTask={handleViewSpecificTask}
+                      />
+                    ))}
+                </div>
               </div>
-            </div>
-          )}
-          <CreateTask
-            url={url}
-            modalTaskData={modalTaskData}
-            setModalTaskData={setModalTaskData}
-            setFinish={setFinish}
-            finish={finish}
-            setToastMessage={setToastMessage}
-            setShowToast={setShowToast}
-            onTaskCreated={handleTaskCreated}
-            Axios={Axios}
-          />
+            )}
+            <CreateTask
+              url={url}
+              modalTaskData={modalTaskData}
+              setModalTaskData={setModalTaskData}
+              setFinish={setFinish}
+              finish={finish}
+              setToastMessage={setToastMessage}
+              setShowToast={setShowToast}
+              onTaskCreated={handleTaskCreated}
+              Axios={Axios}
+            />
+          </div>
         </div>
       )}
       <TaskModal

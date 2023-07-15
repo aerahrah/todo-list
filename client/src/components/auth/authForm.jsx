@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
-import Axios from "axios";
-import { useCookies } from "react-cookie";
+
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
@@ -104,70 +103,4 @@ const AuthForm = ({
   );
 };
 
-export const Signin = () => {
-  const [cookies, setCookie] = useCookies(["user"]);
-  const url = "http://localhost:3500/api/v1";
-  const navigate = useNavigate();
-  const [message, setMessage] = useState("");
-  const [error, setError] = useState(false);
-
-  const handleSignin = async (username, password) => {
-    try {
-      console.log("Signing in...");
-      const response = await Axios.post(`${url}/auth/signin`, {
-        username,
-        password,
-      });
-      const { message, token } = response.data;
-      setCookie("Token", token, { path: "/" });
-      navigate("/notes");
-      setMessage(message);
-    } catch (error) {
-      setMessage(error.response.data.message);
-      setError(true);
-    }
-  };
-
-  return (
-    <AuthForm
-      title="Signin"
-      handleSubmit={handleSignin}
-      message={message}
-      setMessage={setMessage}
-      error={error}
-      setError={setError}
-    />
-  );
-};
-
-export const Signup = () => {
-  const url = "http://localhost:3500/api/v1";
-
-  const [message, setMessage] = useState("");
-  const [error, setError] = useState(false);
-
-  const handleSignup = async (username, password) => {
-    try {
-      const response = await Axios.post(`${url}/auth/signup`, {
-        username,
-        password,
-      });
-      const { message } = response.data;
-      setMessage(message);
-    } catch (error) {
-      setMessage(error.response.data.message);
-      setError(true);
-    }
-  };
-
-  return (
-    <AuthForm
-      title="Signup"
-      handleSubmit={handleSignup}
-      message={message}
-      setMessage={setMessage}
-      error={error}
-      setError={setError}
-    />
-  );
-};
+export default AuthForm;

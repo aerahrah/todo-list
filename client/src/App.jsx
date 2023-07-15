@@ -1,4 +1,5 @@
-import { Signin, Signup } from "./components/auth/auth";
+import Signin from "./components/auth/signin";
+import Signup from "./components/auth/signup";
 import { Routes, Route } from "react-router-dom";
 import GetAllTask from "./pages/loadTask";
 
