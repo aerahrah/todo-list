@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const connectionDB = require("./db/connect");
 const tasks = require("./routes/Tasks");
+const project = require("./routes/projectRoute");
 const cors = require("cors");
 require("dotenv").config();
 
@@ -12,6 +13,7 @@ app.use(express.static("./public"));
 app.use(cors());
 const port = 3500;
 
+app.use("/api/v1/projects", project);
 app.use("/api/v1/tasks", tasks);
 app.use("/api/v1/auth", auth);
 
