@@ -1,5 +1,5 @@
 import React from "react";
-import { deleteTask, updateTask } from "./utils/apiUtils";
+import { deleteTask, updateTask } from "./utils/apiUtilsTask";
 import { useEffect } from "react";
 import { FaTrash, FaCheck } from "react-icons/fa";
 

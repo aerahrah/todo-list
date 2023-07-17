@@ -6,7 +6,7 @@ import TaskModal from "../components/taskModal";
 import CreateTask from "./createTask";
 import SearchBar from "../components/searchBar";
 import TaskCard from "../components/taskCardContainer";
-import { getSingleTask } from "../components/utils/apiUtils";
+import { getSingleTask } from "../components/utils/apiUtilsTask";
 import Spinner from "../components/spinner";
 import SideBar from "../components/sidebar";
 
