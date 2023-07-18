@@ -81,7 +81,7 @@ const GetAllTask = () => {
           <SideBar />
           <div className="text-gray-800 md:pl-64  flex-1 ">
             <SearchBar
-              handleGetAllTask={handleGetAllTask}
+              handleTaskCreated={handleTaskCreated}
               setFilteredTask={setFilteredTask}
               setSortByTask={setSortByTask}
             />
@@ -146,6 +146,7 @@ const GetAllTask = () => {
       <TaskModal
         isModalOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}
+        handleTaskCreated={handleTaskCreated}
         url={url}
         modalTaskData={modalTaskData}
         setTaskName={setTaskName}

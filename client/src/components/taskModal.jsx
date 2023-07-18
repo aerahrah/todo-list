@@ -5,6 +5,7 @@ import TaskInputBox from "./taskInputBox";
 
 const TaskModal = ({
   isModalOpen,
+  handleTaskCreated,
   setIsModalOpen,
   taskName,
   setTaskName,
@@ -58,6 +59,7 @@ const TaskModal = ({
                   setFinish={setFinish}
                   taskName={taskName}
                   taskTitle={taskTitle}
+                  handleTaskCreated={handleTaskCreated}
                   finish={finish}
                   setToastMessage={setToastMessage}
                   setShowToast={setShowToast}

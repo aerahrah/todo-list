@@ -1,15 +1,12 @@
 import { useState, useEffect } from "react";
 
-const SortBtn = ({ setSortByTask, handleGetAllTask }) => {
+const SortBtn = ({ setSortByTask, handleTaskCreated }) => {
   const [sortBy, setSortBy] = useState("");
   const handleSortChange = (e) => {
     setSortBy(e.target.value);
     setSortByTask(e.target.value);
+    handleTaskCreated();
   };
-
-  useEffect(() => {
-    handleGetAllTask();
-  }, [sortBy]);
 
   return (
     <div className="border-2 mr-4 outline-0 ">
