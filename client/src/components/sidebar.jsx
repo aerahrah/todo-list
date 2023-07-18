@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import createAxiosInstance from "./utils/axios";
 import { useCookies } from "react-cookie";
 import { FaEdit, FaTrash } from "react-icons/fa";
-import { deleteProject } from "./utils/apiUtilsProject";
+import { deleteProject, createProject } from "./utils/apiUtilsProject";
 
 const SideBar = () => {
   const url = "http://localhost:3500/api/v1";
@@ -12,6 +12,10 @@ const SideBar = () => {
   const [projectData, setProjectData] = useState([]);
   const [hoverProject, setHoverProject] = useState(false);
   const [isDeleted, setIsDeleted] = useState(false);
+  const [title, setTitle] = useState("");
+  const [addProjectOpen, setAddProjectOpen] = useState(false);
+  const [rerender, setRerender] = useState(false);
+
   const handleDeleteProject = (id) => {
     deleteProject(url, id, Axios)
       .then((data) => {
@@ -33,15 +37,26 @@ const SideBar = () => {
     }
   };
 
+  const handleCreateProject = () => {
+    createProject(url, title, Axios)
+      .then((data) => {
+        console.log(data);
+        setRerender(!rerender);
+        setAddProjectOpen(false);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
   useEffect(() => {
     handleGetAllProject();
-  }, [isDeleted]);
+  }, [isDeleted, rerender]);
   return (
     <div className="bg-sky-500 w-64 md:fixed md:inset-y-0 text-gray-800">
       <div className="my-4 flex flex-col items-center">
         <h1 className="text-4xl font-black">TaskNote</h1>
-        <div className=" mt-12 flex flex-col items-start flex-1 w-full">
-          <h2 className="pl-16 text-3xl font-bold  mb-6">Projects</h2>
+        <div className=" pl-16 mt-12 flex flex-col items-start flex-1 w-full">
+          <h2 className=" text-3xl font-bold  mb-6">Projects</h2>
           {projectData.map((project) => (
             <div
               className="relative flex-1 w-full hover:bg-white"
@@ -49,7 +64,7 @@ const SideBar = () => {
               onMouseEnter={() => setHoverProject(true)}
               onMouseLeave={() => setHoverProject(false)}
             >
-              <h3 className="text-lg font-semibold hover:cursor-pointer  pl-16 ">
+              <h3 className="text-lg font-semibold hover:cursor-pointer">
                 {project.projectTitle}
               </h3>
               {hoverProject && (
@@ -68,6 +83,19 @@ const SideBar = () => {
               )}
             </div>
           ))}
+          <button onClick={() => setAddProjectOpen(true)}>Add Project</button>
+          {addProjectOpen && (
+            <div>
+              <input
+                type="text"
+                placeholder="Add project title"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+              />
+              <button onClick={handleCreateProject}>create</button>
+              <button onClick={() => setAddProjectOpen(false)}>cancel</button>
+            </div>
+          )}
         </div>
       </div>
     </div>

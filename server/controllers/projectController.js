@@ -5,7 +5,7 @@ const { createCustomError } = require("../errors/custom-error");
 const getAllProject = tryCatch(async (req, res, next) => {
   const userId = req.user;
   const project = await Project.find({ user: userId });
-  res.status(200).json({ project });
+  return res.status(200).json({ project });
 });
 
 const getSingleProject = tryCatch(async (req, res, next) => {
@@ -14,7 +14,7 @@ const getSingleProject = tryCatch(async (req, res, next) => {
   if (!project) {
     next(createCustomError(`No task with id : ${projectId}`, 404));
   }
-  res.status(200).json({ project });
+  return res.status(200).json({ project });
 });
 
 const createProject = tryCatch(async (req, res, next) => {
@@ -26,7 +26,7 @@ const createProject = tryCatch(async (req, res, next) => {
     projectTitle: projectTitle,
   });
   await createProject.save();
-  res.status(201).json({ message: "successfully created project" });
+  return res.status(201).json({ message: "successfully created project" });
 });
 
 const deleteProject = tryCatch(async (req, res, next) => {
@@ -35,7 +35,7 @@ const deleteProject = tryCatch(async (req, res, next) => {
   if (!project) {
     next(createCustomError((`No task with id : ${projectId}`, 404)));
   }
-  res.status(201).json({ project });
+  return res.status(201).json({ project });
 });
 module.exports = {
   getAllProject,
