@@ -16,3 +16,12 @@ export const createProject = async (url, title, Axios) => {
     console.error(error);
   }
 };
+
+export const getSingleProject = async (url, id, Axios) => {
+  try {
+    const response = await Axios.get(`${url}/projects/${id}`);
+    return response.data.project._id;
+  } catch (error) {
+    console.log(error);
+  }
+};

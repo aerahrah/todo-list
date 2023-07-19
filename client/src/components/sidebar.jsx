@@ -2,9 +2,13 @@ import { useState, useEffect } from "react";
 import createAxiosInstance from "./utils/axios";
 import { useCookies } from "react-cookie";
 import { FaEdit, FaTrash } from "react-icons/fa";
-import { deleteProject, createProject } from "./utils/apiUtilsProject";
+import {
+  deleteProject,
+  createProject,
+  getSingleProject,
+} from "./utils/apiUtilsProject";
 
-const SideBar = () => {
+const SideBar = ({ setProjectTitle, handleTaskCreated }) => {
   const url = "http://localhost:3500/api/v1";
   const [cookies] = useCookies(["user"]);
   const token = cookies.Token;
@@ -36,7 +40,13 @@ const SideBar = () => {
       console.log(e);
     }
   };
-
+  const handleGetSingleProject = (id) => {
+    getSingleProject(url, id, Axios).then((data) => {
+      console.log(data);
+      setProjectTitle(data);
+      handleTaskCreated();
+    });
+  };
   const handleCreateProject = () => {
     createProject(url, title, Axios)
       .then((data) => {
@@ -64,7 +74,10 @@ const SideBar = () => {
               onMouseEnter={() => setHoverProject(true)}
               onMouseLeave={() => setHoverProject(false)}
             >
-              <h3 className="text-lg font-semibold hover:cursor-pointer">
+              <h3
+                className="text-lg font-semibold hover:cursor-pointer"
+                onClick={() => handleGetSingleProject(project._id)}
+              >
                 {project.projectTitle}
               </h3>
               {hoverProject && (

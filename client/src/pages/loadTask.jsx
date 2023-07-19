@@ -25,6 +25,7 @@ const GetAllTask = () => {
   const [updateTrigger, setUpdateTrigger] = useState(false);
   const [filteredTask, setFilteredTask] = useState("");
   const [sortByTask, setSortByTask] = useState("");
+  const [projectTitle, setProjectTitle] = useState("");
   const token = cookies.Token;
   const Axios = createAxiosInstance(token);
 
@@ -38,6 +39,7 @@ const GetAllTask = () => {
         params: {
           searchTerm: filteredTask,
           sortBy: sortByTask,
+          projectId: projectTitle,
         },
       });
       const { tasks } = response.data;
@@ -78,7 +80,10 @@ const GetAllTask = () => {
         <Spinner />
       ) : (
         <div className="flex">
-          <SideBar />
+          <SideBar
+            setProjectTitle={setProjectTitle}
+            handleTaskCreated={handleTaskCreated}
+          />
           <div className="text-gray-800 md:pl-64  flex-1 ">
             <SearchBar
               handleTaskCreated={handleTaskCreated}

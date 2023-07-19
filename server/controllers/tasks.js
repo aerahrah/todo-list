@@ -5,17 +5,24 @@ const { createCustomError } = require("../errors/custom-error");
 const getAllTask = tryCatch(async (req, res) => {
   const getId = req.user;
   const { searchTerm, sortBy, projectId } = req.query;
-  console.log(sortBy);
-  const filter = {
+  let filter = {
     user: getId,
-    project: "64b36f86c553a1bbbc67dbda",
   };
+
+  console.log(sortBy);
+  console.log(projectId);
+
+  if (projectId && projectId.trim() !== "") {
+    filter.project = projectId;
+  }
+
   if (searchTerm) {
     filter.$or = [
       { title: { $regex: searchTerm, $options: "i" } },
       { name: { $regex: searchTerm, $options: "i" } },
     ];
   }
+
   let tasks;
   if (sortBy === "completed") {
     tasks = await Task.find({ ...filter, completed: true });
@@ -25,6 +32,7 @@ const getAllTask = tryCatch(async (req, res) => {
   } else {
     tasks = await Task.find(filter);
   }
+
   console.log(tasks);
   return res.status(200).json({ tasks });
 });
