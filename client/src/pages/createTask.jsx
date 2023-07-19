@@ -6,6 +6,8 @@ import { createTask } from "../components/utils/apiUtilsTask";
 const CreateTask = ({
   onTaskCreated,
   finish,
+  projectTitle,
+  setProjectTitle,
   setFinish,
   url,
   setToastMessage,
@@ -17,13 +19,14 @@ const CreateTask = ({
   const [isModalCreateOpen, setIsModalCreateOpen] = useState(false);
 
   const handleCreateTask = () => {
-    createTask(url, taskTitle, taskName, Axios)
+    createTask(url, taskTitle, taskName, projectTitle, Axios)
       .then((data) => {
+        console.log(projectTitle);
         console.log(data);
-        onTaskCreated();
         setIsModalCreateOpen(false);
         setTaskName("");
         setTaskTitle("");
+        onTaskCreated();
       })
       .catch((err) => {
         setToastMessage(err.message);

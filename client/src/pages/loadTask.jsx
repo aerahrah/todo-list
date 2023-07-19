@@ -133,17 +133,21 @@ const GetAllTask = () => {
                   </div>
                 </div>
               )}
-              <CreateTask
-                url={url}
-                modalTaskData={modalTaskData}
-                setModalTaskData={setModalTaskData}
-                setFinish={setFinish}
-                finish={finish}
-                setToastMessage={setToastMessage}
-                setShowToast={setShowToast}
-                onTaskCreated={handleTaskCreated}
-                Axios={Axios}
-              />
+              {projectTitle && (
+                <CreateTask
+                  url={url}
+                  projectTitle={projectTitle}
+                  setProjectTitle={setProjectTitle}
+                  modalTaskData={modalTaskData}
+                  setModalTaskData={setModalTaskData}
+                  setFinish={setFinish}
+                  finish={finish}
+                  setToastMessage={setToastMessage}
+                  setShowToast={setShowToast}
+                  onTaskCreated={handleTaskCreated}
+                  Axios={Axios}
+                />
+              )}
             </div>
           </div>
         </div>

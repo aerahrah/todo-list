@@ -37,12 +37,13 @@ const getAllTask = tryCatch(async (req, res) => {
   return res.status(200).json({ tasks });
 });
 const createTask = tryCatch(async (req, res) => {
-  const { title, name } = req.body;
+  const { title, name, project } = req.body;
   const getId = req.user;
   const createtask = new Task({
     user: getId,
     title: title,
     name: name,
+    project: project,
   });
   await createtask.save();
   return res

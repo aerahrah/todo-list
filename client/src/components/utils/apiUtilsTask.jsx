@@ -29,9 +29,10 @@ export const getSingleTask = async (url, id, Axios) => {
   }
 };
 
-export const createTask = async (url, title, name, Axios) => {
+export const createTask = async (url, title, name, projectTitle, Axios) => {
   try {
     const response = await Axios.post(`${url}/tasks`, {
+      project: projectTitle,
       title: title,
       name: name,
     });
