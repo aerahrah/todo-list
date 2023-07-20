@@ -1,7 +1,9 @@
+import { Fragment } from "react";
 import { useState, useEffect } from "react";
 import createAxiosInstance from "./utils/axios";
 import { useCookies } from "react-cookie";
 import { FaEdit, FaTrash } from "react-icons/fa";
+import { Popover, Transition } from "@headlessui/react";
 import {
   deleteProject,
   createProject,
@@ -14,7 +16,7 @@ const SideBar = ({ setProjectTitle, handleTaskCreated }) => {
   const token = cookies.Token;
   const Axios = createAxiosInstance(token);
   const [projectData, setProjectData] = useState([]);
-  const [hoverProject, setHoverProject] = useState(false);
+  const [hoveredProjectId, setHoveredProjectId] = useState("");
   const [isDeleted, setIsDeleted] = useState(false);
   const [title, setTitle] = useState("");
   const [addProjectOpen, setAddProjectOpen] = useState(false);
@@ -62,17 +64,17 @@ const SideBar = ({ setProjectTitle, handleTaskCreated }) => {
     handleGetAllProject();
   }, [isDeleted, rerender]);
   return (
-    <div className="bg-sky-500 w-64 md:fixed md:inset-y-0 text-gray-800">
+    <div className="bg-blue-400 w-64 md:fixed md:inset-y-0 text-gray-800">
       <div className="my-4 flex flex-col items-center">
         <h1 className="text-4xl font-black">TaskNote</h1>
-        <div className=" pl-16 mt-12 flex flex-col items-start flex-1 w-full">
-          <h2 className=" text-3xl font-bold  mb-6">Projects</h2>
+        <div className="mt-12 flex flex-col items-start flex-1 w-full">
+          <h2 className=" text-3xl font-bold  mb-6 pl-12 ">Projects</h2>
           {projectData.map((project) => (
             <div
-              className="relative flex-1 w-full hover:bg-white"
+              className="relative w-[95%] hover:bg-white mb-2 pl-12 py-1 rounded-md mx-auto"
               key={project._id}
-              onMouseEnter={() => setHoverProject(true)}
-              onMouseLeave={() => setHoverProject(false)}
+              onMouseEnter={() => setHoveredProjectId(project._id)}
+              onMouseLeave={() => setHoveredProjectId(null)}
             >
               <h3
                 className="text-lg font-semibold hover:cursor-pointer"
@@ -80,7 +82,7 @@ const SideBar = ({ setProjectTitle, handleTaskCreated }) => {
               >
                 {project.projectTitle}
               </h3>
-              {hoverProject && (
+              {hoveredProjectId === project._id && (
                 <div className="flex absolute top-[50%] -translate-y-[50%] right-0">
                   <button className="hover:cursor-pointer mr-2">
                     <FaEdit />
@@ -96,19 +98,42 @@ const SideBar = ({ setProjectTitle, handleTaskCreated }) => {
               )}
             </div>
           ))}
-          <button onClick={() => setAddProjectOpen(true)}>Add Project</button>
-          {addProjectOpen && (
-            <div>
-              <input
-                type="text"
-                placeholder="Add project title"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-              />
-              <button onClick={handleCreateProject}>create</button>
-              <button onClick={() => setAddProjectOpen(false)}>cancel</button>
-            </div>
-          )}
+          <div className="w-[95%]  mx-auto">
+            <Popover>
+              <Popover.Button
+                className="pl-12 font-bold text-lg mt-6 hover:bg-white text-left py-1 mx-auto rounded-md w-full"
+                onClick={() => setAddProjectOpen(true)}
+              >
+                Add Project
+              </Popover.Button>
+              <Transition
+                enter="transition duration-100 ease-out"
+                enterFrom="transform scale-95 opacity-0"
+                enterTo="transform scale-100 opacity-100"
+                leave="transition duration-75 ease-out"
+                leaveFrom="transform scale-100 opacity-100"
+                leaveTo="transform scale-95 opacity-0"
+              >
+                <Popover.Panel>
+                  <div className="mt-2 bg-white p-4 rounded-md mx-1">
+                    <input
+                      className="outline-0"
+                      type="text"
+                      placeholder="Add project title"
+                      value={title}
+                      onChange={(e) => setTitle(e.target.value)}
+                    />
+                    <div className="mt-2 flex justify-between">
+                      <Popover.Button>cancel</Popover.Button>
+                      <Popover.Button onClick={handleCreateProject}>
+                        create
+                      </Popover.Button>
+                    </div>
+                  </div>
+                </Popover.Panel>
+              </Transition>
+            </Popover>
+          </div>
         </div>
       </div>
     </div>
