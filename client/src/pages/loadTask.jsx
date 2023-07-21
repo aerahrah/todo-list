@@ -4,11 +4,11 @@ import createAxiosInstance from "../components/utils/axios";
 import Toast from "../components/toast";
 import TaskModal from "../components/taskModal";
 import CreateTask from "./createTask";
-import SearchBar from "../components/searchBar";
+import TaskSearchBar from "../components/NavBar/TaskSearchBar";
 import TaskCard from "../components/taskCardContainer";
 import { getSingleTask } from "../components/utils/apiUtilsTask";
 import Spinner from "../components/spinner";
-import SideBar from "../components/sidebar";
+import SideBar from "../components/SideBar/sidebar";
 
 const GetAllTask = () => {
   const url = "http://localhost:3500/api/v1";
@@ -26,6 +26,7 @@ const GetAllTask = () => {
   const [filteredTask, setFilteredTask] = useState("");
   const [sortByTask, setSortByTask] = useState("");
   const [projectTitle, setProjectTitle] = useState("");
+  const [isSideBarOpen, setIsSideBarOpen] = useState(true);
   const token = cookies.Token;
   const Axios = createAxiosInstance(token);
 
@@ -79,16 +80,19 @@ const GetAllTask = () => {
       {isLoading ? (
         <Spinner />
       ) : (
-        <div className="flex">
+        <div>
           <SideBar
             setProjectTitle={setProjectTitle}
             handleTaskCreated={handleTaskCreated}
+            isSideBarOpen={isSideBarOpen}
+            setIsSideBarOpen={setIsSideBarOpen}
           />
           <div className="text-gray-800 md:pl-64  flex-1 ">
-            <SearchBar
+            <TaskSearchBar
               handleTaskCreated={handleTaskCreated}
               setFilteredTask={setFilteredTask}
               setSortByTask={setSortByTask}
+              setIsSideBarOpen={setIsSideBarOpen}
             />
             <div className="py-4 px-6">
               {tasksData.some((task) => task.completed) && (

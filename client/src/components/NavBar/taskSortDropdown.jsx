@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-const SortBtn = ({ setSortByTask, handleTaskCreated }) => {
+const TaskSortDropdown = ({ setSortByTask, handleTaskCreated }) => {
   const [sortBy, setSortBy] = useState("");
   const handleSortChange = (e) => {
     setSortBy(e.target.value);
@@ -20,4 +20,4 @@ const SortBtn = ({ setSortByTask, handleTaskCreated }) => {
   );
 };
 
-export default SortBtn;
+export default TaskSortDropdown;
