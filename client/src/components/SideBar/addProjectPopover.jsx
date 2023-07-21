@@ -7,7 +7,7 @@ const AddProjectPopover = ({
 }) => {
   return (
     <Popover>
-      <Popover.Button className="pl-12 font-bold text-lg mt-6 hover:bg-white text-left py-1 mx-auto rounded-md w-full">
+      <Popover.Button className="pl-12 font-bold text-lg mt-6 hover:bg-white text-left py-1 mx-auto rounded-md w-full outline-0">
         Add Project
       </Popover.Button>
       <Transition

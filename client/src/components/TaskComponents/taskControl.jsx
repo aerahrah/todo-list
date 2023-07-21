@@ -1,5 +1,5 @@
 import React from "react";
-import { deleteTask, updateTask } from "./utils/apiUtilsTask";
+import { deleteTask, updateTask } from "../utils/apiUtilsTask";
 import { useEffect } from "react";
 import {
   FaTrash,
@@ -8,7 +8,7 @@ import {
   FaRegCircle,
 } from "react-icons/fa";
 
-const TaskButtons = ({
+const TaskControl = ({
   url,
   modalTaskData,
   handleTaskCreated,
@@ -75,4 +75,4 @@ const TaskButtons = ({
   );
 };
 
-export default TaskButtons;
+export default TaskControl;

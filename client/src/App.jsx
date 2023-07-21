@@ -1,7 +1,7 @@
 import Signin from "./components/auth/signin";
 import Signup from "./components/auth/signup";
 import { Routes, Route } from "react-router-dom";
-import GetAllTask from "./pages/loadTask";
+import TaskNote from "./pages/layout";
 
 function App() {
   return (
@@ -9,7 +9,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Signup />}></Route>
         <Route path="/signin" element={<Signin />}></Route>
-        <Route path="/notes" element={<GetAllTask />}></Route>
+        <Route path="/notes" element={<TaskNote />}></Route>
       </Routes>
     </>
   );

@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { useCookies } from "react-cookie";
 import createAxiosInstance from "../components/utils/axios";
-import Toast from "../components/toast";
-import TaskModal from "../components/taskModal";
-import CreateTask from "./createTask";
-import TaskSearchBar from "../components/NavBar/TaskSearchBar";
-import TaskCard from "../components/taskCardContainer";
+import Toast from "../components/utils/toast";
+import TaskModal from "../components/TaskComponents/taskModal";
+import CreateTask from "../components/TaskComponents/createTask/createTaskBtn";
 import { getSingleTask } from "../components/utils/apiUtilsTask";
-import Spinner from "../components/spinner";
+import Spinner from "../components/utils/spinner";
 import SideBar from "../components/SideBar/sidebar";
+import NavBar from "../components/NavBar/navbar";
+import TaskList from "../components/taskComponents/taskList";
 
-const GetAllTask = () => {
+const TaskNote = () => {
   const url = "http://localhost:3500/api/v1";
   const [tasksData, setTasksData] = useState({});
   const [taskName, setTaskName] = useState("");
@@ -88,71 +88,31 @@ const GetAllTask = () => {
             setIsSideBarOpen={setIsSideBarOpen}
           />
           <div className="text-gray-800 md:pl-64  flex-1 ">
-            <TaskSearchBar
+            <NavBar
               handleTaskCreated={handleTaskCreated}
               setFilteredTask={setFilteredTask}
               setSortByTask={setSortByTask}
               setIsSideBarOpen={setIsSideBarOpen}
             />
-            <div className="py-4 px-6">
-              {tasksData.some((task) => task.completed) && (
-                <div>
-                  <h2 className="mb-4 px-1 uppercase font-semibold text-sm text-gray-500">
-                    Completed tasks
-                  </h2>
-                  <div className="columns-2 sm:columns-3 md:columns-2 lg:columns-3 xl:columns-4  h-auto mb-8">
-                    {tasksData
-                      .filter((task) => task.completed)
-                      .map((task) => (
-                        <TaskCard
-                          key={task._id}
-                          taskId={task._id}
-                          taskName={task.name}
-                          taskTitle={task.title}
-                          taskCompleted={task.completed}
-                          handleViewSpecificTask={handleViewSpecificTask}
-                        />
-                      ))}
-                  </div>
-                </div>
-              )}
-              {tasksData.some((task) => !task.completed) && (
-                <div>
-                  <h2 className="mb-4 px-1 uppercase font-semibold text-sm text-gray-500">
-                    Not completed tasks
-                  </h2>
-                  <div className="columns-2 sm:columns-3 md:columns-2 lg:columns-3 xl:columns-4  h-auto">
-                    {tasksData
-                      .filter((task) => !task.completed)
-                      .map((task) => (
-                        <TaskCard
-                          key={task._id}
-                          taskId={task._id}
-                          taskName={task.name}
-                          taskTitle={task.title}
-                          taskCompleted={task.completed}
-                          handleViewSpecificTask={handleViewSpecificTask}
-                        />
-                      ))}
-                  </div>
-                </div>
-              )}
-              {projectTitle && (
-                <CreateTask
-                  url={url}
-                  projectTitle={projectTitle}
-                  setProjectTitle={setProjectTitle}
-                  modalTaskData={modalTaskData}
-                  setModalTaskData={setModalTaskData}
-                  setFinish={setFinish}
-                  finish={finish}
-                  setToastMessage={setToastMessage}
-                  setShowToast={setShowToast}
-                  onTaskCreated={handleTaskCreated}
-                  Axios={Axios}
-                />
-              )}
-            </div>
+            <TaskList
+              tasksData={tasksData}
+              handleViewSpecificTask={handleViewSpecificTask}
+            />
+            {projectTitle && (
+              <CreateTask
+                url={url}
+                projectTitle={projectTitle}
+                setProjectTitle={setProjectTitle}
+                modalTaskData={modalTaskData}
+                setModalTaskData={setModalTaskData}
+                setFinish={setFinish}
+                finish={finish}
+                setToastMessage={setToastMessage}
+                setShowToast={setShowToast}
+                onTaskCreated={handleTaskCreated}
+                Axios={Axios}
+              />
+            )}
           </div>
         </div>
       )}
@@ -178,4 +138,4 @@ const GetAllTask = () => {
   );
 };
 
-export default GetAllTask;
+export default TaskNote;

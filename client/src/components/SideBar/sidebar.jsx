@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import createAxiosInstance from "../utils/axios";
 import { useCookies } from "react-cookie";
 import { Dialog, Popover, Transition } from "@headlessui/react";
-import ProjectItems from "./projectList";
+import ProjectItems from "./projectItems";
 import AddProjectPopover from "./addProjectPopover";
 import {
   deleteProject,
@@ -95,7 +95,7 @@ const SideBar = ({
                     handleGetSingleProject={handleGetSingleProject}
                     project={project}
                     key={project._id}
-                  ></ProjectItems>
+                  />
                 ))}
                 <div className="w-[95%]  mx-auto">
                   <AddProjectPopover
@@ -104,7 +104,7 @@ const SideBar = ({
                     handleCreateProject={handleCreateProject}
                     Popover={Popover}
                     Transition={Transition}
-                  ></AddProjectPopover>
+                  />
                 </div>
               </div>
             </div>

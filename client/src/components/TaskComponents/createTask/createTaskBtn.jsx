@@ -1,7 +1,7 @@
 import { useState } from "react";
-import CreateTaskModal from "../components/create_taskModal";
+import CreateTaskModal from "./createTaskModal";
 import { FaPen } from "react-icons/fa";
-import { createTask } from "../components/utils/apiUtilsTask";
+import { createTask } from "../../utils/apiUtilsTask";
 
 const CreateTask = ({
   onTaskCreated,

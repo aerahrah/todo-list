@@ -1,6 +1,6 @@
 import { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import TaskButtons from "./taskButtons";
+import TaskControl from "./taskControl";
 import TaskInputBox from "./taskInputBox";
 
 const TaskModal = ({
@@ -52,7 +52,7 @@ const TaskModal = ({
                   taskName={taskName}
                   setTaskName={setTaskName}
                 />
-                <TaskButtons
+                <TaskControl
                   url={url}
                   modalTaskData={modalTaskData}
                   setModalTaskData={setModalTaskData}
