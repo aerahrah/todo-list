@@ -10,7 +10,7 @@ const NavBar = ({
 }) => {
   return (
     <div>
-      <div className={`p-0 px-6 m-0 shadow-md flex items-center`}>
+      <div className={`p-0 px-6 m-0 bg-white shadow-md flex items-center`}>
         <FaBars
           className="md:hidden block mr-3"
           size="1.5rem"

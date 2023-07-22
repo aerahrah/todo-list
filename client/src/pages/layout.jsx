@@ -7,6 +7,7 @@ import CreateTask from "../components/TaskComponents/createTask/createTaskBtn";
 import { getSingleTask } from "../components/utils/apiUtilsTask";
 import Spinner from "../components/utils/spinner";
 import SideBar from "../components/SideBar/sidebar";
+import SideBarMobile from "../components/SideBar/sideBarMobile";
 import NavBar from "../components/NavBar/navbar";
 import TaskList from "../components/taskComponents/taskList";
 
@@ -26,7 +27,7 @@ const TaskNote = () => {
   const [filteredTask, setFilteredTask] = useState("");
   const [sortByTask, setSortByTask] = useState("");
   const [projectTitle, setProjectTitle] = useState("");
-  const [isSideBarOpen, setIsSideBarOpen] = useState(true);
+  const [isSideBarOpen, setIsSideBarOpen] = useState(false);
   const token = cookies.Token;
   const Axios = createAxiosInstance(token);
 
@@ -82,6 +83,10 @@ const TaskNote = () => {
       ) : (
         <div>
           <SideBar
+            setProjectTitle={setProjectTitle}
+            handleTaskCreated={handleTaskCreated}
+          />
+          <SideBarMobile
             setProjectTitle={setProjectTitle}
             handleTaskCreated={handleTaskCreated}
             isSideBarOpen={isSideBarOpen}

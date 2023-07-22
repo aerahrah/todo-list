@@ -1,4 +1,9 @@
-const TaskSearchBar = ({ handleTaskCreated, setFilteredTask, FaSearch, useState }) => {
+const TaskSearchBar = ({
+  handleTaskCreated,
+  setFilteredTask,
+  FaSearch,
+  useState,
+}) => {
   const [searchTerm, setSearchTerm] = useState("");
 
   const handleInputChange = (e) => {
@@ -8,7 +13,7 @@ const TaskSearchBar = ({ handleTaskCreated, setFilteredTask, FaSearch, useState 
   };
 
   return (
-    <div className="flex items-center">
+    <div className="flex items-center w-full">
       <FaSearch className="text-gray-600"></FaSearch>
       <input
         type="text"
