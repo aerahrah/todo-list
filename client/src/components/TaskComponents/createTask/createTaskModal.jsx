@@ -10,12 +10,6 @@ const CreateTaskModal = ({
   taskTitle,
   setTaskTitle,
   handleCreateTask,
-  finish,
-  setFinish,
-  url,
-  modalTaskData,
-  setToastMessage,
-  setShowToast,
 }) => {
   return (
     <Transition appear show={isModalCreateOpen} as={Fragment}>

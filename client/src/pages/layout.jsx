@@ -85,12 +85,16 @@ const TaskNote = () => {
           <SideBar
             setProjectTitle={setProjectTitle}
             handleTaskCreated={handleTaskCreated}
+            setToastMessage={setToastMessage}
+            setShowToast={setShowToast}
           />
           <SideBarMobile
             setProjectTitle={setProjectTitle}
             handleTaskCreated={handleTaskCreated}
             isSideBarOpen={isSideBarOpen}
             setIsSideBarOpen={setIsSideBarOpen}
+            setToastMessage={setToastMessage}
+            setShowToast={setShowToast}
           />
           <div className="text-gray-800 md:pl-64  flex-1 ">
             <NavBar

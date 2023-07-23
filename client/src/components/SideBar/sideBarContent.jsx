@@ -13,6 +13,8 @@ import {
 const SideBarContent = ({
   setProjectTitle,
   handleTaskCreated,
+  setToastMessage,
+  setShowToast,
   isMobileView,
 }) => {
   const url = "http://localhost:3500/api/v1";
@@ -59,8 +61,9 @@ const SideBarContent = ({
         setRerender(!rerender);
         setAddProjectOpen(false);
       })
-      .catch((e) => {
-        console.log(e);
+      .catch((err) => {
+        setToastMessage(err.message);
+        setShowToast(true);
       });
   };
   useEffect(() => {

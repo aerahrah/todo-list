@@ -4,7 +4,8 @@ const ProjectSchema = new mongoose.Schema({
   user: { type: mongoose.Schema.Types.ObjectId, ref: "Users" },
   projectTitle: {
     type: "string",
-    maxlength: [24, "title must not exceed 24 characters"],
+    required: [true, "Must provide a title for the task"],
+    maxlength: [16, "title must not exceed 16 characters"],
   },
 });
 

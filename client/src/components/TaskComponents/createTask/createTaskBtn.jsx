@@ -7,7 +7,6 @@ const CreateTask = ({
   onTaskCreated,
   finish,
   projectTitle,
-  setProjectTitle,
   setFinish,
   url,
   setToastMessage,
