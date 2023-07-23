@@ -1,3 +1,4 @@
+import { FaPlus } from "react-icons/fa";
 const AddProjectPopover = ({
   title,
   setTitle,
@@ -7,8 +8,8 @@ const AddProjectPopover = ({
 }) => {
   return (
     <Popover>
-      <Popover.Button className="pl-12 font-bold text-lg mt-6 hover:bg-blue-200/50 text-left py-1 mx-auto rounded-md w-full outline-0">
-        Add Project
+      <Popover.Button className="flex items-center gap-4 pl-10 font-bold text-lg mt-2 hover:bg-blue-200/50 text-left py-1 mx-auto rounded-md w-full outline-0">
+        <FaPlus /> Add Project
       </Popover.Button>
       <Transition
         enter="transition duration-100 ease-out"
@@ -19,7 +20,7 @@ const AddProjectPopover = ({
         leaveTo="transform scale-95 opacity-0"
       >
         <Popover.Panel>
-          <div className="mt-2 bg-white p-4 rounded-md mx-1">
+          <div className="mt-2 bg-white border-blue-950 border-[1px] p-4 rounded-md mx-1">
             <input
               className="outline-0"
               type="text"

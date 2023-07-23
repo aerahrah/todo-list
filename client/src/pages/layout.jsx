@@ -97,7 +97,7 @@ const TaskNote = () => {
             setToastMessage={setToastMessage}
             setShowToast={setShowToast}
           />
-          <div className="text-gray-800 md:pl-64  flex-1 ">
+          <div className="text-gray-800 md:pl-72  flex-1 ">
             <NavBar
               handleTaskCreated={handleTaskCreated}
               setFilteredTask={setFilteredTask}

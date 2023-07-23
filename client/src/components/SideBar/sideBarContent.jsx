@@ -75,25 +75,29 @@ const SideBarContent = ({
         isMobileView
           ? "md:hidden block"
           : "hidden md:block md:fixed md:inset-y-0"
-      } bg-white w-64 text-blue-950 border-blue-950 border-r-[1px] md:shadow-md`}
+      } bg-white w-72 text-blue-950 md:border-blue-950 md:border-r-[1px] md:shadow-md`}
     >
       <div className=" flex flex-col items-center">
-        <h1 className="text-4xl font-black mt-6 w-full text-center">
+        <h1 className="text-4xl font-black mt-6 w-full pl-9 tracking-tight drop-shadow-sm shadow-blue-sm">
           TaskNote
         </h1>
         <div className="mt-12 flex flex-col items-start flex-1 w-full">
-          <h2 className=" text-3xl font-bold  mb-6 pl-12 ">Projects</h2>
-          {projectData.map((project) => (
-            <ProjectItems
-              hoveredProjectId={hoveredProjectId}
-              setHoveredProjectId={setHoveredProjectId}
-              handleDeleteProject={handleDeleteProject}
-              handleGetSingleProject={handleGetSingleProject}
-              project={project}
-              isProjectFocusId={isProjectFocusId}
-              key={project._id}
-            />
-          ))}
+          <h2 className=" text-3xl font-bold  mb-6 pl-10 tracking-tight">
+            Projects
+          </h2>
+          <div className="w-full md:max-h-[350px] max-h-[60vh] overflow-y-auto">
+            {projectData.map((project) => (
+              <ProjectItems
+                hoveredProjectId={hoveredProjectId}
+                setHoveredProjectId={setHoveredProjectId}
+                handleDeleteProject={handleDeleteProject}
+                handleGetSingleProject={handleGetSingleProject}
+                project={project}
+                isProjectFocusId={isProjectFocusId}
+                key={project._id}
+              />
+            ))}
+          </div>
           <div className="w-[95%]  mx-auto">
             <AddProjectPopover
               title={title}

@@ -1,4 +1,4 @@
-import { FaEdit, FaTrash } from "react-icons/fa";
+import { FaEdit, FaTrash, FaTasks } from "react-icons/fa";
 
 const ProjectItems = ({
   hoveredProjectId,
@@ -15,11 +15,12 @@ const ProjectItems = ({
       onMouseLeave={() => setHoveredProjectId(null)}
     >
       <h3
-        className={`text-lg hover:cursor-pointer pl-12 py-1 rounded-md mx-auto ${
+        className={`text-lg flex items-center  gap-4 hover:cursor-pointer pl-10 py-1 rounded-md mx-auto ${
           isProjectFocusId === project._id ? "bg-blue-200/50 font-semibold" : ""
         }`}
         onClick={() => handleGetSingleProject(project._id)}
       >
+        <FaTasks />
         {project.projectTitle}
       </h3>
       {hoveredProjectId === project._id && (
