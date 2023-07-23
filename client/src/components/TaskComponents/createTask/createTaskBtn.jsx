@@ -36,8 +36,8 @@ const CreateTask = ({
   return (
     <div className="fixed bottom-8 right-8">
       <button onClick={() => setIsModalCreateOpen(!isModalCreateOpen)}>
-        <div className="bg-blue-600 p-4 rounded-full shadow-md shadow-gray-400">
-          <FaPen size="36px" color="white" />
+        <div className="bg-blue-300 p-4 rounded-full shadow-md shadow-gray-400">
+          <FaPen size="34px" className="text-blue-950" />
         </div>
       </button>
       <CreateTaskModal

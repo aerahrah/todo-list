@@ -7,7 +7,7 @@ const AddProjectPopover = ({
 }) => {
   return (
     <Popover>
-      <Popover.Button className="pl-12 font-bold text-lg mt-6 hover:bg-white text-left py-1 mx-auto rounded-md w-full outline-0">
+      <Popover.Button className="pl-12 font-bold text-lg mt-6 hover:bg-blue-200/50 text-left py-1 mx-auto rounded-md w-full outline-0">
         Add Project
       </Popover.Button>
       <Transition
@@ -28,8 +28,13 @@ const AddProjectPopover = ({
               onChange={(e) => setTitle(e.target.value)}
             />
             <div className="mt-2 flex justify-between">
-              <Popover.Button>cancel</Popover.Button>
-              <Popover.Button onClick={handleCreateProject}>
+              <Popover.Button className="hover:text-red-500 transform hover:scale-[1.02] ">
+                cancel
+              </Popover.Button>
+              <Popover.Button
+                className="hover:text-blue-500 transform hover:scale-[1.02] "
+                onClick={handleCreateProject}
+              >
                 create
               </Popover.Button>
             </div>

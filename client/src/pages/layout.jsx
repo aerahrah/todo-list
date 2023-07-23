@@ -36,6 +36,7 @@ const TaskNote = () => {
   }, [isModalOpen, finish, updateTrigger]);
 
   const handleGetAllTask = async () => {
+    console.log(projectTitle);
     try {
       const response = await Axios.get(`${url}/tasks`, {
         params: {

@@ -20,7 +20,7 @@ const TaskSearchBar = ({
         value={searchTerm}
         onChange={handleInputChange}
         placeholder="Search anything"
-        className="outline-0 w-full p-4 text-lg"
+        className="outline-0 w-full p-5 text-lg"
       />
     </div>
   );

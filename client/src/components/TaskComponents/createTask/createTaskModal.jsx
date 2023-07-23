@@ -43,12 +43,20 @@ const CreateTaskModal = ({
                   taskName={taskName}
                   setTaskName={setTaskName}
                 />
-                <button
-                  className="hover:text-sky-700 transform hover:scale-[1.02] "
-                  onClick={handleCreateTask}
-                >
-                  Create
-                </button>
+                <div className="flex justify-between px-6">
+                  <button
+                    className="hover:text-red-500 transform hover:scale-[1.02] "
+                    onClick={() => setIsModalCreateOpen(false)}
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    className="hover:text-blue-500 transform hover:scale-[1.02] "
+                    onClick={handleCreateTask}
+                  >
+                    Create
+                  </button>
+                </div>
               </Dialog.Panel>
             </Transition.Child>
           </div>

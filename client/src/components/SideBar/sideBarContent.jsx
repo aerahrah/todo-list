@@ -25,6 +25,7 @@ const SideBarContent = ({
   const [hoveredProjectId, setHoveredProjectId] = useState("");
   const [isDeleted, setIsDeleted] = useState(false);
   const [title, setTitle] = useState("");
+  const [isProjectFocusId, setIsProjectFocusId] = useState("");
   const [rerender, setRerender] = useState(false);
 
   const handleDeleteProject = (id) => {
@@ -41,7 +42,6 @@ const SideBarContent = ({
     try {
       const response = await Axios.get(`${url}/projects`);
       const { project } = response.data;
-      console.log(project);
       setProjectData(project);
     } catch (e) {
       console.log(e);
@@ -49,8 +49,8 @@ const SideBarContent = ({
   };
   const handleGetSingleProject = (id) => {
     getSingleProject(url, id, Axios).then((data) => {
-      console.log(data);
       setProjectTitle(data);
+      setIsProjectFocusId(data);
       handleTaskCreated();
     });
   };
@@ -59,7 +59,7 @@ const SideBarContent = ({
       .then((data) => {
         console.log(data);
         setRerender(!rerender);
-        setAddProjectOpen(false);
+        setTitle("");
       })
       .catch((err) => {
         setToastMessage(err.message);
@@ -75,10 +75,12 @@ const SideBarContent = ({
         isMobileView
           ? "md:hidden block"
           : "hidden md:block md:fixed md:inset-y-0"
-      } bg-blue-400 w-64 text-gray-800 `}
+      } bg-white w-64 text-blue-950 border-blue-950 border-r-[1px] md:shadow-md`}
     >
-      <div className="my-4 flex flex-col items-center">
-        <h1 className="text-4xl font-black">TaskNote</h1>
+      <div className=" flex flex-col items-center">
+        <h1 className="text-4xl font-black mt-6 w-full text-center">
+          TaskNote
+        </h1>
         <div className="mt-12 flex flex-col items-start flex-1 w-full">
           <h2 className=" text-3xl font-bold  mb-6 pl-12 ">Projects</h2>
           {projectData.map((project) => (
@@ -88,6 +90,7 @@ const SideBarContent = ({
               handleDeleteProject={handleDeleteProject}
               handleGetSingleProject={handleGetSingleProject}
               project={project}
+              isProjectFocusId={isProjectFocusId}
               key={project._id}
             />
           ))}

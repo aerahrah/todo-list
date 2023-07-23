@@ -42,7 +42,8 @@ const TaskControl = ({
   const handleUpdateTask = (id) => {
     updateTask(url, id, taskName, taskTitle, finish, Axios)
       .then((data) => {
-        console.log(data);
+        setModalTaskData({});
+        setIsModalOpen(false);
       })
       .catch((err) => {
         setToastMessage(err.message);
@@ -58,9 +59,9 @@ const TaskControl = ({
           className=" transform absolute top-[8%] right-[4%] hover:scale-[1.04] transition duration-100"
         >
           {!finish ? (
-            <FaRegCircle className="text-red-500" size="1.5rem" />
+            <FaRegCircle className="text-red-700" size="1.5rem" />
           ) : (
-            <FaRegCheckCircle className="text-green-500" size="1.5rem" />
+            <FaRegCheckCircle className="text-blue-700" size="1.5rem" />
           )}
         </button>
         <button onClick={() => handleDeleteTask(modalTaskData._id)}>
@@ -68,7 +69,7 @@ const TaskControl = ({
         </button>
       </div>
 
-      <button onClick={() => setIsModalOpen(false)}>
+      <button onClick={() => handleUpdateTask(modalTaskData._id)}>
         <FaCheck className="hover:text-sky-500" />
       </button>
     </div>
