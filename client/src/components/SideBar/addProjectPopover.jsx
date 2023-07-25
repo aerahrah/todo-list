@@ -8,7 +8,10 @@ const AddProjectPopover = ({
 }) => {
   return (
     <Popover>
-      <Popover.Button className="flex items-center gap-4 pl-10 font-bold text-lg mt-2 hover:bg-blue-200/50 text-left py-1 mx-auto rounded-md w-full outline-0">
+      <Popover.Button
+        className="flex items-center gap-4 pl-10 font-bold text-lg mt-2 hover:bg-blue-200/50 text-left py-1
+       mx-auto rounded-lg w-full outline-0"
+      >
         <FaPlus /> Add Project
       </Popover.Button>
       <Transition
@@ -20,7 +23,7 @@ const AddProjectPopover = ({
         leaveTo="transform scale-95 opacity-0"
       >
         <Popover.Panel>
-          <div className="mt-2 bg-white border-blue-950 border-[1px] p-4 rounded-md mx-1">
+          <div className="mt-2 bg-white border-blue-950 border-[1px] p-4 rounded-lg mx-1">
             <input
               className="outline-0"
               type="text"

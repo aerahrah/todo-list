@@ -11,17 +11,19 @@ const Signout = ({ FaSignOutAlt }) => {
   return (
     <>
       <div
-        className=" transform transition md:flex gap-1 hover:bg-blue-950 hover:text-blue-50 border-blue-950 border-[1px]  rounded-lg p-1.5 items-center hover:cursor-pointer hover:shadow-md hover:scale-[1.02] duration-100 tracking-tight w-32 hidden"
+        className=" transform transition md:flex gap-1 hover:bg-blue-950 hover:text-blue-50 border-blue-950 border-[1px]  rounded-lg p-1.5 items-center hover:cursor-pointer hover:shadow-md hover:scale-[1.03] duration-100 tracking-tight whitespace-nowrap hidden"
         onClick={handleSingOut}
       >
         <FaSignOutAlt size="1.15rem" />
         Log Out
       </div>
-      <FaSignOutAlt
-        className="md:hidden text-blue-950"
-        size="1.5rem"
-        onClick={handleSingOut}
-      />
+      <div className="p-2 md:hidden border-[1px] rounded-lg">
+        <FaSignOutAlt
+          className="text-blue-950"
+          size="1.45rem"
+          onClick={handleSingOut}
+        />
+      </div>
     </>
   );
 };
