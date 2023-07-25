@@ -29,6 +29,18 @@ const createProject = tryCatch(async (req, res, next) => {
   return res.status(201).json({ message: "successfully created project" });
 });
 
+const updateProject = tryCatch(async (req, res, next) => {
+  const { id: projectId } = req.params;
+  const project = await Project.findOneAndUpdate({ _id: projectId }, req.body, {
+    new: true,
+    runValidators: true,
+  });
+  if (!project) {
+    return next(createCustomError(`No task with id : ${projectId}`, 404));
+  }
+  return res.status(200).json({ project });
+});
+
 const deleteProject = tryCatch(async (req, res, next) => {
   const { id: projectId } = req.params;
   const project = await Project.findOneAndDelete({ _id: projectId });
@@ -42,4 +54,5 @@ module.exports = {
   getSingleProject,
   createProject,
   deleteProject,
+  updateProject,
 };

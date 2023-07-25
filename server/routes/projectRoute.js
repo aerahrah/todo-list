@@ -6,6 +6,7 @@ const {
   getSingleProject,
   deleteProject,
   createProject,
+  updateProject,
 } = require("../controllers/projectController");
 
 router
@@ -16,6 +17,7 @@ router
 router
   .route("/:id")
   .get(authenticate, getSingleProject)
-  .delete(authenticate, deleteProject);
+  .delete(authenticate, deleteProject)
+  .patch(authenticate, updateProject);
 
 module.exports = router;

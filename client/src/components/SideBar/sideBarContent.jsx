@@ -27,6 +27,7 @@ const SideBarContent = ({
   const [title, setTitle] = useState("");
   const [isProjectFocusId, setIsProjectFocusId] = useState("");
   const [rerender, setRerender] = useState(false);
+  const [projectTitleName, setProjectTitleName] = useState("");
 
   const handleDeleteProject = (id) => {
     deleteProject(url, id, Axios)
@@ -38,6 +39,7 @@ const SideBarContent = ({
         console.log(err);
       });
   };
+
   const handleGetAllProject = async () => {
     try {
       const response = await Axios.get(`${url}/projects`);
@@ -49,8 +51,15 @@ const SideBarContent = ({
   };
   const handleGetSingleProject = (id) => {
     getSingleProject(url, id, Axios).then((data) => {
-      setProjectTitle(data);
-      setIsProjectFocusId(data);
+      setProjectTitle(data.project._id);
+      setIsProjectFocusId(data.project._id);
+      console.log(data);
+      handleTaskCreated();
+    });
+  };
+  const handleOpenEditPopOver = (id) => {
+    getSingleProject(url, id, Axios).then((data) => {
+      setProjectTitleName(data);
       handleTaskCreated();
     });
   };
@@ -94,6 +103,7 @@ const SideBarContent = ({
                 handleGetSingleProject={handleGetSingleProject}
                 project={project}
                 isProjectFocusId={isProjectFocusId}
+                handleOpenEditPopOver={handleOpenEditPopOver}
                 key={project._id}
               />
             ))}
