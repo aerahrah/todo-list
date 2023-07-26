@@ -5,6 +5,7 @@ const AddProjectPopover = ({
   handleCreateProject,
   Popover,
   Transition,
+
 }) => {
   return (
     <Popover>
@@ -25,7 +26,7 @@ const AddProjectPopover = ({
         <Popover.Panel>
           <div className="mt-2 bg-white border-blue-950 border-[1px] p-4 rounded-lg mx-1">
             <input
-              className="outline-0"
+              className="outline-0 p-1 focus:border-blue-950 border-b-2 w-full"
               type="text"
               placeholder="Add project title"
               value={title}

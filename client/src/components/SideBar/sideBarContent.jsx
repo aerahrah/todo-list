@@ -8,6 +8,7 @@ import {
   deleteProject,
   createProject,
   getSingleProject,
+  updateProject,
 } from "../utils/apiUtilsProject";
 
 const SideBarContent = ({
@@ -27,7 +28,6 @@ const SideBarContent = ({
   const [title, setTitle] = useState("");
   const [isProjectFocusId, setIsProjectFocusId] = useState("");
   const [rerender, setRerender] = useState(false);
-  const [projectTitleName, setProjectTitleName] = useState("");
 
   const handleDeleteProject = (id) => {
     deleteProject(url, id, Axios)
@@ -57,14 +57,21 @@ const SideBarContent = ({
       handleTaskCreated();
     });
   };
-  const handleOpenEditPopOver = (id) => {
-    getSingleProject(url, id, Axios).then((data) => {
-      setProjectTitleName(data);
-      handleTaskCreated();
-    });
-  };
+
   const handleCreateProject = () => {
     createProject(url, title, Axios)
+      .then((data) => {
+        console.log(data);
+        setRerender(!rerender);
+        setTitle("");
+      })
+      .catch((err) => {
+        setToastMessage(err.message);
+        setShowToast(true);
+      });
+  };
+  const handleUpdateProject = (id) => {
+    updateProject(url, title, id, Axios)
       .then((data) => {
         console.log(data);
         setRerender(!rerender);
@@ -103,12 +110,16 @@ const SideBarContent = ({
                 handleGetSingleProject={handleGetSingleProject}
                 project={project}
                 isProjectFocusId={isProjectFocusId}
-                handleOpenEditPopOver={handleOpenEditPopOver}
+                Popover={Popover}
+                Transition={Transition}
+                projectTitleName={title}
+                setProjectTitleName={setTitle}
+                handleUpdateProject={handleUpdateProject}
                 key={project._id}
               />
             ))}
           </div>
-          <div className="w-[95%]  mx-auto">
+          <div className="w-[95%] mx-auto">
             <AddProjectPopover
               title={title}
               setTitle={setTitle}
