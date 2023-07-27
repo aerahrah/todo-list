@@ -6,6 +6,7 @@ const ProjectItems = ({
   handleDeleteProject,
   handleGetSingleProject,
   isProjectFocusId,
+  setIsProjectFocusId,
   Popover,
   Transition,
   projectTitleName,
@@ -16,17 +17,19 @@ const ProjectItems = ({
   return (
     <Popover className="">
       <div
-        className={`relative w-[95%] mb-2 mx-auto rounded-md hover:bg-blue-200/50 hover:font-semibold`}
+        className={`relative w-[95%] mb-1 mx-auto rounded-md hover:bg-blue-200/50 hover:font-semibold`}
         onMouseEnter={() => setHoveredProjectId(project._id)}
         onMouseLeave={() => setHoveredProjectId(null)}
+        onClick={() => setHoveredProjectId(project._id)}
       >
         <h3
-          className={`text-lg flex items-center  gap-4 hover:cursor-pointer pl-10 py-1 rounded-md mx-auto ${
+          className={`text-lg flex items-center  gap-4 hover:cursor-pointer pl-10 py-2 rounded-md mx-auto ${
             isProjectFocusId === project._id
               ? "bg-blue-200/50 font-semibold"
               : ""
           }`}
           onClick={() => handleGetSingleProject(project._id)}
+          
         >
           <FaTasks />
           {project.projectTitle}
@@ -35,7 +38,10 @@ const ProjectItems = ({
           <div className="flex absolute top-[50%] -translate-y-[50%] right-0">
             <Popover.Button className="hover:cursor-pointer hover:text-blue-500 mr-2">
               <FaEdit
-                onClick={() => setProjectTitleName(project.projectTitle)}
+                onClick={() => {
+                  setProjectTitleName(project.projectTitle);
+                  setIsProjectFocusId(project._id);
+                }}
               />
             </Popover.Button>
 

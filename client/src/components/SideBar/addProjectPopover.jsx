@@ -1,17 +1,22 @@
 import { FaPlus } from "react-icons/fa";
+import { useState } from "react";
 const AddProjectPopover = ({
   title,
   setTitle,
   handleCreateProject,
   Popover,
   Transition,
-
 }) => {
+  const [isButtonFocused, setIsButtonFocused] = useState(false);
   return (
     <Popover>
       <Popover.Button
-        className="flex items-center gap-4 pl-10 font-bold text-lg mt-2 hover:bg-blue-200/50 text-left py-1
-       mx-auto rounded-lg w-full outline-0"
+        className={`flex items-center gap-4 pl-10 font-bold text-lg mt-1 hover:bg-blue-200/50 text-left py-2
+          mx-auto rounded-lg w-full outline-0 ${
+            isButtonFocused ? "focus:bg-blue-200/50" : ""
+          }`}
+        onClick={() => setIsButtonFocused(true)}
+        onBlur={() => setIsButtonFocused(false)}
       >
         <FaPlus /> Add Project
       </Popover.Button>

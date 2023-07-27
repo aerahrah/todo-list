@@ -16,12 +16,12 @@ const SideBarMobile = ({
         className="md:hidden"
       >
         <Transition.Child
-          enter="transition ease-in-out duration-300 transform"
-          enterFrom="-translate-x-full fixed inset-y-0 bg-white text-gray-800  border-blue-950 border-r-[1px]"
-          enterTo="translate-x-0 fixed inset-y-0 bg-white text-gray-800 border-blue-950 border-r-[1px]"
+          enter="transition ease-in-out duration-300 transform "
+          enterFrom="-translate-x-full fixed inset-y-0 bg-white text-gray-800  border-blue-950 border-r-[1px]  z-30"
+          enterTo="translate-x-0 fixed inset-y-0 bg-white text-gray-800 border-blue-950 border-r-[1px]  z-30"
           leave="transition ease-in-out duration-300 transform"
-          leaveFrom="translate-x-0 fixed inset-y-0 bg-white text-gray-800 border-blue-950 border-r-[1px]"
-          leaveTo="-translate-x-full fixed inset-y-0 bg-white text-gray-800 border-blue-950 border-r-[1px]"
+          leaveFrom="translate-x-0 fixed inset-y-0 bg-white text-gray-800 border-blue-950 border-r-[1px]  z-30"
+          leaveTo="-translate-x-full fixed inset-y-0 bg-white text-gray-800 border-blue-950 border-r-[1px]  z-30"
         >
           <div>
             <SideBarContent

@@ -53,7 +53,6 @@ const SideBarContent = ({
     getSingleProject(url, id, Axios).then((data) => {
       setProjectTitle(data.project._id);
       setIsProjectFocusId(data.project._id);
-      console.log(data);
       handleTaskCreated();
     });
   };
@@ -101,7 +100,9 @@ const SideBarContent = ({
           <h2 className=" text-3xl font-bold  mb-6 pl-10 tracking-tight">
             Projects
           </h2>
-          <div className="w-full md:max-h-[350px] max-h-[60vh] overflow-y-auto">
+          <div
+            className={`w-full md:max-h-[350px] max-h-[60vh] overflow-y-auto overflow-hidden md:hover:overflow-y-auto`}
+          >
             {projectData.map((project) => (
               <ProjectItems
                 hoveredProjectId={hoveredProjectId}
@@ -110,6 +111,7 @@ const SideBarContent = ({
                 handleGetSingleProject={handleGetSingleProject}
                 project={project}
                 isProjectFocusId={isProjectFocusId}
+                setIsProjectFocusId={setIsProjectFocusId}
                 Popover={Popover}
                 Transition={Transition}
                 projectTitleName={title}

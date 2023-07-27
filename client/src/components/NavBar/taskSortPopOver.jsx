@@ -17,7 +17,7 @@ const TaskSortPopOver = ({
 
   return (
     <div className="mx-2 md:mr-4">
-      <Popover className="relative z-30 md:hidden">
+      <Popover className="relative z-10 md:hidden">
         <Popover.Button className="md:hidden w-full p-2.5 border-[1px] rounded-lg">
           <FaFilter className="text-gray-600" />
         </Popover.Button>

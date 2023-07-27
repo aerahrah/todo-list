@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import Footer from "../Footer";
 
 const AuthForm = ({
   title,
@@ -99,6 +100,7 @@ const AuthForm = ({
           {message && <p>{message}</p>}
         </div>
       </div>
+      <Footer />
     </div>
   );
 };
