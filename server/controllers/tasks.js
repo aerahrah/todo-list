@@ -4,13 +4,10 @@ const { createCustomError } = require("../errors/custom-error");
 
 const getAllTask = tryCatch(async (req, res) => {
   const getId = req.user;
-  const { searchTerm, sortBy, projectId } = req.query;
+  const { searchTerm, sortBy, projectId, taskType } = req.query;
   let filter = {
     user: getId,
   };
-
-  console.log(sortBy);
-  console.log(projectId);
 
   if (projectId && projectId.trim() !== "") {
     filter.project = projectId;
@@ -24,26 +21,51 @@ const getAllTask = tryCatch(async (req, res) => {
   }
 
   let tasks;
-  if (sortBy === "completed") {
-    tasks = await Task.find({ ...filter, completed: true });
-    console.log(tasks);
-  } else if (sortBy === "incomplete") {
-    tasks = await Task.find({ ...filter, completed: false });
+  if (taskType === "notes") {
+    console.log(taskType);
+    console.log("backend");
+    if (sortBy === "completed") {
+      tasks = await Task.find({
+        ...filter,
+        completed: true,
+        taskType: "notes",
+      });
+    } else if (sortBy === "incomplete") {
+      tasks = await Task.find({
+        ...filter,
+        completed: false,
+        taskType: "notes",
+      });
+    } else {
+      tasks = await Task.find({ ...filter, taskType: "notes" });
+    }
   } else {
-    tasks = await Task.find(filter);
+    if (sortBy === "completed") {
+      tasks = await Task.find({ ...filter, completed: true });
+    } else if (sortBy === "incomplete") {
+      tasks = await Task.find({ ...filter, completed: false });
+    } else {
+      tasks = await Task.find(filter);
+    }
   }
 
-  console.log(tasks);
   return res.status(200).json({ tasks });
 });
 const createTask = tryCatch(async (req, res) => {
-  const { title, name, project } = req.body;
+  const { title, name, project, taskType } = req.body;
   const getId = req.user;
+  let projectId;
+  if (project && project.trim() !== "") {
+    projectId = project;
+  } else {
+    projectId = null;
+  }
   const createtask = new Task({
     user: getId,
     title: title,
     name: name,
-    project: project,
+    project: projectId,
+    taskType: taskType,
   });
   await createtask.save();
   return res

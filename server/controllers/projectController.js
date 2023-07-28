@@ -1,4 +1,5 @@
 const Project = require("../models/Project");
+const Task = require("../models/Task");
 const tryCatch = require("../middleware/async");
 const { createCustomError } = require("../errors/custom-error");
 
@@ -12,7 +13,7 @@ const getSingleProject = tryCatch(async (req, res, next) => {
   const { id: projectId } = req.params;
   const project = await Project.findOne({ _id: projectId });
   if (!project) {
-    next(createCustomError(`No task with id : ${projectId}`, 404));
+    return next(createCustomError(`No task with id : ${projectId}`, 404));
   }
   return res.status(200).json({ project });
 });
@@ -43,12 +44,15 @@ const updateProject = tryCatch(async (req, res, next) => {
 
 const deleteProject = tryCatch(async (req, res, next) => {
   const { id: projectId } = req.params;
-  const project = await Project.findOneAndDelete({ _id: projectId });
+  const project = await Project.findByIdAndDelete({ _id: projectId });
+  const tasks = await Task.deleteMany({ project: projectId });
+  console.log(project);
   if (!project) {
-    next(createCustomError((`No task with id : ${projectId}`, 404)));
+    return next(createCustomError(`No task with id : ${projectId}`, 404));
   }
   return res.status(201).json({ project });
 });
+
 module.exports = {
   getAllProject,
   getSingleProject,

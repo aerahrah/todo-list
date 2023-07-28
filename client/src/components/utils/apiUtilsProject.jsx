@@ -1,6 +1,7 @@
 export const deleteProject = async (url, id, Axios) => {
   try {
     const response = await Axios.delete(`${url}/projects/${id}`);
+    console.log("deleted project");
     console.log(response);
   } catch (error) {
     throw new Error(error.response.data.errors[0]);

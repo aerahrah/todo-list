@@ -11,6 +11,7 @@ const CreateTask = ({
   url,
   setToastMessage,
   setShowToast,
+  taskType,
   Axios,
 }) => {
   const [taskName, setTaskName] = useState("");
@@ -18,9 +19,10 @@ const CreateTask = ({
   const [isModalCreateOpen, setIsModalCreateOpen] = useState(false);
 
   const handleCreateTask = () => {
-    createTask(url, taskTitle, taskName, projectTitle, Axios)
+    console.log(taskType);
+    console.log(projectTitle);
+    createTask(url, taskTitle, taskName, projectTitle, taskType, Axios)
       .then((data) => {
-        console.log(projectTitle);
         console.log(data);
         setIsModalCreateOpen(false);
         setTaskName("");

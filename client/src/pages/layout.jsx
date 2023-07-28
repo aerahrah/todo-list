@@ -28,6 +28,7 @@ const TaskNote = () => {
   const [sortByTask, setSortByTask] = useState("");
   const [projectTitle, setProjectTitle] = useState("");
   const [isSideBarOpen, setIsSideBarOpen] = useState(false);
+  const [taskType, setTaskType] = useState("notes");
   const token = cookies.Token;
   const Axios = createAxiosInstance(token);
 
@@ -36,13 +37,13 @@ const TaskNote = () => {
   }, [isModalOpen, finish, updateTrigger]);
 
   const handleGetAllTask = async () => {
-    console.log(projectTitle);
     try {
       const response = await Axios.get(`${url}/tasks`, {
         params: {
           searchTerm: filteredTask,
           sortBy: sortByTask,
           projectId: projectTitle,
+          taskType: taskType,
         },
       });
       const { tasks } = response.data;
@@ -88,6 +89,7 @@ const TaskNote = () => {
             handleTaskCreated={handleTaskCreated}
             setToastMessage={setToastMessage}
             setShowToast={setShowToast}
+            setTaskType={setTaskType}
           />
           <SideBarMobile
             setProjectTitle={setProjectTitle}
@@ -96,6 +98,7 @@ const TaskNote = () => {
             setIsSideBarOpen={setIsSideBarOpen}
             setToastMessage={setToastMessage}
             setShowToast={setShowToast}
+            setTaskType={setTaskType}
           />
           <div className="text-gray-800 md:pl-72  flex-1 ">
             <NavBar
@@ -108,21 +111,20 @@ const TaskNote = () => {
               tasksData={tasksData}
               handleViewSpecificTask={handleViewSpecificTask}
             />
-            {projectTitle && (
-              <CreateTask
-                url={url}
-                projectTitle={projectTitle}
-                setProjectTitle={setProjectTitle}
-                modalTaskData={modalTaskData}
-                setModalTaskData={setModalTaskData}
-                setFinish={setFinish}
-                finish={finish}
-                setToastMessage={setToastMessage}
-                setShowToast={setShowToast}
-                onTaskCreated={handleTaskCreated}
-                Axios={Axios}
-              />
-            )}
+            <CreateTask
+              url={url}
+              projectTitle={projectTitle}
+              setProjectTitle={setProjectTitle}
+              modalTaskData={modalTaskData}
+              setModalTaskData={setModalTaskData}
+              setFinish={setFinish}
+              finish={finish}
+              setToastMessage={setToastMessage}
+              setShowToast={setShowToast}
+              onTaskCreated={handleTaskCreated}
+              Axios={Axios}
+              taskType={taskType}
+            />
           </div>
         </div>
       )}
