@@ -1,28 +1,24 @@
 export const deleteProject = async (url, id, Axios) => {
   try {
-    const response = await Axios.delete(`${url}/projects/${id}`);
-    console.log("deleted project");
-    console.log(response);
+    await Axios.delete(`${url}/projects/${id}`);
   } catch (error) {
     throw new Error(error.response.data.errors[0]);
   }
 };
 export const createProject = async (url, title, Axios) => {
   try {
-    const response = await Axios.post(`${url}/projects`, {
+    await Axios.post(`${url}/projects`, {
       projectTitle: title,
     });
-    console.log(response);
   } catch (error) {
     throw new Error(error.response.data.errors[0]);
   }
 };
 export const updateProject = async (url, title, id, Axios) => {
   try {
-    const response = await Axios.patch(`${url}/projects/${id}`, {
+    await Axios.patch(`${url}/projects/${id}`, {
       projectTitle: title,
     });
-    console.log(response);
   } catch (error) {
     throw new Error(error.response.data.errors[0]);
   }

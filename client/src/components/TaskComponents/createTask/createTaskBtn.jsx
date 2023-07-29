@@ -19,11 +19,8 @@ const CreateTask = ({
   const [isModalCreateOpen, setIsModalCreateOpen] = useState(false);
 
   const handleCreateTask = () => {
-    console.log(taskType);
-    console.log(projectTitle);
     createTask(url, taskTitle, taskName, projectTitle, taskType, Axios)
-      .then((data) => {
-        console.log(data);
+      .then(() => {
         setIsModalCreateOpen(false);
         setTaskName("");
         setTaskTitle("");

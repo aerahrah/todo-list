@@ -49,8 +49,9 @@ const TaskNote = () => {
       const { tasks } = response.data;
       setTasksData(tasks);
       setIsLoading(false);
-    } catch (error) {
-      console.error(error);
+    } catch (err) {
+      setToastMessage(err.message);
+      setShowToast(true);
     }
   };
 
@@ -67,7 +68,10 @@ const TaskNote = () => {
         setModalTaskData(task);
         setFinish(task.completed);
       })
-      .catch((err) => console.error(err));
+      .catch((err) => {
+        setToastMessage(err.message);
+        setShowToast(true);
+      });
   };
 
   const handleViewSpecificTask = (id) => {
@@ -90,6 +94,7 @@ const TaskNote = () => {
             setToastMessage={setToastMessage}
             setShowToast={setShowToast}
             setTaskType={setTaskType}
+            taskType={taskType}
           />
           <SideBarMobile
             setProjectTitle={setProjectTitle}
@@ -99,6 +104,7 @@ const TaskNote = () => {
             setToastMessage={setToastMessage}
             setShowToast={setShowToast}
             setTaskType={setTaskType}
+            taskType={taskType}
           />
           <div className="text-gray-800 md:pl-72  flex-1 ">
             <NavBar

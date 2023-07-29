@@ -6,6 +6,7 @@ const SideBar = ({
   setToastMessage,
   setShowToast,
   setTaskType,
+  taskType,
 }) => {
   return (
     <SideBarContent
@@ -14,6 +15,7 @@ const SideBar = ({
       setToastMessage={setToastMessage}
       setShowToast={setShowToast}
       setTaskType={setTaskType}
+      taskType={taskType}
       isMobileView={false}
     />
   );

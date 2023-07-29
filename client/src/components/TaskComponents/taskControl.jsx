@@ -32,16 +32,19 @@ const TaskControl = ({
 
   const handleDeleteTask = (id) => {
     deleteTask(url, id, Axios)
-      .then((data) => {
+      .then(() => {
         setModalTaskData({});
         setIsModalOpen(false);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        setToastMessage(err.message);
+        setShowToast(true);
+      });
   };
 
   const handleUpdateTask = (id) => {
     updateTask(url, id, taskName, taskTitle, finish, Axios)
-      .then((data) => {
+      .then(() => {
         setModalTaskData({});
         setIsModalOpen(false);
       })

@@ -18,6 +18,7 @@ const SideBarContent = ({
   setToastMessage,
   setShowToast,
   setTaskType,
+  taskType,
   isMobileView,
 }) => {
   const url = "http://localhost:3500/api/v1";
@@ -33,12 +34,15 @@ const SideBarContent = ({
 
   const handleDeleteProject = (id) => {
     deleteProject(url, id, Axios)
-      .then((data) => {
+      .then(() => {
+        setProjectTitle("");
+        setTaskType("notes");
         setIsDeleted(!isDeleted);
         handleTaskCreated();
       })
       .catch((err) => {
-        console.log(err);
+        setToastMessage(err.message);
+        setShowToast(true);
       });
   };
 
@@ -47,8 +51,9 @@ const SideBarContent = ({
       const response = await Axios.get(`${url}/projects`);
       const { project } = response.data;
       setProjectData(project);
-    } catch (e) {
-      console.log(e);
+    } catch (err) {
+      setToastMessage(err.message);
+      setShowToast(true);
     }
   };
   const handleGetSingleProject = (id) => {
@@ -67,8 +72,7 @@ const SideBarContent = ({
   };
   const handleCreateProject = () => {
     createProject(url, title, Axios)
-      .then((data) => {
-        console.log(data);
+      .then(() => {
         setRerender(!rerender);
         setTitle("");
       })
@@ -79,8 +83,7 @@ const SideBarContent = ({
   };
   const handleUpdateProject = (id) => {
     updateProject(url, title, id, Axios)
-      .then((data) => {
-        console.log(data);
+      .then(() => {
         setRerender(!rerender);
         setTitle("");
       })
@@ -105,7 +108,7 @@ const SideBarContent = ({
           TaskNote
         </h1>
         <div className=" flex flex-col items-start flex-1 w-full">
-          <Notes handleGetNoteTasks={handleGetNoteTasks} />
+          <Notes handleGetNoteTasks={handleGetNoteTasks} taskType={taskType} />
           <h2 className=" text-3xl font-bold  mb-6 pl-10 tracking-tight">
             Projects
           </h2>

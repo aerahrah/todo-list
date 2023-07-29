@@ -8,6 +8,7 @@ const SideBarMobile = ({
   setToastMessage,
   setShowToast,
   setTaskType,
+  taskType,
 }) => {
   return (
     <Transition appear show={isSideBarOpen}>
@@ -31,6 +32,7 @@ const SideBarMobile = ({
               setToastMessage={setToastMessage}
               setShowToast={setShowToast}
               setTaskType={setTaskType}
+              taskType={taskType}
               isMobileView={true}
             />
           </div>
