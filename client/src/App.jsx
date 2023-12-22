@@ -1,5 +1,5 @@
-import Signin from "./components/auth/signin";
-import Signup from "./components/auth/signup";
+import Signin from "./pages/auth/signin";
+import Signup from "./pages/auth/signup";
 import { Routes, Route } from "react-router-dom";
 import TaskNote from "./pages/layout";
 

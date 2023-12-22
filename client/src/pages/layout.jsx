@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { useCookies } from "react-cookie";
-import createAxiosInstance from "../components/utils/axios";
-import Toast from "../components/utils/toast";
-import TaskModal from "../components/TaskComponents/taskModal";
-import CreateTask from "../components/TaskComponents/createTask/createTaskBtn";
-import { getSingleTask } from "../components/utils/apiUtilsTask";
-import Spinner from "../components/utils/spinner";
-import SideBar from "../components/SideBar/sidebar";
-import SideBarMobile from "../components/SideBar/sideBarMobile";
+import { getSingleTask } from "../api/apiUtilsTask";
+import createAxiosInstance from "../utils/axios";
+import Toast from "../components/toast";
+import TaskModal from "../pages/TaskComponents/taskModal";
+import CreateTask from "../pages/TaskComponents/createTask/createTaskBtn";
+import Spinner from "../components/spinner";
+import SideBar from "../pages/SideBar/sidebar";
+import SideBarMobile from "../pages/SideBar/sideBarMobile";
 import NavBar from "../components/NavBar/navbar";
-import TaskList from "../components/taskComponents/taskList";
+import TaskList from "../pages/taskComponents/taskList";
 
 const TaskNote = () => {
   const url = "http://localhost:3500/api/v1";

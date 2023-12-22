@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import Footer from "../Footer";
+import Footer from "../../components/Footer/Footer";
 
 const AuthForm = ({
   title,
@@ -45,12 +45,12 @@ const AuthForm = ({
   }, [message]);
 
   return (
-    <div className="flex min-h-screen w-full items-center justify-center text-blue-950">
-      <div className="flex flex-col bg-white items-center p-8 rounded-xl shadow-md">
+    <div className="flex min-h-screen bg-neutral-200 w-full items-center justify-center text-blue-950">
+      <div className="flex flex-col bg-white items-center p-8 rounded-xl shadow-lg ring ring-1 ring-neutral-300">
         <h1 className="mb-14 text-6xl font-black uppercase tracking-tight drop-shadow-md shadow-blue-md">
           TaskNote
         </h1>
-        {/* <h1 className="mb-8 text-3xl font-bold uppercase ">{title}</h1> */}
+
         <form className="flex flex-col " onSubmit={handleFormSubmit}>
           <input
             className="text-lg mb-6 border-b-2 capitalize min-w-[14rem] w-[20vw] outline-0 focus:border-blue-950"
