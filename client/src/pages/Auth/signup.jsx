@@ -8,11 +8,11 @@ const Signup = () => {
   const [message, setMessage] = useState("");
   const [error, setError] = useState(false);
 
-  const handleSignup = async (username, password) => {
+  const handleSignup = async (userInfo) => {
     try {
       const response = await Axios.post(`${url}/auth/signup`, {
-        username,
-        password,
+        username: userInfo.username,
+        password: userInfo.password,
       });
       const { message } = response.data;
       setMessage(message);
@@ -25,7 +25,7 @@ const Signup = () => {
   return (
     <AuthForm
       title="Signup"
-      handleSubmit={handleSignup}
+      handleAuth={handleSignup}
       message={message}
       setMessage={setMessage}
       error={error}

@@ -11,12 +11,12 @@ const Signin = () => {
   const [message, setMessage] = useState("");
   const [error, setError] = useState(false);
 
-  const handleSignin = async (username, password) => {
+  const handleSignin = async (userInfo) => {
     try {
       console.log("Signing in...");
       const response = await Axios.post(`${url}/auth/signin`, {
-        username,
-        password,
+        username: userInfo.username,
+        password: userInfo.password,
       });
       const { message, token } = response.data;
       setCookie("Token", token, { path: "/" });
@@ -31,7 +31,7 @@ const Signin = () => {
   return (
     <AuthForm
       title="Signin"
-      handleSubmit={handleSignin}
+      handleAuth={handleSignin}
       message={message}
       setMessage={setMessage}
       error={error}

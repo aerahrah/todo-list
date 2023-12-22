@@ -1,31 +1,41 @@
-import { useState, useEffect } from "react";
-
-import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { Link } from "react-router-dom";
 import Footer from "../../components/Footer/Footer";
+import * as yup from "yup";
 
 const AuthForm = ({
   title,
-  handleSubmit,
+  handleAuth,
   message,
   setMessage,
   error,
   setError,
 }) => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const navigate = useNavigate();
+  const schema = yup.object().shape({
+    username: yup
+      .string()
+      .required("Username is required")
+      .min(4, "Username must be at least 4 characters"),
+    password: yup
+      .string()
+      .required("Password is required")
+      .min(8, "Password must be at least 8 characters"),
+  });
 
-  const handleFormSubmit = (e) => {
-    e.preventDefault();
-    handleSubmit(username, password);
-  };
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
 
   useEffect(() => {
     if (message === "User registered successfully") {
       const timer = setTimeout(() => {
         setMessage("");
-        navigate("/signin");
       }, 2000);
 
       return () => {
@@ -51,30 +61,57 @@ const AuthForm = ({
           TaskNote
         </h1>
 
-        <form className="flex flex-col " onSubmit={handleFormSubmit}>
+        <form
+          className="flex flex-col w-full"
+          onSubmit={handleSubmit(handleAuth)}
+        >
+          <div className="flex flex-col gap-8 relative">
+            <div className="w-full relative text-lg ">
+              <input
+                className={`text-lg border-b-2 capitalize min-w-[14rem] w-full outline-0  ${
+                  errors.username
+                    ? "border-red-500"
+                    : "border-neutral-300 focus:border-blue-950"
+                }`}
+                type="text"
+                placeholder="Username"
+                {...register("username")}
+              />
+              <p className="absolute text-xs text-red-500">
+                {errors.username?.message}
+              </p>
+            </div>
+
+            <div className="w-full relative text-lg mb-14">
+              <input
+                className={`text-lg border-b-2 capitalize min-w-[14rem] w-full outline-0 ${
+                  errors.password
+                    ? "border-red-500"
+                    : "border-neutral-300 focus:border-blue-950"
+                }`}
+                type="password"
+                placeholder="Password"
+                {...register("password")}
+              />
+              <p className="absolute text-xs text-red-500">
+                {errors.password?.message}
+              </p>
+            </div>
+            <div
+              className={`absolute bottom-[1rem] w-full text-center transition duration-200 ${
+                message ? "scale-100" : "scale-0"
+              } ${error ? "text-red-500" : "text-green-500"}`}
+            >
+              {message && <p>{message}</p>}
+            </div>
+          </div>
           <input
-            className="text-lg mb-6 border-b-2 capitalize min-w-[14rem] w-[20vw] outline-0 focus:border-blue-950"
-            type="text"
-            value={username}
-            placeholder="username"
-            required={true}
-            onChange={(e) => setUsername(e.target.value)}
-          />
-          <input
-            className="text-lg mb-10 border-b-2 capitalize min-w-[14rem] w-[20vw] outline-0 focus:border-blue-950"
-            type="password"
-            value={password}
-            placeholder="password"
-            required={true}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <button
-            className="mb-6 bg-blue-950 min-w-[12rem] uppercase font-semibold rounded-full py-2 px-4 mx-auto text-white hover:scale-[1.01] hover:shadow-md active:scale-[.98] active:shadow-none transition duration-100 text-lg"
+            className="mb-6 cursor-pointer bg-blue-950 min-w-[12rem] uppercase font-semibold rounded-full py-2 px-4 mx-auto text-white hover:scale-[1.01] hover:shadow-md active:scale-[.98] active:shadow-none transition duration-100 text-lg"
             type="submit"
-          >
-            {title}
-          </button>
-          <p className="mx-auto mb-4 text-md">
+            value={title}
+          />
+
+          <p className="mx-auto text-md">
             {title == "Signup" ? (
               <span>
                 Already have an account?{" "}
@@ -92,13 +129,6 @@ const AuthForm = ({
             )}
           </p>
         </form>
-        <div
-          className={`text-center transition duration-200 ${
-            message ? "scale-100" : "scale-0"
-          } ${error ? "text-red-500" : "text-green-500"}`}
-        >
-          {message && <p>{message}</p>}
-        </div>
       </div>
       <Footer />
     </div>
