@@ -1,5 +1,5 @@
 import React from "react";
-import { deleteTask, updateTask } from "../../api/apiUtilsTask";
+import { deleteTask, updateTask } from "../../api/taskAPI";
 import { useEffect } from "react";
 import {
   FaTrash,

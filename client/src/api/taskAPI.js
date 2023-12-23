@@ -1,4 +1,6 @@
-export const deleteTask = async (url, id, Axios) => {
+const url = "http://localhost:3500/api/v1";
+
+export const deleteTask = async (id) => {
   try {
     await Axios.delete(`${url}/tasks/${id}`);
   } catch (error) {
@@ -6,7 +8,7 @@ export const deleteTask = async (url, id, Axios) => {
   }
 };
 
-export const updateTask = async (url, id, name, title, isCompleted, Axios) => {
+export const updateTask = async (id, name, title, isCompleted) => {
   try {
     await Axios.patch(`${url}/tasks/${id}`, {
       name: name,
@@ -18,7 +20,7 @@ export const updateTask = async (url, id, name, title, isCompleted, Axios) => {
   }
 };
 
-export const getSingleTask = async (url, id, Axios) => {
+export const getSingleTask = async ( id) => {
   try {
     const response = await Axios.get(`${url}/tasks/${id}`);
     return response.data;
@@ -33,7 +35,7 @@ export const createTask = async (
   name,
   projectTitle,
   taskType,
-  Axios
+
 ) => {
   try {
     const response = await Axios.post(`${url}/tasks`, {

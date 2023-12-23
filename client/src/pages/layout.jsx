@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useCookies } from "react-cookie";
-import { getSingleTask } from "../api/apiUtilsTask";
-import createAxiosInstance from "../utils/axios";
+import { getSingleTask } from "../api/taskAPI";
 import Toast from "../components/toast";
 import TaskModal from "../pages/TaskComponents/taskModal";
 import CreateTask from "../pages/TaskComponents/createTask/createTaskBtn";
@@ -12,7 +10,6 @@ import NavBar from "../components/NavBar/navbar";
 import TaskList from "../pages/taskComponents/taskList";
 
 const TaskNote = () => {
-  const url = "http://localhost:3500/api/v1";
   const [tasksData, setTasksData] = useState({});
   const [taskName, setTaskName] = useState("");
   const [taskTitle, setTaskTitle] = useState("");
@@ -60,7 +57,7 @@ const TaskNote = () => {
   };
 
   const handleSingleTask = (id) => {
-    getSingleTask(url, id, Axios)
+    getSingleTask(id)
       .then((data) => {
         const { task } = data;
         setTaskName(task.name);
@@ -118,7 +115,6 @@ const TaskNote = () => {
               handleViewSpecificTask={handleViewSpecificTask}
             />
             <CreateTask
-              url={url}
               projectTitle={projectTitle}
               setProjectTitle={setProjectTitle}
               modalTaskData={modalTaskData}
@@ -138,7 +134,6 @@ const TaskNote = () => {
         isModalOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}
         handleTaskCreated={handleTaskCreated}
-        url={url}
         modalTaskData={modalTaskData}
         setTaskName={setTaskName}
         setTaskTitle={setTaskTitle}

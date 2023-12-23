@@ -2,17 +2,15 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { clearAuthError, clearAuthMessage } from "../../store/slices/authSlice";
 import Footer from "../../components/Footer/Footer";
 import * as yup from "yup";
 
-const AuthForm = ({
-  title,
-  handleAuth,
-  message,
-  setMessage,
-  error,
-  setError,
-}) => {
+const AuthForm = ({ title, handleAuth }) => {
+  const dispatch = useDispatch();
+  const { message, error } = useSelector((state) => state.auth);
+
   const schema = yup.object().shape({
     username: yup
       .string()
@@ -35,7 +33,7 @@ const AuthForm = ({
   useEffect(() => {
     if (message === "User registered successfully") {
       const timer = setTimeout(() => {
-        setMessage("");
+        dispatch(clearAuthMessage());
       }, 2000);
 
       return () => {
@@ -44,8 +42,8 @@ const AuthForm = ({
     }
     if (message !== "") {
       const timer = setTimeout(() => {
-        setError(false);
-        setMessage("");
+        dispatch(clearAuthError());
+        dispatch(clearAuthMessage());
       }, 2000);
 
       return () => {
@@ -97,13 +95,15 @@ const AuthForm = ({
                 {errors.password?.message}
               </p>
             </div>
-            <div
-              className={`absolute bottom-[1rem] w-full text-center transition duration-200 ${
-                message ? "scale-100" : "scale-0"
-              } ${error ? "text-red-500" : "text-green-500"}`}
-            >
-              {message && <p>{message}</p>}
-            </div>
+            {message && (
+              <div
+                className={`absolute bottom-[1rem] w-full text-center transition duration-200 ${
+                  message ? "scale-100" : "scale-0"
+                } ${error ? "text-red-500" : "text-green-500"}`}
+              >
+                {message && <p>{message}</p>}
+              </div>
+            )}
           </div>
           <input
             className="mb-6 cursor-pointer bg-blue-950 min-w-[12rem] uppercase font-semibold rounded-full py-2 px-4 mx-auto text-white hover:scale-[1.01] hover:shadow-md active:scale-[.98] active:shadow-none transition duration-100 text-lg"

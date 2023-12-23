@@ -1,37 +1,19 @@
 import AuthForm from "./authForm";
-import Axios from "axios";
-import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { signup } from "../../api/authAPI";
 
 const Signup = () => {
-  const url = "http://localhost:3500/api/v1";
+  const dispatch = useDispatch();
 
-  const [message, setMessage] = useState("");
-  const [error, setError] = useState(false);
-
-  const handleSignup = async (userInfo) => {
+  const handleSignup = (userInfo) => {
     try {
-      const response = await Axios.post(`${url}/auth/signup`, {
-        username: userInfo.username,
-        password: userInfo.password,
-      });
-      const { message } = response.data;
-      setMessage(message);
+      dispatch(signup(userInfo));
     } catch (error) {
-      setMessage(error.response.data.message);
-      setError(true);
+      console.log(error);
     }
   };
 
-  return (
-    <AuthForm
-      title="Signup"
-      handleAuth={handleSignup}
-      message={message}
-      setMessage={setMessage}
-      error={error}
-      setError={setError}
-    />
-  );
+  return <AuthForm title="Signup" handleAuth={handleSignup} />;
 };
 
 export default Signup;

@@ -1,12 +1,7 @@
-import Axios from "axios";
+Axios.interceptors.request.use((config) => {
+  const token = localStorage.getItem("token");
+  config.headers.Authorization = `Bearer ${token}`;
+  return config;
+});
 
-const createAxiosInstance = (token) => {
-  const instance = Axios.create();
-  instance.interceptors.request.use((config) => {
-    config.headers.Authorization = `Bearer ${token}`;
-    return config;
-  });
-  return instance;
-};
-
-export default createAxiosInstance;
+export default Axios;

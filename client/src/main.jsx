@@ -1,13 +1,18 @@
+import { BrowserRouter as Router } from "react-router-dom";
+import { CookiesProvider } from "react-cookie";
+import { Provider } from "react-redux";
 import React from "react";
+import store from "./store/store.js";
 import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
 import "./index.css";
-import { BrowserRouter as Router } from "react-router-dom";
-import { CookiesProvider } from "react-cookie";
+
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <CookiesProvider>
-    <Router>
-      <App />
-    </Router>
-  </CookiesProvider>
+  <Provider store={store}>
+    <CookiesProvider>
+      <Router>
+        <App />
+      </Router>
+    </CookiesProvider>
+  </Provider>
 );

@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import createAxiosInstance from "../../utils/axios";
 import { useCookies } from "react-cookie";
 import { Popover, Transition } from "@headlessui/react";
 import ProjectItems from "./projectItems";
@@ -10,7 +9,7 @@ import {
   createProject,
   getSingleProject,
   updateProject,
-} from "../../api/apiUtilsProject";
+} from "../../api/projectAPI";
 
 const SideBarContent = ({
   setProjectTitle,

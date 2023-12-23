@@ -1,11 +1,13 @@
-export const deleteProject = async (url, id, Axios) => {
+const url = "http://localhost:3500/api/v1";
+
+export const deleteProject = async ( id) => {
   try {
     await Axios.delete(`${url}/projects/${id}`);
   } catch (error) {
     throw new Error(error.response.data.errors[0]);
   }
 };
-export const createProject = async (url, title, Axios) => {
+export const createProject = async ( title) => {
   try {
     await Axios.post(`${url}/projects`, {
       projectTitle: title,
@@ -14,7 +16,7 @@ export const createProject = async (url, title, Axios) => {
     throw new Error(error.response.data.errors[0]);
   }
 };
-export const updateProject = async (url, title, id, Axios) => {
+export const updateProject = async ( title, id) => {
   try {
     await Axios.patch(`${url}/projects/${id}`, {
       projectTitle: title,
@@ -24,7 +26,7 @@ export const updateProject = async (url, title, id, Axios) => {
   }
 };
 
-export const getSingleProject = async (url, id, Axios) => {
+export const getSingleProject = async ( id) => {
   try {
     const response = await Axios.get(`${url}/projects/${id}`);
     return response.data;

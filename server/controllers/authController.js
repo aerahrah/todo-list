@@ -7,6 +7,7 @@ const SECRET_KEY = process.env.SECRET_KEY;
 const signup = async (req, res) => {
   try {
     const { username, password } = req.body;
+    console.log(username, password);
     const existingUser = await Users.findOne({ username });
 
     if (existingUser) {
