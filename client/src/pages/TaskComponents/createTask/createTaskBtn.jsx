@@ -2,13 +2,7 @@ import { useState } from "react";
 import { FaPen } from "react-icons/fa";
 import CreateTaskModal from "./createTaskModal";
 
-const CreateTask = ({
-  onTaskCreated,
-  finish,
-  setFinish,
-  setToastMessage,
-  setShowToast,
-}) => {
+const CreateTask = ({ onTaskCreated }) => {
   const [isModalCreateOpen, setIsModalCreateOpen] = useState(false);
 
   return (
@@ -21,10 +15,6 @@ const CreateTask = ({
       <CreateTaskModal
         isModalCreateOpen={isModalCreateOpen}
         setIsModalCreateOpen={setIsModalCreateOpen}
-        finish={finish}
-        setFinish={setFinish}
-        setToastMessage={setToastMessage}
-        setShowToast={setShowToast}
         onTaskCreated={onTaskCreated}
       ></CreateTaskModal>
     </div>

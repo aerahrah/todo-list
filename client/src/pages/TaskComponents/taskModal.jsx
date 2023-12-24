@@ -16,8 +16,6 @@ const TaskModal = ({
   url,
   modalTaskData,
   setModalTaskData,
-  setToastMessage,
-  setShowToast,
   Axios,
 }) => {
   return (
@@ -32,10 +30,10 @@ const TaskModal = ({
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <div className="fixed inset-0 bg-black/20 backdrop-blur-sm" />
+          <div className="fixed inset-0 z-30 bg-black/20 backdrop-blur-sm" />
         </Transition.Child>
-        <div className="fixed inset-0">
-          <div className="flex min-h-full items-center justify-center p-6 text-center">
+        <div className="fixed inset-0 z-50">
+          <div className="relative flex min-h-full items-center justify-center p-6 text-center">
             <Transition.Child
               as={Fragment}
               enter="ease-out duration-200"
@@ -61,8 +59,6 @@ const TaskModal = ({
                   taskTitle={taskTitle}
                   handleTaskCreated={handleTaskCreated}
                   finish={finish}
-                  setToastMessage={setToastMessage}
-                  setShowToast={setShowToast}
                   isModalOpen={isModalOpen}
                   setIsModalOpen={setIsModalOpen}
                   Axios={Axios}

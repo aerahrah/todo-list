@@ -1,6 +1,11 @@
 import React from "react";
 import { deleteTask, updateTask } from "../../api/taskAPI";
 import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import {
+  setToastMessage,
+  toggleDisplayToast,
+} from "../../store/slices/toastSlice";
 import {
   FaTrash,
   FaCheck,
@@ -17,8 +22,6 @@ const TaskControl = ({
   taskName,
   taskTitle,
   finish,
-  setToastMessage,
-  setShowToast,
   setIsModalOpen,
   isModalOpen,
   Axios,
@@ -37,8 +40,8 @@ const TaskControl = ({
         setIsModalOpen(false);
       })
       .catch((err) => {
-        setToastMessage(err.message);
-        setShowToast(true);
+        dispatch(setToastMessage(err.message));
+        dispatch(toggleDisplayToast());
       });
   };
 
@@ -49,8 +52,8 @@ const TaskControl = ({
         setIsModalOpen(false);
       })
       .catch((err) => {
-        setToastMessage(err.message);
-        setShowToast(true);
+        dispatch(setToastMessage(err.message));
+        dispatch(toggleDisplayToast());
       });
   };
 

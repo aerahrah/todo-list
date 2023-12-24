@@ -1,9 +1,8 @@
-
 import TaskCard from "./taskCard";
 
 const TaskList = ({ tasksData, handleViewSpecificTask }) => {
   return (
-    <div className="py-4 px-6">
+    <div className="pt-24 bg-neutral-200/70 py-4 px-6 min-h-screen">
       {tasksData.some((task) => task.completed) && (
         <div>
           <h2 className="mb-4 px-1 uppercase font-semibold text-sm text-gray-500">

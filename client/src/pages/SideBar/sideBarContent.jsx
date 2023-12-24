@@ -8,16 +8,15 @@ import {
 } from "../../api/projectAPI";
 import { setTaskType, setProjectId } from "../../store/slices/filterSlice";
 import { useDispatch, useSelector } from "react-redux";
+import {
+  setToastMessage,
+  toggleDisplayToast,
+} from "../../store/slices/toastSlice";
 import ProjectItems from "./projectItems";
 import AddProjectPopover from "./addProjectPopover";
 import Notes from "./notes";
 
-const SideBarContent = ({
-  handleTaskCreated,
-  setToastMessage,
-  setShowToast,
-  isMobileView,
-}) => {
+const SideBarContent = ({ handleTaskCreated, isMobileView }) => {
   const dispatch = useDispatch();
   const { taskType } = useSelector((state) => state.filter);
   const [projectData, setProjectData] = useState([]);
@@ -37,8 +36,8 @@ const SideBarContent = ({
         handleTaskCreated();
       })
       .catch((err) => {
-        setToastMessage(err.message);
-        setShowToast(true);
+        dispatch(setToastMessage(err.message));
+        dispatch(toggleDisplayToast());
       });
   };
 
@@ -48,8 +47,8 @@ const SideBarContent = ({
       const { project } = response.data;
       setProjectData(project);
     } catch (err) {
-      setToastMessage(err.message);
-      setShowToast(true);
+      dispatch(setToastMessage(err.message));
+      dispatch(toggleDisplayToast());
     }
   };
   const handleGetSingleProject = (id) => {
@@ -73,8 +72,8 @@ const SideBarContent = ({
         setTitle("");
       })
       .catch((err) => {
-        setToastMessage(err.message);
-        setShowToast(true);
+        dispatch(setToastMessage(err.message));
+        dispatch(toggleDisplayToast());
       });
   };
   const handleUpdateProject = (id) => {
@@ -84,8 +83,8 @@ const SideBarContent = ({
         setTitle("");
       })
       .catch((err) => {
-        setToastMessage(err.message);
-        setShowToast(true);
+        dispatch(setToastMessage(err.message));
+        dispatch(toggleDisplayToast());
       });
   };
   useEffect(() => {
@@ -96,8 +95,8 @@ const SideBarContent = ({
     <div
       className={`${
         isMobileView
-          ? "md:hidden block"
-          : "hidden md:block md:fixed md:inset-y-0"
+          ? "md:hidden block relative"
+          : "hidden md:block md:fixed relative md:inset-y-0"
       } bg-white w-72 text-blue-950 md:border-blue-950 md:border-r-[1px] md:shadow-md`}
     >
       <div className=" flex flex-col items-center">

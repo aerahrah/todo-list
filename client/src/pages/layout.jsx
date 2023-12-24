@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { getSingleTask } from "../api/taskAPI";
 import { useDispatch, useSelector } from "react-redux";
+import {
+  setToastMessage,
+  toggleDisplayToast,
+} from "../store/slices/toastSlice";
 import Axios from "../utils/axios";
 import Toast from "../components/toast";
 import TaskModal from "../pages/TaskComponents/taskModal";
@@ -13,9 +17,11 @@ import TaskList from "../pages/taskComponents/taskList";
 
 const TaskNote = () => {
   const url = "http://localhost:3500/api/v1";
+  const dispatch = useDispatch();
   const { filterTask, sortTask, taskType, projectId } = useSelector(
     (state) => state.filter
   );
+  const { toastMessage, displayToast } = useSelector((state) => state.toast);
   const [tasksData, setTasksData] = useState({});
   const [taskName, setTaskName] = useState("");
   const [taskTitle, setTaskTitle] = useState("");
@@ -23,8 +29,6 @@ const TaskNote = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [modalTaskData, setModalTaskData] = useState({});
   const [finish, setFinish] = useState("");
-  const [toastMessage, setToastMessage] = useState("");
-  const [showToast, setShowToast] = useState(false);
   const [updateTrigger, setUpdateTrigger] = useState(false);
   const [isSideBarOpen, setIsSideBarOpen] = useState(false);
 
@@ -46,8 +50,8 @@ const TaskNote = () => {
       setTasksData(tasks);
       setIsLoading(false);
     } catch (err) {
-      setToastMessage(err.message);
-      setShowToast(true);
+      dispatch(setToastMessage(err.message));
+      dispatch(toggleDisplayToast());
     }
   };
 
@@ -65,9 +69,8 @@ const TaskNote = () => {
         setFinish(task.completed);
       })
       .catch((err) => {
-        setToastMessage(err.message);
-        console.log(err);
-        setShowToast(true);
+        dispatch(setToastMessage(err.message));
+        dispatch(toggleDisplayToast());
       });
   };
 
@@ -76,8 +79,8 @@ const TaskNote = () => {
     setIsModalOpen(true);
   };
 
-  const handleCloseToast = () => {
-    setShowToast(false);
+  const handleToggleDisplayToast = () => {
+    dispatch(toggleDisplayToast());
   };
   return (
     <div>
@@ -85,19 +88,13 @@ const TaskNote = () => {
         <Spinner />
       ) : (
         <div>
-          <SideBar
-            handleTaskCreated={handleTaskCreated}
-            setToastMessage={setToastMessage}
-            setShowToast={setShowToast}
-          />
+          <SideBar handleTaskCreated={handleTaskCreated} />
           <SideBarMobile
             handleTaskCreated={handleTaskCreated}
             isSideBarOpen={isSideBarOpen}
             setIsSideBarOpen={setIsSideBarOpen}
-            setToastMessage={setToastMessage}
-            setShowToast={setShowToast}
           />
-          <div className="text-gray-800 md:pl-72  flex-1 ">
+          <div className="min-h-screen text-gray-800 md:pl-72  flex-1 ">
             <NavBar
               handleTaskCreated={handleTaskCreated}
               setIsSideBarOpen={setIsSideBarOpen}
@@ -109,10 +106,6 @@ const TaskNote = () => {
             <CreateTask
               modalTaskData={modalTaskData}
               setModalTaskData={setModalTaskData}
-              setFinish={setFinish}
-              finish={finish}
-              setToastMessage={setToastMessage}
-              setShowToast={setShowToast}
               onTaskCreated={handleTaskCreated}
               taskType={taskType}
             />
@@ -131,11 +124,11 @@ const TaskNote = () => {
         taskName={taskName}
         taskTitle={taskTitle}
         finish={finish}
-        setToastMessage={setToastMessage}
-        setShowToast={setShowToast}
         Axios={Axios}
       />
-      {showToast && <Toast message={toastMessage} onClose={handleCloseToast} />}
+      {displayToast && (
+        <Toast message={toastMessage} onClose={handleToggleDisplayToast} />
+      )}
     </div>
   );
 };

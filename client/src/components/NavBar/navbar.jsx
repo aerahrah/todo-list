@@ -13,7 +13,7 @@ const NavBar = ({ handleTaskCreated, setIsSideBarOpen }) => {
   return (
     <div>
       <div
-        className={`px-4 md:px-6 m-0 bg-white shadow md:shadow-md flex items-center`}
+        className={`fixed top-0 z-10 w-full px-4 md:px-6 m-0 bg-white shadow md:shadow-md flex items-center`}
       >
         <div className="md:hidden block pr-4 border-r-[2px] py-5 ">
           <FaBars

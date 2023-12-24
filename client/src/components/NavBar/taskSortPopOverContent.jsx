@@ -8,21 +8,21 @@ const TaskSortPopOverContent = ({ handleSortChange, Popover, Transition }) => {
       leaveFrom="transform scale-100 opacity-100"
       leaveTo="transform scale-95 opacity-0"
     >
-      <Popover.Panel className="absolute mt-2 border-[1px] bg-white p-2 shadow-md rounded-lg right-[50%] transform translate-x-[50%]">
+      <Popover.Panel className="absolute mt-2 border-[1px] bg-white py-4 px-3 shadow-md rounded-lg right-[50%] ring ring-1 ring-neutral-300 transform translate-x-[50%] ">
         <Popover.Button
-          className="hover:font-semibold hover:border-blue-950 border-b-[1px] w-full text-left pb-1"
+          className="hover:border-blue-950 border-b-[1px] w-full text-left pb-1"
           onClick={() => handleSortChange("all task")}
         >
           All task
         </Popover.Button>
         <Popover.Button
-          className="hover:font-semibold hover:border-blue-950 border-b-[1px] w-full text-left pb-1"
+          className=" hover:border-blue-950 border-b-[1px] w-full text-left pb-1"
           onClick={() => handleSortChange("completed")}
         >
           Completed
         </Popover.Button>
         <Popover.Button
-          className="hover:font-semibold hover:border-blue-950 border-b-[1px] w-full text-left pb-1"
+          className=" hover:border-blue-950 border-b-[1px] w-full text-left pb-1"
           onClick={() => handleSortChange("incomplete")}
         >
           Incomplete
