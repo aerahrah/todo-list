@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { getSingleTask } from "../api/taskAPI";
+import { useDispatch, useSelector } from "react-redux";
+import Axios from "../utils/axios";
 import Toast from "../components/toast";
 import TaskModal from "../pages/TaskComponents/taskModal";
 import CreateTask from "../pages/TaskComponents/createTask/createTaskBtn";
@@ -10,6 +12,10 @@ import NavBar from "../components/NavBar/navbar";
 import TaskList from "../pages/taskComponents/taskList";
 
 const TaskNote = () => {
+  const url = "http://localhost:3500/api/v1";
+  const { filterTask, sortTask, taskType, projectId } = useSelector(
+    (state) => state.filter
+  );
   const [tasksData, setTasksData] = useState({});
   const [taskName, setTaskName] = useState("");
   const [taskTitle, setTaskTitle] = useState("");
@@ -19,15 +25,8 @@ const TaskNote = () => {
   const [finish, setFinish] = useState("");
   const [toastMessage, setToastMessage] = useState("");
   const [showToast, setShowToast] = useState(false);
-  const [cookies] = useCookies(["user"]);
   const [updateTrigger, setUpdateTrigger] = useState(false);
-  const [filteredTask, setFilteredTask] = useState("");
-  const [sortByTask, setSortByTask] = useState("");
-  const [projectTitle, setProjectTitle] = useState("");
   const [isSideBarOpen, setIsSideBarOpen] = useState(false);
-  const [taskType, setTaskType] = useState("notes");
-  const token = cookies.Token;
-  const Axios = createAxiosInstance(token);
 
   useEffect(() => {
     handleGetAllTask();
@@ -37,10 +36,10 @@ const TaskNote = () => {
     try {
       const response = await Axios.get(`${url}/tasks`, {
         params: {
-          searchTerm: filteredTask,
-          sortBy: sortByTask,
-          projectId: projectTitle,
-          taskType: taskType,
+          searchTerm: filterTask,
+          sortBy: sortTask,
+          projectId,
+          taskType,
         },
       });
       const { tasks } = response.data;
@@ -67,6 +66,7 @@ const TaskNote = () => {
       })
       .catch((err) => {
         setToastMessage(err.message);
+        console.log(err);
         setShowToast(true);
       });
   };
@@ -86,28 +86,20 @@ const TaskNote = () => {
       ) : (
         <div>
           <SideBar
-            setProjectTitle={setProjectTitle}
             handleTaskCreated={handleTaskCreated}
             setToastMessage={setToastMessage}
             setShowToast={setShowToast}
-            setTaskType={setTaskType}
-            taskType={taskType}
           />
           <SideBarMobile
-            setProjectTitle={setProjectTitle}
             handleTaskCreated={handleTaskCreated}
             isSideBarOpen={isSideBarOpen}
             setIsSideBarOpen={setIsSideBarOpen}
             setToastMessage={setToastMessage}
             setShowToast={setShowToast}
-            setTaskType={setTaskType}
-            taskType={taskType}
           />
           <div className="text-gray-800 md:pl-72  flex-1 ">
             <NavBar
               handleTaskCreated={handleTaskCreated}
-              setFilteredTask={setFilteredTask}
-              setSortByTask={setSortByTask}
               setIsSideBarOpen={setIsSideBarOpen}
             />
             <TaskList
@@ -115,8 +107,6 @@ const TaskNote = () => {
               handleViewSpecificTask={handleViewSpecificTask}
             />
             <CreateTask
-              projectTitle={projectTitle}
-              setProjectTitle={setProjectTitle}
               modalTaskData={modalTaskData}
               setModalTaskData={setModalTaskData}
               setFinish={setFinish}
@@ -124,7 +114,6 @@ const TaskNote = () => {
               setToastMessage={setToastMessage}
               setShowToast={setShowToast}
               onTaskCreated={handleTaskCreated}
-              Axios={Axios}
               taskType={taskType}
             />
           </div>

@@ -1,14 +1,11 @@
 import { Dialog, Transition } from "@headlessui/react";
 import SideBarContent from "./sideBarContent";
 const SideBarMobile = ({
-  setProjectTitle,
   handleTaskCreated,
   isSideBarOpen,
   setIsSideBarOpen,
   setToastMessage,
   setShowToast,
-  setTaskType,
-  taskType,
 }) => {
   return (
     <Transition appear show={isSideBarOpen}>
@@ -27,12 +24,9 @@ const SideBarMobile = ({
         >
           <div>
             <SideBarContent
-              setProjectTitle={setProjectTitle}
               handleTaskCreated={handleTaskCreated}
               setToastMessage={setToastMessage}
               setShowToast={setShowToast}
-              setTaskType={setTaskType}
-              taskType={taskType}
               isMobileView={true}
             />
           </div>

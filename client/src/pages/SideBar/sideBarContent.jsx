@@ -1,29 +1,25 @@
 import { useState, useEffect } from "react";
-import { useCookies } from "react-cookie";
 import { Popover, Transition } from "@headlessui/react";
-import ProjectItems from "./projectItems";
-import AddProjectPopover from "./addProjectPopover";
-import Notes from "./notes";
 import {
   deleteProject,
   createProject,
   getSingleProject,
   updateProject,
 } from "../../api/projectAPI";
+import { setTaskType, setProjectId } from "../../store/slices/filterSlice";
+import { useDispatch, useSelector } from "react-redux";
+import ProjectItems from "./projectItems";
+import AddProjectPopover from "./addProjectPopover";
+import Notes from "./notes";
 
 const SideBarContent = ({
-  setProjectTitle,
   handleTaskCreated,
   setToastMessage,
   setShowToast,
-  setTaskType,
-  taskType,
   isMobileView,
 }) => {
-  const url = "http://localhost:3500/api/v1";
-  const [cookies] = useCookies(["user"]);
-  const token = cookies.Token;
-  const Axios = createAxiosInstance(token);
+  const dispatch = useDispatch();
+  const { taskType } = useSelector((state) => state.filter);
   const [projectData, setProjectData] = useState([]);
   const [hoveredProjectId, setHoveredProjectId] = useState("");
   const [isDeleted, setIsDeleted] = useState(false);
@@ -32,10 +28,11 @@ const SideBarContent = ({
   const [rerender, setRerender] = useState(false);
 
   const handleDeleteProject = (id) => {
-    deleteProject(url, id, Axios)
+    deleteProject(id)
       .then(() => {
-        setProjectTitle("");
-        setTaskType("notes");
+        dispatch(setProjectId(""));
+        dispatch(setTaskType("notes"));
+
         setIsDeleted(!isDeleted);
         handleTaskCreated();
       })
@@ -56,21 +53,21 @@ const SideBarContent = ({
     }
   };
   const handleGetSingleProject = (id) => {
-    getSingleProject(url, id, Axios).then((data) => {
-      setTaskType("project");
-      setProjectTitle(data.project._id);
+    getSingleProject(id).then((data) => {
+      dispatch(setTaskType("project"));
+      dispatch(setProjectId(data.project._id));
       setIsProjectFocusId(data.project._id);
       handleTaskCreated();
     });
   };
   const handleGetNoteTasks = () => {
-    setTaskType("notes");
-    setProjectTitle(null);
+    dispatch(setTaskType("notes"));
+    dispatch(setProjectId(""));
     setIsProjectFocusId(null);
     handleTaskCreated();
   };
   const handleCreateProject = () => {
-    createProject(url, title, Axios)
+    createProject(title)
       .then(() => {
         setRerender(!rerender);
         setTitle("");
@@ -81,7 +78,7 @@ const SideBarContent = ({
       });
   };
   const handleUpdateProject = (id) => {
-    updateProject(url, title, id, Axios)
+    updateProject(title, id)
       .then(() => {
         setRerender(!rerender);
         setTitle("");
@@ -94,6 +91,7 @@ const SideBarContent = ({
   useEffect(() => {
     handleGetAllProject();
   }, [isDeleted, rerender]);
+
   return (
     <div
       className={`${

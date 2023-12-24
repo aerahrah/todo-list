@@ -1,16 +1,37 @@
 import { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
+import { useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
+import { createTask } from "../../../api/taskAPI";
 import TaskInputBox from "../taskInputBox";
 
 const CreateTaskModal = ({
   isModalCreateOpen,
   setIsModalCreateOpen,
-  taskName,
-  setTaskName,
-  taskTitle,
-  setTaskTitle,
-  handleCreateTask,
+  finish,
+  setFinish,
+  setShowToast,
+  setToastMessage,
+  onTaskCreated,
 }) => {
+  const { taskType, projectId } = useSelector((state) => state.filter);
+  const [taskName, setTaskName] = useState("");
+  const [taskTitle, setTaskTitle] = useState("");
+
+  const handleCreateTask = () => {
+    createTask(taskTitle, taskName, projectId, taskType)
+      .then(() => {
+        setIsModalCreateOpen(false);
+        setTaskName("");
+        setTaskTitle("");
+        onTaskCreated();
+      })
+      .catch((err) => {
+        setToastMessage(err.message);
+        setShowToast(true);
+      });
+  };
+
   return (
     <Transition appear show={isModalCreateOpen} as={Fragment}>
       <Dialog as="div" onClose={() => setIsModalCreateOpen(false)}>

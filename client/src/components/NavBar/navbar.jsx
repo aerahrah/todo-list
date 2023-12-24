@@ -9,12 +9,7 @@ import TaskSortPopOver from "./taskSortPopOver";
 import TaskSearchBar from "./TaskSearchBar";
 import Signout from "./signout";
 import { useState } from "react";
-const NavBar = ({
-  handleTaskCreated,
-  setFilteredTask,
-  setSortByTask,
-  setIsSideBarOpen,
-}) => {
+const NavBar = ({ handleTaskCreated, setIsSideBarOpen }) => {
   return (
     <div>
       <div
@@ -29,14 +24,12 @@ const NavBar = ({
         </div>
         <div className="flex items-center w-full">
           <TaskSortPopOver
-            setSortByTask={setSortByTask}
             handleTaskCreated={handleTaskCreated}
             useState={useState}
             FaFilter={FaFilter}
             FaAngleDown={FaAngleDown}
           />
           <TaskSearchBar
-            setFilteredTask={setFilteredTask}
             handleTaskCreated={handleTaskCreated}
             FaSearch={FaSearch}
             useState={useState}

@@ -1,3 +1,5 @@
+import Axios from "../utils/axios";
+
 const url = "http://localhost:3500/api/v1";
 
 export const deleteProject = async ( id) => {

@@ -1,14 +1,13 @@
-const TaskSearchBar = ({
-  handleTaskCreated,
-  setFilteredTask,
-  FaSearch,
-  useState,
-}) => {
+import { useDispatch } from "react-redux";
+import { setFilterTask } from "../../store/slices/filterSlice";
+
+const TaskSearchBar = ({ handleTaskCreated, FaSearch, useState }) => {
+  const dispatch = useDispatch();
   const [searchTerm, setSearchTerm] = useState("");
 
   const handleInputChange = (e) => {
     setSearchTerm(e.target.value);
-    setFilteredTask(e.target.value);
+    dispatch(setFilterTask(e.target.value));
     handleTaskCreated();
   };
 

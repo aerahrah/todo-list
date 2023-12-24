@@ -1,3 +1,5 @@
+import Axios from "../utils/axios";
+
 const url = "http://localhost:3500/api/v1";
 
 export const deleteTask = async (id) => {
@@ -20,7 +22,7 @@ export const updateTask = async (id, name, title, isCompleted) => {
   }
 };
 
-export const getSingleTask = async ( id) => {
+export const getSingleTask = async (id) => {
   try {
     const response = await Axios.get(`${url}/tasks/${id}`);
     return response.data;
@@ -29,17 +31,10 @@ export const getSingleTask = async ( id) => {
   }
 };
 
-export const createTask = async (
-  url,
-  title,
-  name,
-  projectTitle,
-  taskType,
-
-) => {
+export const createTask = async (title, name, projectId, taskType) => {
   try {
     const response = await Axios.post(`${url}/tasks`, {
-      project: projectTitle,
+      project: projectId,
       title: title,
       name: name,
       taskType: taskType,

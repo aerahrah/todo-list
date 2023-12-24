@@ -1,21 +1,11 @@
 import SideBarContent from "./sideBarContent";
 
-const SideBar = ({
-  setProjectTitle,
-  handleTaskCreated,
-  setToastMessage,
-  setShowToast,
-  setTaskType,
-  taskType,
-}) => {
+const SideBar = ({ handleTaskCreated, setToastMessage, setShowToast }) => {
   return (
     <SideBarContent
-      setProjectTitle={setProjectTitle}
       handleTaskCreated={handleTaskCreated}
       setToastMessage={setToastMessage}
       setShowToast={setShowToast}
-      setTaskType={setTaskType}
-      taskType={taskType}
       isMobileView={false}
     />
   );

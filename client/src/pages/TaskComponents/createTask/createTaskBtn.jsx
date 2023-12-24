@@ -1,36 +1,15 @@
 import { useState } from "react";
-import CreateTaskModal from "./createTaskModal";
 import { FaPen } from "react-icons/fa";
-import { createTask } from "../../../api/taskAPI";
+import CreateTaskModal from "./createTaskModal";
 
 const CreateTask = ({
   onTaskCreated,
   finish,
-  projectTitle,
   setFinish,
-  url,
   setToastMessage,
   setShowToast,
-  taskType,
-  Axios,
 }) => {
-  const [taskName, setTaskName] = useState("");
-  const [taskTitle, setTaskTitle] = useState("");
   const [isModalCreateOpen, setIsModalCreateOpen] = useState(false);
-
-  const handleCreateTask = () => {
-    createTask(url, taskTitle, taskName, projectTitle, taskType, Axios)
-      .then(() => {
-        setIsModalCreateOpen(false);
-        setTaskName("");
-        setTaskTitle("");
-        onTaskCreated();
-      })
-      .catch((err) => {
-        setToastMessage(err.message);
-        setShowToast(true);
-      });
-  };
 
   return (
     <div className="fixed bottom-8 right-8">
@@ -42,16 +21,11 @@ const CreateTask = ({
       <CreateTaskModal
         isModalCreateOpen={isModalCreateOpen}
         setIsModalCreateOpen={setIsModalCreateOpen}
-        url={url}
-        setTaskName={setTaskName}
-        setTaskTitle={setTaskTitle}
-        setFinish={setFinish}
-        taskName={taskName}
-        taskTitle={taskTitle}
         finish={finish}
+        setFinish={setFinish}
         setToastMessage={setToastMessage}
         setShowToast={setShowToast}
-        handleCreateTask={handleCreateTask}
+        onTaskCreated={onTaskCreated}
       ></CreateTaskModal>
     </div>
   );

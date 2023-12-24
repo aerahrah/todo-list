@@ -1,17 +1,19 @@
 import { Popover, Transition } from "@headlessui/react";
+import { useDispatch } from "react-redux";
+import { setSortTask } from "../../store/slices/filterSlice";
+
 import TaskSortPopOverContent from "./taskSortPopOverContent";
 const TaskSortPopOver = ({
-  setSortByTask,
   handleTaskCreated,
   useState,
   FaFilter,
   FaAngleDown,
 }) => {
+  const dispatch = useDispatch();
   const [sortBy, setSortBy] = useState("Filter");
-
   const handleSortChange = (value) => {
     setSortBy(value);
-    setSortByTask(value);
+    dispatch(setSortTask(value));
     handleTaskCreated();
   };
 
