@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { getSingleTask } from "../api/taskAPI";
+import { getSingleTask, getAllTask } from "../api/taskAPI";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setToastMessage,
   toggleDisplayToast,
 } from "../store/slices/toastSlice";
+import { setSingleTaskDataStatic } from "../store/slices/taskSlice/fetchTaskSlice";
 import Axios from "../utils/axios";
 import Toast from "../components/toast";
 import TaskModal from "../pages/TaskComponents/taskModal";
@@ -22,9 +23,10 @@ const TaskNote = () => {
     (state) => state.filter
   );
   const { toastMessage, displayToast } = useSelector((state) => state.toast);
-  const [tasksData, setTasksData] = useState({});
-  const [taskName, setTaskName] = useState("");
-  const [taskTitle, setTaskTitle] = useState("");
+  const { singleTaskData } = useSelector((state) => state.fetch);
+  // const [tasksData, setTasksData] = useState({});
+  // const [taskName, setTaskName] = useState("");
+  // const [taskTitle, setTaskTitle] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [modalTaskData, setModalTaskData] = useState({});
@@ -32,22 +34,9 @@ const TaskNote = () => {
   const [updateTrigger, setUpdateTrigger] = useState(false);
   const [isSideBarOpen, setIsSideBarOpen] = useState(false);
 
-  useEffect(() => {
-    handleGetAllTask();
-  }, [isModalOpen, finish, updateTrigger]);
-
   const handleGetAllTask = async () => {
     try {
-      const response = await Axios.get(`${url}/tasks`, {
-        params: {
-          searchTerm: filterTask,
-          sortBy: sortTask,
-          projectId,
-          taskType,
-        },
-      });
-      const { tasks } = response.data;
-      setTasksData(tasks);
+      dispatch(getAllTask({ filterTask, sortTask, projectId, taskType }));
       setIsLoading(false);
     } catch (err) {
       dispatch(setToastMessage(err.message));
@@ -55,23 +44,19 @@ const TaskNote = () => {
     }
   };
 
-  const handleTaskCreated = () => {
-    setUpdateTrigger((prevTrigger) => !prevTrigger);
+  const handleSingleTask = async (id) => {
+    try {
+      const data = await dispatch(getSingleTask(id));
+      console.log(data.payload.task);
+      dispatch(setSingleTaskDataStatic(data.payload.task));
+    } catch (error) {
+      dispatch(setToastMessage(err.message));
+      dispatch(toggleDisplayToast());
+    }
   };
 
-  const handleSingleTask = (id) => {
-    getSingleTask(id)
-      .then((data) => {
-        const { task } = data;
-        setTaskName(task.name);
-        setTaskTitle(task.title);
-        setModalTaskData(task);
-        setFinish(task.completed);
-      })
-      .catch((err) => {
-        dispatch(setToastMessage(err.message));
-        dispatch(toggleDisplayToast());
-      });
+  const handleTaskCreated = () => {
+    setUpdateTrigger((prevTrigger) => !prevTrigger);
   };
 
   const handleViewSpecificTask = (id) => {
@@ -82,6 +67,11 @@ const TaskNote = () => {
   const handleToggleDisplayToast = () => {
     dispatch(toggleDisplayToast());
   };
+
+  useEffect(() => {
+    handleGetAllTask();
+  }, [isModalOpen, finish, updateTrigger]);
+
   return (
     <div>
       {isLoading ? (
@@ -99,10 +89,7 @@ const TaskNote = () => {
               handleTaskCreated={handleTaskCreated}
               setIsSideBarOpen={setIsSideBarOpen}
             />
-            <TaskList
-              tasksData={tasksData}
-              handleViewSpecificTask={handleViewSpecificTask}
-            />
+            <TaskList handleViewSpecificTask={handleViewSpecificTask} />
             <CreateTask
               modalTaskData={modalTaskData}
               setModalTaskData={setModalTaskData}
@@ -114,15 +101,12 @@ const TaskNote = () => {
       )}
       <TaskModal
         isModalOpen={isModalOpen}
+        singleTaskData={singleTaskData}
         setIsModalOpen={setIsModalOpen}
         handleTaskCreated={handleTaskCreated}
         modalTaskData={modalTaskData}
-        setTaskName={setTaskName}
-        setTaskTitle={setTaskTitle}
         setModalTaskData={setModalTaskData}
         setFinish={setFinish}
-        taskName={taskName}
-        taskTitle={taskTitle}
         finish={finish}
         Axios={Axios}
       />

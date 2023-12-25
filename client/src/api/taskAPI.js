@@ -1,6 +1,38 @@
+import { createAsyncThunk } from "@reduxjs/toolkit";
 import Axios from "../utils/axios";
 
 const url = "http://localhost:3500/api/v1";
+
+export const getAllTask = createAsyncThunk(
+  "fetchAll",
+  async ({ filterTask, sortTask, projectId, taskType }) => {
+    try {
+      console.log(filterTask);
+      const response = await Axios.get(`${url}/tasks`, {
+        params: {
+          searchTerm: filterTask,
+          sortBy: sortTask,
+          projectId,
+          taskType,
+        },
+      });
+
+      return response.data;
+    } catch (error) {
+      throw new Error(error.response.data);
+    }
+  }
+);
+
+export const getSingleTask = createAsyncThunk("fetchSingle", async (id) => {
+  try {
+    const response = await Axios.get(`${url}/tasks/${id}`);
+
+    return response.data;
+  } catch (error) {
+    throw new Error(error.response.data);
+  }
+});
 
 export const deleteTask = async (id) => {
   try {
@@ -17,15 +49,6 @@ export const updateTask = async (id, name, title, isCompleted) => {
       title: title,
       completed: isCompleted,
     });
-  } catch (error) {
-    throw new Error(error.response.data.errors[0]);
-  }
-};
-
-export const getSingleTask = async (id) => {
-  try {
-    const response = await Axios.get(`${url}/tasks/${id}`);
-    return response.data;
   } catch (error) {
     throw new Error(error.response.data.errors[0]);
   }
