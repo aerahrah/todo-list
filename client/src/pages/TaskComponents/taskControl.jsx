@@ -2,6 +2,7 @@ import React from "react";
 import { deleteTask, updateTask } from "../../api/taskAPI";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
+import { clearSingleTaskData } from "../../store/slices/taskSlice/fetchTaskSlice";
 import {
   setToastMessage,
   toggleDisplayToast,
@@ -15,9 +16,8 @@ import {
 
 const TaskControl = ({
   url,
-  modalTaskData,
   handleTaskCreated,
-  setModalTaskData,
+  singleTaskData,
   setFinish,
   taskName,
   taskTitle,
@@ -26,17 +26,19 @@ const TaskControl = ({
   isModalOpen,
   Axios,
 }) => {
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    if (!isModalOpen && modalTaskData._id !== undefined) {
-      handleUpdateTask(modalTaskData._id);
+    if (!isModalOpen && singleTaskData._id) {
+      handleUpdateTask(singleTaskData._id);
       handleTaskCreated();
     }
-  }, [modalTaskData, isModalOpen]);
+  }, [singleTaskData, isModalOpen]);
 
   const handleDeleteTask = (id) => {
     deleteTask(url, id, Axios)
       .then(() => {
-        setModalTaskData({});
+        dispatch(clearSingleTaskData());
         setIsModalOpen(false);
       })
       .catch((err) => {
@@ -48,7 +50,7 @@ const TaskControl = ({
   const handleUpdateTask = (id) => {
     updateTask(url, id, taskName, taskTitle, finish, Axios)
       .then(() => {
-        setModalTaskData({});
+        dispatch(clearSingleTaskData());
         setIsModalOpen(false);
       })
       .catch((err) => {
@@ -70,12 +72,12 @@ const TaskControl = ({
             <FaRegCheckCircle className="text-blue-700" size="1.5rem" />
           )}
         </button>
-        <button onClick={() => handleDeleteTask(modalTaskData._id)}>
+        <button onClick={() => handleDeleteTask(singleTaskData._id)}>
           <FaTrash className="hover:text-red-500" />
         </button>
       </div>
 
-      <button onClick={() => handleUpdateTask(modalTaskData._id)}>
+      <button onClick={() => handleUpdateTask(singleTaskData._id)}>
         <FaCheck className="hover:text-sky-500" />
       </button>
     </div>

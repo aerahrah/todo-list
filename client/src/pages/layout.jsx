@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { getSingleTask, getAllTask } from "../api/taskAPI";
+import { getAllTask } from "../api/taskAPI";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setToastMessage,
   toggleDisplayToast,
 } from "../store/slices/toastSlice";
-import { setSingleTaskDataStatic } from "../store/slices/taskSlice/fetchTaskSlice";
+import { setSingleTaskData } from "../store/slices/taskSlice/fetchTaskSlice";
 import Axios from "../utils/axios";
 import Toast from "../components/toast";
 import TaskModal from "../pages/TaskComponents/taskModal";
@@ -23,13 +23,8 @@ const TaskNote = () => {
     (state) => state.filter
   );
   const { toastMessage, displayToast } = useSelector((state) => state.toast);
-  const { singleTaskData } = useSelector((state) => state.fetch);
-  // const [tasksData, setTasksData] = useState({});
-  // const [taskName, setTaskName] = useState("");
-  // const [taskTitle, setTaskTitle] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [modalTaskData, setModalTaskData] = useState({});
   const [finish, setFinish] = useState("");
   const [updateTrigger, setUpdateTrigger] = useState(false);
   const [isSideBarOpen, setIsSideBarOpen] = useState(false);
@@ -44,23 +39,14 @@ const TaskNote = () => {
     }
   };
 
-  const handleSingleTask = async (id) => {
-    try {
-      const data = await dispatch(getSingleTask(id));
-      console.log(data.payload.task);
-      dispatch(setSingleTaskDataStatic(data.payload.task));
-    } catch (error) {
-      dispatch(setToastMessage(err.message));
-      dispatch(toggleDisplayToast());
-    }
-  };
-
   const handleTaskCreated = () => {
     setUpdateTrigger((prevTrigger) => !prevTrigger);
   };
 
-  const handleViewSpecificTask = (id) => {
-    handleSingleTask(id);
+  const handleViewSpecificTask = (task) => {
+    console.log("click");
+    console.log(task);
+    dispatch(setSingleTaskData(task));
     setIsModalOpen(true);
   };
 
@@ -91,8 +77,7 @@ const TaskNote = () => {
             />
             <TaskList handleViewSpecificTask={handleViewSpecificTask} />
             <CreateTask
-              modalTaskData={modalTaskData}
-              setModalTaskData={setModalTaskData}
+       
               onTaskCreated={handleTaskCreated}
               taskType={taskType}
             />
@@ -101,11 +86,8 @@ const TaskNote = () => {
       )}
       <TaskModal
         isModalOpen={isModalOpen}
-        singleTaskData={singleTaskData}
         setIsModalOpen={setIsModalOpen}
         handleTaskCreated={handleTaskCreated}
-        modalTaskData={modalTaskData}
-        setModalTaskData={setModalTaskData}
         setFinish={setFinish}
         finish={finish}
         Axios={Axios}

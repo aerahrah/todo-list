@@ -11,17 +11,15 @@ const TaskInputBox = ({
   finish,
   setFinish,
   url,
-  modalTaskData,
-  setModalTaskData,
   Axios,
 }) => {
-  const { singleTaskDataStatic } = useSelector((state) => state.fetch);
+  const { singleTaskData } = useSelector((state) => state.fetch);
   const schema = yup.object().shape({
     title: yup.string().required("title is required"),
     content: yup.string(),
   });
 
-  console.log(singleTaskDataStatic);
+  console.log(singleTaskData);
   const {
     register,
     handleSubmit,
@@ -29,8 +27,8 @@ const TaskInputBox = ({
   } = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
-      title: singleTaskDataStatic.title,
-      content: singleTaskDataStatic.content,
+      title: singleTaskData?.title ?? "",
+      content: singleTaskData?.name ?? "",
     },
   });
 
@@ -39,17 +37,13 @@ const TaskInputBox = ({
       <div className="flex flex-col text-gray-800">
         <input
           type="text"
-          placeholder={
-            singleTaskDataStatic.title ? singleTaskDataStatic.title : "title"
-          }
+          placeholder={singleTaskData?.title ? singleTaskData.title : "title"}
           {...register("title")}
           className="outline-0 mb-4 text-xl font-semibold text-center capitalize"
         />
         <textarea
           placeholder={
-            singleTaskDataStatic.content
-              ? singleTaskDataStatic.content
-              : "Start here..."
+            singleTaskData?.name ? singleTaskData.name : "Start here..."
           }
           {...register("content")}
           rows={6}
@@ -59,8 +53,7 @@ const TaskInputBox = ({
       </div>
       <TaskControl
         url={url}
-        modalTaskData={modalTaskData}
-        setModalTaskData={setModalTaskData}
+        singleTaskData={singleTaskData}
         setFinish={setFinish}
         handleTaskCreated={handleTaskCreated}
         finish={finish}

@@ -3,7 +3,7 @@ const TaskCard = ({ task, handleViewSpecificTask }) => {
   return (
     <ul
       className="bg-white text-blue-950 min-w-full max-w-md py-2  md:px-4 rounded-xl  border-[1px] shadow-sm hover:shadow hover:border-gray-300 mb-4 px-2 overflow-hidden max-h-60 cursor-pointer relative"
-      onClick={() => handleViewSpecificTask(task._id)}
+      onClick={() => handleViewSpecificTask(task)}
     >
       <li className="my-2 text-lg font-semibold overflow-hidden">
         {task.title}

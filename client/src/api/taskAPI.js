@@ -24,16 +24,6 @@ export const getAllTask = createAsyncThunk(
   }
 );
 
-export const getSingleTask = createAsyncThunk("fetchSingle", async (id) => {
-  try {
-    const response = await Axios.get(`${url}/tasks/${id}`);
-
-    return response.data;
-  } catch (error) {
-    throw new Error(error.response.data);
-  }
-});
-
 export const deleteTask = async (id) => {
   try {
     await Axios.delete(`${url}/tasks/${id}`);
