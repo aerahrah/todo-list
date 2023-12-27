@@ -1,19 +1,10 @@
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useSelector } from "react-redux";
-import TaskControl from "./taskControl";
+
 import * as yup from "yup";
 
-const TaskInputBox = ({
-  isModalOpen,
-  handleTaskCreated,
-  setIsModalOpen,
-  finish,
-  setFinish,
-  url,
-  Axios,
-}) => {
-  const { singleTaskData } = useSelector((state) => state.fetch);
+const TaskInputBox = ({singleTaskData}) => {
+
   const schema = yup.object().shape({
     title: yup.string().required("title is required"),
     content: yup.string(),
@@ -51,16 +42,6 @@ const TaskInputBox = ({
           className="outline-0 text-md mx-4 mb-2"
         />
       </div>
-      <TaskControl
-        url={url}
-        singleTaskData={singleTaskData}
-        setFinish={setFinish}
-        handleTaskCreated={handleTaskCreated}
-        finish={finish}
-        isModalOpen={isModalOpen}
-        setIsModalOpen={setIsModalOpen}
-        Axios={Axios}
-      />
     </>
   );
 };

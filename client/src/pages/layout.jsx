@@ -8,7 +8,7 @@ import {
 import { setSingleTaskData } from "../store/slices/taskSlice/fetchTaskSlice";
 import Axios from "../utils/axios";
 import Toast from "../components/toast";
-import TaskModal from "../pages/TaskComponents/taskModal";
+import UpdateTaskModal from "./TaskComponents/updateTaskModal";
 import CreateTask from "../pages/TaskComponents/createTask/createTaskBtn";
 import Spinner from "../components/spinner";
 import SideBar from "../pages/SideBar/sidebar";
@@ -23,7 +23,6 @@ const TaskNote = () => {
     (state) => state.filter
   );
   const { toastMessage, displayToast } = useSelector((state) => state.toast);
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [finish, setFinish] = useState("");
   const [updateTrigger, setUpdateTrigger] = useState(false);
@@ -43,20 +42,13 @@ const TaskNote = () => {
     setUpdateTrigger((prevTrigger) => !prevTrigger);
   };
 
-  const handleViewSpecificTask = (task) => {
-    console.log("click");
-    console.log(task);
-    dispatch(setSingleTaskData(task));
-    setIsModalOpen(true);
-  };
-
   const handleToggleDisplayToast = () => {
     dispatch(toggleDisplayToast());
   };
 
   useEffect(() => {
     handleGetAllTask();
-  }, [isModalOpen, finish, updateTrigger]);
+  }, [finish, updateTrigger]);
 
   return (
     <div>
@@ -75,18 +67,12 @@ const TaskNote = () => {
               handleTaskCreated={handleTaskCreated}
               setIsSideBarOpen={setIsSideBarOpen}
             />
-            <TaskList handleViewSpecificTask={handleViewSpecificTask} />
-            <CreateTask
-       
-              onTaskCreated={handleTaskCreated}
-              taskType={taskType}
-            />
+            <TaskList />
+            <CreateTask onTaskCreated={handleTaskCreated} taskType={taskType} />
           </div>
         </div>
       )}
-      <TaskModal
-        isModalOpen={isModalOpen}
-        setIsModalOpen={setIsModalOpen}
+      <UpdateTaskModal
         handleTaskCreated={handleTaskCreated}
         setFinish={setFinish}
         finish={finish}

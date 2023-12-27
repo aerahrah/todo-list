@@ -2,6 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "./slices/authSlice";
 import filterReducer from "./slices/filterSlice";
 import toastReducer from "./slices/toastSlice";
+import modalReducer from "./slices/modalSlice";
 import fetchReducer from "./slices/taskSlice/fetchTaskSlice";
 
 const store = configureStore({
@@ -10,6 +11,7 @@ const store = configureStore({
     filter: filterReducer,
     toast: toastReducer,
     fetch: fetchReducer,
+    modal: modalReducer,
   },
 });
 

@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import TaskCard from "./taskCard";
 
-const TaskList = ({ handleViewSpecificTask }) => {
+const TaskList = () => {
   const { allTaskData } = useSelector((state) => state.fetch);
 
   return (
@@ -17,11 +17,7 @@ const TaskList = ({ handleViewSpecificTask }) => {
                 {allTaskData
                   .filter((task) => task.completed)
                   .map((task) => (
-                    <TaskCard
-                      key={task._id}
-                      task={task}
-                      handleViewSpecificTask={handleViewSpecificTask}
-                    />
+                    <TaskCard key={task._id} task={task} />
                   ))}
               </div>
             </div>
@@ -35,11 +31,7 @@ const TaskList = ({ handleViewSpecificTask }) => {
                 {allTaskData
                   .filter((task) => !task.completed)
                   .map((task) => (
-                    <TaskCard
-                      key={task._id}
-                      task={task}
-                      handleViewSpecificTask={handleViewSpecificTask}
-                    />
+                    <TaskCard key={task._id} task={task} />
                   ))}
               </div>
             </div>
