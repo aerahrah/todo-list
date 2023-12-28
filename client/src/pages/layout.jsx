@@ -24,7 +24,6 @@ const TaskNote = () => {
   );
   const { toastMessage, displayToast } = useSelector((state) => state.toast);
   const [isLoading, setIsLoading] = useState(true);
-  const [finish, setFinish] = useState("");
   const [updateTrigger, setUpdateTrigger] = useState(false);
   const [isSideBarOpen, setIsSideBarOpen] = useState(false);
 
@@ -48,7 +47,7 @@ const TaskNote = () => {
 
   useEffect(() => {
     handleGetAllTask();
-  }, [finish, updateTrigger]);
+  }, [updateTrigger]);
 
   return (
     <div>
@@ -74,8 +73,6 @@ const TaskNote = () => {
       )}
       <UpdateTaskModal
         handleTaskCreated={handleTaskCreated}
-        setFinish={setFinish}
-        finish={finish}
         Axios={Axios}
       />
       {displayToast && (

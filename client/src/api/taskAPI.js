@@ -24,26 +24,6 @@ export const getAllTask = createAsyncThunk(
   }
 );
 
-export const deleteTask = async (id) => {
-  try {
-    await Axios.delete(`${url}/tasks/${id}`);
-  } catch (error) {
-    throw new Error(error.response.data.errors[0]);
-  }
-};
-
-export const updateTask = async (id, name, title, isCompleted) => {
-  try {
-    await Axios.patch(`${url}/tasks/${id}`, {
-      name: name,
-      title: title,
-      completed: isCompleted,
-    });
-  } catch (error) {
-    throw new Error(error.response.data.errors[0]);
-  }
-};
-
 export const createTask = async (title, name, projectId, taskType) => {
   try {
     const response = await Axios.post(`${url}/tasks`, {
@@ -57,3 +37,27 @@ export const createTask = async (title, name, projectId, taskType) => {
     throw new Error(error.response.data.errors[0]);
   }
 };
+
+export const deleteTask = createAsyncThunk("delete", async (id) => {
+  try {
+    await Axios.delete(`${url}/tasks/${id}`);
+  } catch (error) {
+    throw new Error(error.response.data.errors[0]);
+  }
+});
+
+export const updateTask = createAsyncThunk(
+  "update",
+  async ({ id, formData, isTaskComplete }) => {
+    try {
+      await Axios.patch(`${url}/tasks/${id}`, {
+        name: formData.content,
+        title: formData.title,
+        completed: isTaskComplete,
+      });
+      console.log("hello");
+    } catch (error) {
+      throw new Error(error.response.data.errors[0]);
+    }
+  }
+);

@@ -1,6 +1,7 @@
 import { FaRegCheckCircle, FaRegCircle } from "react-icons/fa";
 import { setSingleTaskData } from "../../store/slices/taskSlice/fetchTaskSlice";
 import { toggleUpdateTaskModal } from "../../store/slices/modalSlice";
+
 import { useDispatch } from "react-redux";
 
 const TaskCard = ({ task }) => {

@@ -7,6 +7,7 @@ const fetchTaskSlice = createSlice({
     status: "idle",
     singleTaskData: {},
     allTaskData: null,
+
     error: false,
   },
   reducers: {
@@ -23,7 +24,7 @@ const fetchTaskSlice = createSlice({
         state.status = "loading";
       })
       .addCase(getAllTask.fulfilled, (state, action) => {
-        console.log(action.payload.tasks);
+        console.log(action.payload.tasks.completed);
         state.allTaskData = action.payload.tasks;
         state.status = "succeeded";
         state.error = false;

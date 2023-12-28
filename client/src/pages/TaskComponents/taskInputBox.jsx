@@ -3,8 +3,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 
 import * as yup from "yup";
 
-const TaskInputBox = ({singleTaskData}) => {
-
+const TaskInputBox = ({ children, singleTaskData, handleSubmitFunction }) => {
   const schema = yup.object().shape({
     title: yup.string().required("title is required"),
     content: yup.string(),
@@ -25,7 +24,12 @@ const TaskInputBox = ({singleTaskData}) => {
 
   return (
     <>
-      <div className="flex flex-col text-gray-800">
+      <form
+        onSubmit={handleSubmit((formData) =>
+          handleSubmitFunction(singleTaskData._id, formData)
+        )}
+        className="flex flex-col text-gray-800"
+      >
         <input
           type="text"
           placeholder={singleTaskData?.title ? singleTaskData.title : "title"}
@@ -37,11 +41,13 @@ const TaskInputBox = ({singleTaskData}) => {
             singleTaskData?.name ? singleTaskData.name : "Start here..."
           }
           {...register("content")}
-          rows={6}
+          rows={10}
           cols={60}
-          className="outline-0 text-md mx-4 mb-2"
+          className="outline-0 text-md mx-2 mb-6"
         />
-      </div>
+        {children}
+
+      </form>
     </>
   );
 };

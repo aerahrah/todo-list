@@ -30,8 +30,8 @@ const authSlice = createSlice({
       })
       .addCase(signin.rejected, (state, action) => {
         state.status = "failed";
-        state.message = action.payload.message;
-        state.error = action.error.message;
+        state.message = action.error.message;
+        state.error = true;
       })
       .addCase(signup.pending, (state) => {
         state.status = "loading";

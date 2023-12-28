@@ -1,8 +1,9 @@
 import { deleteTask, updateTask } from "../../api/taskAPI";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { clearSingleTaskData } from "../../store/slices/taskSlice/fetchTaskSlice";
 import { toggleUpdateTaskModal } from "../../store/slices/modalSlice";
+
 import {
   setToastMessage,
   toggleDisplayToast,
@@ -17,24 +18,24 @@ import TaskModal from "../../components/taskModal";
 import TaskInputBox from "./taskInputBox";
 import React from "react";
 
-const UpdateTaskModal = ({
-  isModalOpen,
-  handleTaskCreated,
-  setIsModalOpen,
-  finish,
-  setFinish,
-  url,
-  Axios,
-}) => {
+const UpdateTaskModal = ({ handleTaskCreated, url, Axios }) => {
   const dispatch = useDispatch();
   const { singleTaskData } = useSelector((state) => state.fetch);
+  const [isTaskComplete, setIsTaskComplete] = useState(
+    () => singleTaskData.completed
+  );
   const { updateTaskModal } = useSelector((state) => state.modal);
+
   useEffect(() => {
-    if (!isModalOpen && singleTaskData._id) {
-      handleUpdateTask(singleTaskData._id);
-      handleTaskCreated();
-    }
-  }, [singleTaskData, isModalOpen]);
+    setIsTaskComplete(singleTaskData.completed);
+  }, [singleTaskData.completed]);
+  console.log(singleTaskData);
+  // useEffect(() => {
+  //   if (!isModalOpen && singleTaskData._id) {
+  //     handleUpdateTask(singleTaskData._id);
+  //     handleTaskCreated();
+  //   }
+  // }, [singleTaskData, isModalOpen]);
 
   const handleToggleUpdateModal = () => {
     dispatch(toggleUpdateTaskModal());
@@ -52,8 +53,9 @@ const UpdateTaskModal = ({
       });
   };
 
-  const handleUpdateTask = (id, taskContent) => {
-    updateTask(url, id, taskContent, finish, Axios)
+  const handleUpdateTask = (id, formData) => {
+    console.log(formData);
+    dispatch(updateTask({ id, formData, isTaskComplete }))
       .then(() => {
         dispatch(clearSingleTaskData());
         dispatch(toggleUpdateTaskModal());
@@ -68,28 +70,44 @@ const UpdateTaskModal = ({
       isModalOpen={updateTaskModal}
       toggleModal={handleToggleUpdateModal}
     >
-      <TaskInputBox singleTaskData={singleTaskData} />
-      <div className="flex justify-between items-center text-gray-800 px-4">
-        <div>
-          <button
-            onClick={() => setFinish(!finish)}
-            className=" transform absolute top-[8%] right-[4%] hover:scale-[1.04] transition duration-100"
-          >
-            {!finish ? (
-              <FaRegCircle className="text-red-700" size="1.5rem" />
-            ) : (
-              <FaRegCheckCircle className="text-blue-700" size="1.5rem" />
-            )}
-          </button>
-          <button onClick={() => handleDeleteTask(singleTaskData._id)}>
-            <FaTrash className="hover:text-red-500" />
-          </button>
+      <TaskInputBox
+        singleTaskData={singleTaskData}
+        handleSubmitFunction={handleUpdateTask}
+      >
+        <div className=" transform absolute top-[.75rem] right-[5%] ">
+          <div className="flex items-center justify-center gap-3 bg-neutral-300/80 px-4 py-2 rounded-full">
+            <button
+              type="button"
+              onClick={() => handleDeleteTask(singleTaskData._id)}
+            >
+              <FaTrash className="hover:text-red-500 h-6 -6" />
+            </button>
+            <button
+              type="button"
+              onClick={() => setIsTaskComplete(!isTaskComplete)}
+            >
+              {!isTaskComplete ? (
+                <FaRegCircle className="text-red-600 h-6 w-6" />
+              ) : (
+                <FaRegCheckCircle className="text-blue-600 h-6 w-6" />
+              )}
+            </button>
+          </div>
         </div>
-
-        <button onClick={() => handleUpdateTask(singleTaskData._id)}>
-          <FaCheck className="hover:text-sky-500" />
-        </button>
-      </div>
+        <div className="w-full flex justify-between gap-6 items-center text-gray-800 px-2">
+          <button
+            className=" w-full bg-neutral-300/80 rounded py-1.5"
+            onClick={() => handleToggleUpdateModal()}
+          >
+            Cancel
+          </button>
+          <input
+            type="submit"
+            value="Update"
+            className="cursor-pointer w-full bg-blue-500 rounded py-1.5 text-neutral-100"
+          />
+        </div>
+      </TaskInputBox>
     </TaskModal>
   );
 };
