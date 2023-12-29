@@ -5,7 +5,7 @@ const TaskList = () => {
   const { allTaskData } = useSelector((state) => state.fetch);
 
   return (
-    <div className="pt-24 bg-neutral-200/70 py-4 px-6 min-h-screen">
+    <div className="pt-24 bg-neutral-200/70 py-4 px-6 min-h-screen bg-neutral-300/50">
       {allTaskData && (
         <div>
           {allTaskData.some((task) => task.completed) && (

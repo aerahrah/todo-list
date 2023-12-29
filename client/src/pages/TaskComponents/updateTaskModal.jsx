@@ -1,7 +1,10 @@
 import { deleteTask, updateTask } from "../../api/taskAPI";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { clearSingleTaskData } from "../../store/slices/taskSlice/fetchTaskSlice";
+import {
+  clearSingleTaskData,
+  toggleRefetchData,
+} from "../../store/slices/taskSlice/fetchTaskSlice";
 import { toggleUpdateTaskModal } from "../../store/slices/modalSlice";
 
 import {
@@ -18,7 +21,7 @@ import TaskModal from "../../components/taskModal";
 import TaskInputBox from "./taskInputBox";
 import React from "react";
 
-const UpdateTaskModal = ({ handleTaskCreated, url, Axios }) => {
+const UpdateTaskModal = ({ url, Axios }) => {
   const dispatch = useDispatch();
   const { singleTaskData } = useSelector((state) => state.fetch);
   const [isTaskComplete, setIsTaskComplete] = useState(
@@ -26,26 +29,20 @@ const UpdateTaskModal = ({ handleTaskCreated, url, Axios }) => {
   );
   const { updateTaskModal } = useSelector((state) => state.modal);
 
-  useEffect(() => {
-    setIsTaskComplete(singleTaskData.completed);
-  }, [singleTaskData.completed]);
-  console.log(singleTaskData);
   // useEffect(() => {
-  //   if (!isModalOpen && singleTaskData._id) {
-  //     handleUpdateTask(singleTaskData._id);
-  //     handleTaskCreated();
-  //   }
-  // }, [singleTaskData, isModalOpen]);
+  //   setIsTaskComplete(singleTaskData.completed);
+  // }, [singleTaskData.completed]);
 
   const handleToggleUpdateModal = () => {
     dispatch(toggleUpdateTaskModal());
   };
-
+  console.log(updateTaskModal);
   const handleDeleteTask = (id) => {
-    deleteTask(url, id, Axios)
+    dispatch(deleteTask(id))
       .then(() => {
         dispatch(clearSingleTaskData());
-        dispatch(toggleUpdateTaskModal());
+        dispatch(toggleRefetchData());
+        handleToggleUpdateModal();
       })
       .catch((err) => {
         dispatch(setToastMessage(err.message));
@@ -58,7 +55,8 @@ const UpdateTaskModal = ({ handleTaskCreated, url, Axios }) => {
     dispatch(updateTask({ id, formData, isTaskComplete }))
       .then(() => {
         dispatch(clearSingleTaskData());
-        dispatch(toggleUpdateTaskModal());
+        dispatch(toggleRefetchData());
+        handleToggleUpdateModal();
       })
       .catch((err) => {
         dispatch(setToastMessage(err.message));
@@ -96,6 +94,7 @@ const UpdateTaskModal = ({ handleTaskCreated, url, Axios }) => {
         </div>
         <div className="w-full flex justify-between gap-6 items-center text-gray-800 px-2">
           <button
+            type="button"
             className=" w-full bg-neutral-300/80 rounded py-1.5"
             onClick={() => handleToggleUpdateModal()}
           >

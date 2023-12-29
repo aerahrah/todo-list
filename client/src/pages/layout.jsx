@@ -5,7 +5,7 @@ import {
   setToastMessage,
   toggleDisplayToast,
 } from "../store/slices/toastSlice";
-import { setSingleTaskData } from "../store/slices/taskSlice/fetchTaskSlice";
+
 import Axios from "../utils/axios";
 import Toast from "../components/toast";
 import UpdateTaskModal from "./TaskComponents/updateTaskModal";
@@ -22,9 +22,9 @@ const TaskNote = () => {
   const { filterTask, sortTask, taskType, projectId } = useSelector(
     (state) => state.filter
   );
+  const { refetchData } = useSelector((state) => state.fetch);
   const { toastMessage, displayToast } = useSelector((state) => state.toast);
   const [isLoading, setIsLoading] = useState(true);
-  const [updateTrigger, setUpdateTrigger] = useState(false);
   const [isSideBarOpen, setIsSideBarOpen] = useState(false);
 
   const handleGetAllTask = async () => {
@@ -37,44 +37,33 @@ const TaskNote = () => {
     }
   };
 
-  const handleTaskCreated = () => {
-    setUpdateTrigger((prevTrigger) => !prevTrigger);
-  };
-
   const handleToggleDisplayToast = () => {
     dispatch(toggleDisplayToast());
   };
 
   useEffect(() => {
     handleGetAllTask();
-  }, [updateTrigger]);
+  }, [refetchData]);
 
   return (
     <div>
       {isLoading ? (
         <Spinner />
       ) : (
-        <div>
-          <SideBar handleTaskCreated={handleTaskCreated} />
+        <div className="w-full">
+          <SideBar />
           <SideBarMobile
-            handleTaskCreated={handleTaskCreated}
             isSideBarOpen={isSideBarOpen}
             setIsSideBarOpen={setIsSideBarOpen}
           />
           <div className="min-h-screen text-gray-800 md:pl-72  flex-1 ">
-            <NavBar
-              handleTaskCreated={handleTaskCreated}
-              setIsSideBarOpen={setIsSideBarOpen}
-            />
+            <NavBar setIsSideBarOpen={setIsSideBarOpen} />
             <TaskList />
-            <CreateTask onTaskCreated={handleTaskCreated} taskType={taskType} />
+            <CreateTask taskType={taskType} />
           </div>
         </div>
       )}
-      <UpdateTaskModal
-        handleTaskCreated={handleTaskCreated}
-        Axios={Axios}
-      />
+      <UpdateTaskModal Axios={Axios} />
       {displayToast && (
         <Toast message={toastMessage} onClose={handleToggleDisplayToast} />
       )}

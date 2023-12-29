@@ -1,20 +1,17 @@
 import { Popover, Transition } from "@headlessui/react";
 import { useDispatch } from "react-redux";
+import { useState } from "react";
 import { setSortTask } from "../../store/slices/filterSlice";
-
+import { toggleRefetchData } from "../../store/slices/taskSlice/fetchTaskSlice";
 import TaskSortPopOverContent from "./taskSortPopOverContent";
-const TaskSortPopOver = ({
-  handleTaskCreated,
-  useState,
-  FaFilter,
-  FaAngleDown,
-}) => {
+
+const TaskSortPopOver = ({ FaFilter, FaAngleDown }) => {
   const dispatch = useDispatch();
   const [sortBy, setSortBy] = useState("Filter");
   const handleSortChange = (value) => {
     setSortBy(value);
     dispatch(setSortTask(value));
-    handleTaskCreated();
+    dispatch(toggleRefetchData());
   };
 
   return (
@@ -30,8 +27,8 @@ const TaskSortPopOver = ({
         />
       </Popover>
       <Popover className="relative z-30 hidden md:block">
-        <Popover.Button className=" w-full p-2 border-[1px] rounded-lg border-2 hidden md:block">
-          <div className="flex items-center justify-between">
+        <Popover.Button className=" w-full py-2 px-3 ring ring-1 ring-neutral-300 bg-neutral-200 rounded-full font-semibold hidden md:block">
+          <div className="flex items-center gap-1 justify-between">
             <p className="capitalize whitespace-nowrap w-[80px]">{sortBy}</p>
             <FaAngleDown />
           </div>

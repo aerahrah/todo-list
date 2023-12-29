@@ -97,7 +97,7 @@ const SideBarContent = ({ handleTaskCreated, isMobileView }) => {
         isMobileView
           ? "md:hidden block relative"
           : "hidden md:block md:fixed relative md:inset-y-0"
-      } bg-white w-72 text-blue-950 md:border-blue-950 md:border-r-[1px] md:shadow-md`}
+      } bg-white w-72 text-blue-950 md:border-neutral-300 md:border-r-[2px] md:shadow-md`}
     >
       <div className=" flex flex-col items-center">
         <h1 className="text-4xl font-black my-6 w-full pl-9 tracking-tight drop-shadow-sm shadow-blue-sm">
