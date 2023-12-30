@@ -24,19 +24,23 @@ export const getAllTask = createAsyncThunk(
   }
 );
 
-export const createTask = async (title, name, projectId, taskType) => {
-  try {
-    const response = await Axios.post(`${url}/tasks`, {
-      project: projectId,
-      title: title,
-      name: name,
-      taskType: taskType,
-    });
-    return response.data;
-  } catch (error) {
-    throw new Error(error.response.data.errors[0]);
+export const createTask = createAsyncThunk(
+  "create",
+  async ({ projectId, formData, taskType }) => {
+    try {
+      console.log(formData);
+      const response = await Axios.post(`${url}/tasks`, {
+        project: projectId,
+        title: formData.title,
+        name: formData.content,
+        taskType: taskType,
+      });
+      return response.data;
+    } catch (error) {
+      throw new Error(error.response.data.errors[0]);
+    }
   }
-};
+);
 
 export const deleteTask = createAsyncThunk("delete", async (id) => {
   try {

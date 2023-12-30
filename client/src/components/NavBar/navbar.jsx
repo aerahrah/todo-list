@@ -12,18 +12,16 @@ import { useState } from "react";
 
 const NavBar = ({ setIsSideBarOpen }) => {
   return (
-    <div className="w-full">
-      <div
-        className={`fixed top-0 z-10  w-full px-4 md:px-6 m-0 bg-white shadow flex items-center`}
-      >
-        <div className="md:hidden block pr-4 border-r-[2px] py-5 ">
+    <div className="fixed w-full top-0 z-30 m-0 md:pr-72 shadow bg-white ">
+      <div className="w-full flex items-center relative bg-white z-30 px-4 md:px-6 shadow">
+        <div className="md:hidden  block pr-4 border-r-[2px] py-5 ">
           <FaBars
             className="text-blue-950"
             size="1.25rem"
             onClick={() => setIsSideBarOpen(true)}
           />
         </div>
-        <div className="flex items-center w-full">
+        <div className="flex items-center w-full gap-3">
           <TaskSortPopOver FaFilter={FaFilter} FaAngleDown={FaAngleDown} />
           <TaskSearchBar FaSearch={FaSearch} />
           <Signout FaSignOutAlt={FaSignOutAlt} />

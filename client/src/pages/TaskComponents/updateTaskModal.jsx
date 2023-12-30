@@ -29,14 +29,14 @@ const UpdateTaskModal = ({ url, Axios }) => {
   );
   const { updateTaskModal } = useSelector((state) => state.modal);
 
-  // useEffect(() => {
-  //   setIsTaskComplete(singleTaskData.completed);
-  // }, [singleTaskData.completed]);
+  useEffect(() => {
+    setIsTaskComplete(singleTaskData.completed);
+  }, [singleTaskData.completed]);
 
   const handleToggleUpdateModal = () => {
     dispatch(toggleUpdateTaskModal());
   };
-  console.log(updateTaskModal);
+
   const handleDeleteTask = (id) => {
     dispatch(deleteTask(id))
       .then(() => {
@@ -71,6 +71,7 @@ const UpdateTaskModal = ({ url, Axios }) => {
       <TaskInputBox
         singleTaskData={singleTaskData}
         handleSubmitFunction={handleUpdateTask}
+        modalType="Update"
       >
         <div className=" transform absolute top-[.75rem] right-[5%] ">
           <div className="flex items-center justify-center gap-3 bg-neutral-300/80 px-4 py-2 rounded-full">

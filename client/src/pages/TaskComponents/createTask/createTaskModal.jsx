@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useState } from "react";
+import { toggleRefetchData } from "../../../store/slices/taskSlice/fetchTaskSlice";
 import { createTask } from "../../../api/taskAPI";
 import {
   setToastMessage,
@@ -9,20 +9,16 @@ import {
 import TaskModal from "../../../components/taskModal";
 import TaskInputBox from "../taskInputBox";
 
-const CreateTaskModal = ({ onTaskCreated, handleToggleCreateModal }) => {
+const CreateTaskModal = ({ handleToggleCreateModal }) => {
   const dispatch = useDispatch();
   const { taskType, projectId } = useSelector((state) => state.filter);
   const { createTaskModal } = useSelector((state) => state.modal);
-  const [taskName, setTaskName] = useState("");
-  const [taskTitle, setTaskTitle] = useState("");
 
-  const handleCreateTask = () => {
-    createTask(taskTitle, taskName, projectId, taskType)
+  const handleCreateTask = (formData) => {
+    dispatch(createTask({ projectId, formData, taskType }))
       .then(() => {
-        setIsModalCreateOpen(false);
-        setTaskName("");
-        setTaskTitle("");
-        onTaskCreated();
+        dispatch(toggleRefetchData());
+        handleToggleCreateModal();
       })
       .catch((err) => {
         dispatch(setToastMessage(err.message));
@@ -35,26 +31,22 @@ const CreateTaskModal = ({ onTaskCreated, handleToggleCreateModal }) => {
       isModalOpen={createTaskModal}
       toggleModal={handleToggleCreateModal}
     >
-      <TaskInputBox
-        taskTitle={taskTitle}
-        setTaskTitle={setTaskTitle}
-        taskName={taskName}
-        setTaskName={setTaskName}
-      />
-      <div className="flex justify-between px-6">
-        <button
-          className="hover:text-red-500 transform hover:scale-[1.02] "
-          onClick={() => handleToggleCreateModal()}
-        >
-          Cancel
-        </button>
-        <button
-          className="hover:text-blue-500 transform hover:scale-[1.02] "
-          onClick={handleCreateTask}
-        >
-          Create
-        </button>
-      </div>
+      <TaskInputBox handleSubmitFunction={handleCreateTask} modalType="Add">
+        <div className="w-full flex justify-between gap-6 items-center text-gray-800 px-2">
+          <button
+            type="button"
+            className=" w-full bg-neutral-300/80 rounded py-1.5"
+            onClick={() => handleToggleCreateModal()}
+          >
+            Cancel
+          </button>
+          <input
+            type="submit"
+            value="Add"
+            className="cursor-pointer w-full bg-blue-500 rounded py-1.5 text-neutral-100"
+          />
+        </div>
+      </TaskInputBox>
     </TaskModal>
   );
 };

@@ -14,7 +14,7 @@ const TaskSearchBar = ({ FaSearch }) => {
   };
 
   return (
-    <div className="text-neutral-700  relative flex items-center w-full py-3 mr-4 md:mr-6 ">
+    <div className="text-neutral-700  relative flex items-center w-full py-3 ">
       <FaSearch className="absolute left-[.5rem] " />
       <input
         type="text"

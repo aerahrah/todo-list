@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { toggleCreateTaskModal } from "../../../store/slices/modalSlice";
 import CreateTaskModal from "./createTaskModal";
 
-const CreateTask = ({ onTaskCreated }) => {
+const CreateTask = () => {
   const dispatch = useDispatch();
   const handleToggleCreateModal = () => {
     dispatch(toggleCreateTaskModal());
@@ -17,7 +17,6 @@ const CreateTask = ({ onTaskCreated }) => {
         </div>
       </button>
       <CreateTaskModal
-        onTaskCreated={onTaskCreated}
         handleToggleCreateModal={handleToggleCreateModal}
       ></CreateTaskModal>
     </div>
