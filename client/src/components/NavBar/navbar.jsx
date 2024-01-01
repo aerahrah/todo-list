@@ -8,7 +8,7 @@ import {
 import TaskSortPopOver from "./taskSortPopOver";
 import TaskSearchBar from "./TaskSearchBar";
 import Signout from "./signout";
-import { useState } from "react";
+import DarkModeBtn from "./darkmodeBtn";
 
 const NavBar = ({ setIsSideBarOpen }) => {
   return (
@@ -22,6 +22,7 @@ const NavBar = ({ setIsSideBarOpen }) => {
           />
         </div>
         <div className="flex items-center w-full gap-3">
+          <DarkModeBtn />
           <TaskSortPopOver FaFilter={FaFilter} FaAngleDown={FaAngleDown} />
           <TaskSearchBar FaSearch={FaSearch} />
           <Signout FaSignOutAlt={FaSignOutAlt} />
