@@ -11,9 +11,11 @@ const AddProjectPopover = ({
   return (
     <Popover>
       <Popover.Button
-        className={`flex items-center gap-4 pl-10 font-bold text-lg mt-1 hover:bg-blue-200/50 text-left py-2
+        className={`flex items-center gap-4 pl-10 font-semibold text-lg mt-1 hover:bg-neutral-300 hover:dark:bg-neutral-900/50 text-left py-2
           mx-auto rounded-lg w-full outline-0 ${
-            isButtonFocused ? "focus:bg-blue-200/50" : ""
+            isButtonFocused
+              ? "focus:bg-neutral-300  focus:dark:bg-neutral-900/50"
+              : ""
           }`}
         onClick={() => setIsButtonFocused(true)}
         onBlur={() => setIsButtonFocused(false)}

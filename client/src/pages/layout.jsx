@@ -56,7 +56,7 @@ const TaskNote = () => {
             isSideBarOpen={isSideBarOpen}
             setIsSideBarOpen={setIsSideBarOpen}
           />
-          <div className="min-h-screen text-gray-800 md:pl-72 w-full  flex-1  relative">
+          <div className="min-h-screen text-neutral-800 md:pl-72 w-full  flex-1  relative">
             <NavBar setIsSideBarOpen={setIsSideBarOpen} />
             <TaskList />
             <CreateTask />

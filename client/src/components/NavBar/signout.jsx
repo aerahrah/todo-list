@@ -10,7 +10,7 @@ const Signout = ({ FaSignOutAlt }) => {
   return (
     <>
       <div
-        className=" transform transition md:flex gap-1 hover:bg-blue-950 hover:text-blue-50 border-blue-950  border-[1px]  rounded-full p-2 items-center hover:cursor-pointer hover:shadow-md hover:scale-[1.03] duration-100 tracking-tight whitespace-nowrap hidden"
+        className="md:flex gap-1 ring ring-1 ring-neutral-300 text-neutral-800 bg-neutral-200 hover:bg-neutral-400/40  rounded-full p-2 items-center hover:cursor-pointer tracking-tight whitespace-nowrap hidden dark:bg-neutral-900 dark:ring-neutral-700/70 dark:text-neutral-300"
         onClick={handleLogout}
       >
         <FaSignOutAlt size="1.15rem" />
@@ -18,7 +18,7 @@ const Signout = ({ FaSignOutAlt }) => {
       </div>
       <div className="p-2 md:hidden border-[1px] rounded-lg">
         <FaSignOutAlt
-          className="text-blue-950"
+          className="text-neutral-800"
           size="1.45rem"
           onClick={handleLogout}
         />
