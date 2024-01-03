@@ -8,10 +8,10 @@ import {
 
 import Axios from "../utils/axios";
 import Toast from "../components/toast";
-import UpdateTaskModal from "./TaskComponents/updateTaskModal";
+import UpdateTaskModal from "./TaskComponents/updateTask/updateTaskModal";
 import CreateTask from "../pages/TaskComponents/createTask/createTaskBtn";
 import Spinner from "../components/spinner";
-import SideBar from "../pages/SideBar/sidebar";
+import SideBarContent from "./SideBar/sideBarContent";
 import SideBarMobile from "../pages/SideBar/sideBarMobile";
 import NavBar from "../components/NavBar/navbar";
 import TaskList from "../pages/taskComponents/taskList";
@@ -25,7 +25,6 @@ const TaskNote = () => {
   const { refetchData } = useSelector((state) => state.fetch);
   const { toastMessage, displayToast } = useSelector((state) => state.toast);
   const [isLoading, setIsLoading] = useState(true);
-  const [isSideBarOpen, setIsSideBarOpen] = useState(false);
 
   const handleGetAllTask = async () => {
     try {
@@ -51,13 +50,10 @@ const TaskNote = () => {
         <Spinner />
       ) : (
         <div className="w-full">
-          <SideBar />
-          <SideBarMobile
-            isSideBarOpen={isSideBarOpen}
-            setIsSideBarOpen={setIsSideBarOpen}
-          />
+          <SideBarContent isMobileView={false} />
+          <SideBarMobile />
           <div className="min-h-screen text-neutral-800 md:pl-72 w-full  flex-1  relative">
-            <NavBar setIsSideBarOpen={setIsSideBarOpen} />
+            <NavBar />
             <TaskList />
             <CreateTask />
           </div>

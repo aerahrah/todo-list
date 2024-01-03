@@ -5,6 +5,7 @@ const modalSlice = createSlice({
   initialState: {
     updateTaskModal: false,
     createTaskModal: false,
+    isSideBarOpen: false,
   },
   reducers: {
     toggleUpdateTaskModal: (state) => {
@@ -14,9 +15,15 @@ const modalSlice = createSlice({
     toggleCreateTaskModal: (state) => {
       state.createTaskModal = !state.createTaskModal;
     },
+    toggleIsSidebarOpen: (state) => {
+      state.isSideBarOpen = !state.isSideBarOpen;
+    },
   },
 });
 
-export const { toggleUpdateTaskModal, toggleCreateTaskModal } =
-  modalSlice.actions;
+export const {
+  toggleUpdateTaskModal,
+  toggleCreateTaskModal,
+  toggleIsSidebarOpen,
+} = modalSlice.actions;
 export default modalSlice.reducer;

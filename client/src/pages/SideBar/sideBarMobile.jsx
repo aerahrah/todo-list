@@ -1,15 +1,21 @@
 import { Dialog, Transition } from "@headlessui/react";
+import { toggleIsSidebarOpen } from "../../store/slices/modalSlice";
+import { useDispatch, useSelector } from "react-redux";
 import SideBarContent from "./sideBarContent";
-const SideBarMobile = ({
-  handleTaskCreated,
-  isSideBarOpen,
-  setIsSideBarOpen,
-}) => {
+
+const SideBarMobile = () => {
+  const dispatch = useDispatch();
+
+  const { isSideBarOpen } = useSelector((state) => state.modal);
+
+  const handleToggleSideBar = () => {
+    dispatch(toggleIsSidebarOpen());
+  };
   return (
     <Transition appear show={isSideBarOpen}>
       <Dialog
         as="div"
-        onClose={() => setIsSideBarOpen(false)}
+        onClose={() => handleToggleSideBar()}
         className="md:hidden"
       >
         <Transition.Child
@@ -21,10 +27,7 @@ const SideBarMobile = ({
           leaveTo="-translate-x-full fixed inset-y-0 bg-white text-gray-800 border-blue-950 border-r-[1px]  z-30"
         >
           <div>
-            <SideBarContent
-              handleTaskCreated={handleTaskCreated}
-              isMobileView={true}
-            />
+            <SideBarContent isMobileView={true} />
           </div>
         </Transition.Child>
       </Dialog>

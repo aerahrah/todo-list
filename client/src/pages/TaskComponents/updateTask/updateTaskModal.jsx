@@ -1,27 +1,21 @@
-import { deleteTask, updateTask } from "../../api/taskAPI";
+import { deleteTask, updateTask } from "../../../api/taskAPI";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   clearSingleTaskData,
   toggleRefetchData,
-} from "../../store/slices/taskSlice/fetchTaskSlice";
-import { toggleUpdateTaskModal } from "../../store/slices/modalSlice";
-
+} from "../../../store/slices/taskSlice/fetchTaskSlice";
+import { toggleUpdateTaskModal } from "../../../store/slices/modalSlice";
 import {
   setToastMessage,
   toggleDisplayToast,
-} from "../../store/slices/toastSlice";
-import {
-  FaTrash,
-  FaCheck,
-  FaRegCheckCircle,
-  FaRegCircle,
-} from "react-icons/fa";
-import TaskModal from "../../components/taskModal";
-import TaskInputBox from "./taskInputBox";
+} from "../../../store/slices/toastSlice";
+import { FaTrash, FaRegCheckCircle, FaRegCircle } from "react-icons/fa";
+import TaskModal from "../../../components/taskModal";
+import TaskInputBox from "../taskInputBox";
 import React from "react";
 
-const UpdateTaskModal = ({ url, Axios }) => {
+const UpdateTaskModal = () => {
   const dispatch = useDispatch();
   const { singleTaskData } = useSelector((state) => state.fetch);
   const [isTaskComplete, setIsTaskComplete] = useState(

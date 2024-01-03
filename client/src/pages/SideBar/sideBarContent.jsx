@@ -6,6 +6,7 @@ import {
   getSingleProject,
   updateProject,
 } from "../../api/projectAPI";
+import { toggleRefetchData } from "../../store/slices/taskSlice/fetchTaskSlice";
 import { setTaskType, setProjectId } from "../../store/slices/filterSlice";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -16,7 +17,7 @@ import ProjectItems from "./projectItems";
 import AddProjectPopover from "./addProjectPopover";
 import Notes from "./notes";
 
-const SideBarContent = ({ handleTaskCreated, isMobileView }) => {
+const SideBarContent = ({ isMobileView }) => {
   const dispatch = useDispatch();
   const { taskType } = useSelector((state) => state.filter);
   const [projectData, setProjectData] = useState([]);
@@ -31,9 +32,8 @@ const SideBarContent = ({ handleTaskCreated, isMobileView }) => {
       .then(() => {
         dispatch(setProjectId(""));
         dispatch(setTaskType("notes"));
-
         setIsDeleted(!isDeleted);
-        handleTaskCreated();
+        dispatch(toggleRefetchData());
       })
       .catch((err) => {
         dispatch(setToastMessage(err.message));
@@ -56,14 +56,14 @@ const SideBarContent = ({ handleTaskCreated, isMobileView }) => {
       dispatch(setTaskType("project"));
       dispatch(setProjectId(data.project._id));
       setIsProjectFocusId(data.project._id);
-      handleTaskCreated();
+      dispatch(toggleRefetchData());
     });
   };
   const handleGetNoteTasks = () => {
     dispatch(setTaskType("notes"));
     dispatch(setProjectId(""));
     setIsProjectFocusId(null);
-    handleTaskCreated();
+    dispatch(toggleRefetchData());
   };
   const handleCreateProject = () => {
     createProject(title)
