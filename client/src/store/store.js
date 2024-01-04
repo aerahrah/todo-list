@@ -5,6 +5,7 @@ import toastReducer from "./slices/toastSlice";
 import modalReducer from "./slices/modalSlice";
 import fetchReducer from "./slices/taskSlice/fetchTaskSlice";
 import darkModeReducer from "./slices/darkModeSlice";
+import projectReducer from "./slices/projectSlice/fetchProjectSlice";
 
 const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ const store = configureStore({
     filter: filterReducer,
     toast: toastReducer,
     fetch: fetchReducer,
+    project: projectReducer,
     modal: modalReducer,
     theme: darkModeReducer,
   },

@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { toggleRefetchData } from "../../../store/slices/taskSlice/fetchTaskSlice";
+import { toggleRefetchTaskData } from "../../../store/slices/taskSlice/fetchTaskSlice";
 import { createTask } from "../../../api/taskAPI";
 import {
   setToastMessage,
@@ -17,7 +17,7 @@ const CreateTaskModal = ({ handleToggleCreateModal }) => {
   const handleCreateTask = (formData) => {
     dispatch(createTask({ projectId, formData, taskType }))
       .then(() => {
-        dispatch(toggleRefetchData());
+        dispatch(toggleRefetchTaskData());
         handleToggleCreateModal();
       })
       .catch((err) => {

@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   clearSingleTaskData,
-  toggleRefetchData,
+  toggleRefetchTaskData,
 } from "../../../store/slices/taskSlice/fetchTaskSlice";
 import { toggleUpdateTaskModal } from "../../../store/slices/modalSlice";
 import {
@@ -35,7 +35,7 @@ const UpdateTaskModal = () => {
     dispatch(deleteTask(id))
       .then(() => {
         dispatch(clearSingleTaskData());
-        dispatch(toggleRefetchData());
+        dispatch(toggleRefetchTaskData());
         handleToggleUpdateModal();
       })
       .catch((err) => {
@@ -49,7 +49,7 @@ const UpdateTaskModal = () => {
     dispatch(updateTask({ id, formData, isTaskComplete }))
       .then(() => {
         dispatch(clearSingleTaskData());
-        dispatch(toggleRefetchData());
+        dispatch(toggleRefetchTaskData());
         handleToggleUpdateModal();
       })
       .catch((err) => {

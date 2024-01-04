@@ -1,13 +1,26 @@
+import { createProject } from "../../api/projectAPI";
+import { Popover, Transition } from "@headlessui/react";
+import { toggleRefetchProjectData } from "../../store/slices/projectSlice/fetchProjectSlice";
+import { useDispatch } from "react-redux";
 import { FaPlus } from "react-icons/fa";
 import { useState } from "react";
-const AddProjectPopover = ({
-  title,
-  setTitle,
-  handleCreateProject,
-  Popover,
-  Transition,
-}) => {
+
+const CreateProject = () => {
+  const dispatch = useDispatch();
   const [isButtonFocused, setIsButtonFocused] = useState(false);
+  const [title, setTitle] = useState("");
+  const handleCreateProject = () => {
+    dispatch(createProject(title))
+      .then(() => {
+        setTitle("");
+        dispatch(toggleRefetchProjectData());
+      })
+      .catch((err) => {
+        dispatch(setToastMessage(err.message));
+        dispatch(toggleDisplayToast());
+      });
+  };
+
   return (
     <Popover>
       <Popover.Button
@@ -56,4 +69,4 @@ const AddProjectPopover = ({
     </Popover>
   );
 };
-export default AddProjectPopover;
+export default CreateProject;

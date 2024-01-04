@@ -17,7 +17,7 @@ const ProjectItems = ({
   return (
     <Popover className="">
       <div
-        className={`relative w-[95%] mb-1 mx-auto rounded-md hover:bg-blue-500/50`}
+        className={`relative w-[95%] mb-1 mx-auto rounded-md hover:bg-neutral-300`}
         onMouseEnter={() => setHoveredProjectId(project._id)}
         onMouseLeave={() => setHoveredProjectId(null)}
         onClick={() => setHoveredProjectId(project._id)}
@@ -25,7 +25,7 @@ const ProjectItems = ({
         <h3
           className={`text-lg flex items-center  gap-4 hover:cursor-pointer pl-10 py-2 rounded-md mx-auto ${
             isProjectFocusId === project._id
-              ? "bg-neutral-500/50 font-semibold"
+              ? "bg-neutral-300 font-semibold"
               : ""
           }`}
           onClick={() => handleGetSingleProject(project._id)}

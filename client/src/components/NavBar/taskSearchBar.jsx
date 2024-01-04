@@ -1,7 +1,7 @@
 import { useDispatch } from "react-redux";
 import { useState } from "react";
 import { setFilterTask } from "../../store/slices/filterSlice";
-import { toggleRefetchData } from "../../store/slices/taskSlice/fetchTaskSlice";
+import { toggleRefetchTaskData } from "../../store/slices/taskSlice/fetchTaskSlice";
 
 const TaskSearchBar = ({ FaSearch }) => {
   const dispatch = useDispatch();
@@ -10,7 +10,7 @@ const TaskSearchBar = ({ FaSearch }) => {
   const handleInputChange = (e) => {
     setSearchTerm(e.target.value);
     dispatch(setFilterTask(e.target.value));
-    dispatch(toggleRefetchData());
+    dispatch(toggleRefetchTaskData());
   };
 
   return (

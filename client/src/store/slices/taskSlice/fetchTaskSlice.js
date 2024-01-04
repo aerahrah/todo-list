@@ -2,11 +2,11 @@ import { createSlice } from "@reduxjs/toolkit";
 import { getAllTask } from "../../../api/taskAPI";
 
 const fetchTaskSlice = createSlice({
-  name: "fetch",
+  name: "fetchTask",
   initialState: {
     status: "idle",
     singleTaskData: {},
-    allTaskData: null,
+    allTaskData: [],
     refetchData: false,
     error: false,
   },
@@ -17,7 +17,7 @@ const fetchTaskSlice = createSlice({
     clearSingleTaskData: (state) => {
       state.singleTaskData = {};
     },
-    toggleRefetchData: (state) => {
+    toggleRefetchTaskData: (state) => {
       state.refetchData = !state.refetchData;
     },
   },
@@ -39,6 +39,6 @@ const fetchTaskSlice = createSlice({
   },
 });
 
-export const { setSingleTaskData, clearSingleTaskData, toggleRefetchData } =
+export const { setSingleTaskData, clearSingleTaskData, toggleRefetchTaskData } =
   fetchTaskSlice.actions;
 export default fetchTaskSlice.reducer;

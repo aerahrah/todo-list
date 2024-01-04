@@ -2,11 +2,12 @@ import { useState, useEffect } from "react";
 import { Popover, Transition } from "@headlessui/react";
 import {
   deleteProject,
-  createProject,
   getSingleProject,
   updateProject,
+  getAllProject,
 } from "../../api/projectAPI";
-import { toggleRefetchData } from "../../store/slices/taskSlice/fetchTaskSlice";
+import { toggleRefetchProjectData } from "../../store/slices/projectSlice/fetchProjectSlice";
+import { toggleRefetchTaskData } from "../../store/slices/taskSlice/fetchTaskSlice";
 import { setTaskType, setProjectId } from "../../store/slices/filterSlice";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -14,26 +15,35 @@ import {
   toggleDisplayToast,
 } from "../../store/slices/toastSlice";
 import ProjectItems from "./projectItems";
-import AddProjectPopover from "./addProjectPopover";
+import CreateProject from "./createProject";
 import Notes from "./notes";
 
 const SideBarContent = ({ isMobileView }) => {
   const dispatch = useDispatch();
+  const { refetchData, allProjectData } = useSelector((state) => state.project);
   const { taskType } = useSelector((state) => state.filter);
-  const [projectData, setProjectData] = useState([]);
   const [hoveredProjectId, setHoveredProjectId] = useState("");
   const [isDeleted, setIsDeleted] = useState(false);
   const [title, setTitle] = useState("");
   const [isProjectFocusId, setIsProjectFocusId] = useState("");
-  const [rerender, setRerender] = useState(false);
+
+  const handleGetAllProject = async () => {
+    try {
+      dispatch(getAllProject());
+    } catch (err) {
+      dispatch(setToastMessage(err.message));
+      dispatch(toggleDisplayToast());
+    }
+  };
 
   const handleDeleteProject = (id) => {
     deleteProject(id)
       .then(() => {
         dispatch(setProjectId(""));
         dispatch(setTaskType("notes"));
+        dispatch(toggleRefetchTaskData());
+        dispatch(toggleRefetchProjectData());
         setIsDeleted(!isDeleted);
-        dispatch(toggleRefetchData());
       })
       .catch((err) => {
         dispatch(setToastMessage(err.message));
@@ -41,45 +51,26 @@ const SideBarContent = ({ isMobileView }) => {
       });
   };
 
-  const handleGetAllProject = async () => {
-    try {
-      const response = await Axios.get(`${url}/projects`);
-      const { project } = response.data;
-      setProjectData(project);
-    } catch (err) {
-      dispatch(setToastMessage(err.message));
-      dispatch(toggleDisplayToast());
-    }
-  };
   const handleGetSingleProject = (id) => {
     getSingleProject(id).then((data) => {
       dispatch(setTaskType("project"));
       dispatch(setProjectId(data.project._id));
+      dispatch(toggleRefetchTaskData());
+      dispatch(toggleRefetchProjectData());
       setIsProjectFocusId(data.project._id);
-      dispatch(toggleRefetchData());
     });
   };
   const handleGetNoteTasks = () => {
     dispatch(setTaskType("notes"));
     dispatch(setProjectId(""));
+    dispatch(toggleRefetchTaskData());
+    dispatch(toggleRefetchProjectData());
     setIsProjectFocusId(null);
-    dispatch(toggleRefetchData());
   };
-  const handleCreateProject = () => {
-    createProject(title)
-      .then(() => {
-        setRerender(!rerender);
-        setTitle("");
-      })
-      .catch((err) => {
-        dispatch(setToastMessage(err.message));
-        dispatch(toggleDisplayToast());
-      });
-  };
+
   const handleUpdateProject = (id) => {
     updateProject(title, id)
       .then(() => {
-        setRerender(!rerender);
         setTitle("");
       })
       .catch((err) => {
@@ -89,7 +80,7 @@ const SideBarContent = ({ isMobileView }) => {
   };
   useEffect(() => {
     handleGetAllProject();
-  }, [isDeleted, rerender]);
+  }, [isDeleted, refetchData]);
 
   return (
     <div
@@ -108,35 +99,33 @@ const SideBarContent = ({ isMobileView }) => {
           <h2 className=" text-3xl font-bold  mb-6 pl-10 tracking-tight">
             Projects
           </h2>
-          <div
-            className={`w-full md:max-h-[350px] max-h-[60vh] md:overflow-hidden md:hover:overflow-y-auto overflow-y-auto`}
-          >
-            {projectData.map((project) => (
-              <ProjectItems
-                hoveredProjectId={hoveredProjectId}
-                setHoveredProjectId={setHoveredProjectId}
-                handleDeleteProject={handleDeleteProject}
-                handleGetSingleProject={handleGetSingleProject}
-                project={project}
-                isProjectFocusId={isProjectFocusId}
-                setIsProjectFocusId={setIsProjectFocusId}
-                Popover={Popover}
-                Transition={Transition}
-                projectTitleName={title}
-                setProjectTitleName={setTitle}
-                handleUpdateProject={handleUpdateProject}
-                key={project._id}
-              />
-            ))}
-          </div>
+          {allProjectData && (
+            <div
+              className={`w-full md:max-h-[350px] max-h-[60vh] md:overflow-hidden md:hover:overflow-y-auto overflow-y-auto`}
+            >
+              {console.log(allProjectData)}
+
+              {allProjectData.map((project) => (
+                <ProjectItems
+                  hoveredProjectId={hoveredProjectId}
+                  setHoveredProjectId={setHoveredProjectId}
+                  handleDeleteProject={handleDeleteProject}
+                  handleGetSingleProject={handleGetSingleProject}
+                  project={project}
+                  isProjectFocusId={isProjectFocusId}
+                  setIsProjectFocusId={setIsProjectFocusId}
+                  Popover={Popover}
+                  Transition={Transition}
+                  projectTitleName={title}
+                  setProjectTitleName={setTitle}
+                  handleUpdateProject={handleUpdateProject}
+                  key={project._id}
+                />
+              ))}
+            </div>
+          )}
           <div className="w-[95%] mx-auto">
-            <AddProjectPopover
-              title={title}
-              setTitle={setTitle}
-              handleCreateProject={handleCreateProject}
-              Popover={Popover}
-              Transition={Transition}
-            />
+            <CreateProject />
           </div>
         </div>
       </div>
