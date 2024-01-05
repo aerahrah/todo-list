@@ -16,12 +16,8 @@ const Signout = ({ FaSignOutAlt }) => {
         <FaSignOutAlt size="1.15rem" />
         Log Out
       </div>
-      <div className="p-2 md:hidden border-[1px] rounded-lg">
-        <FaSignOutAlt
-          className="text-neutral-800"
-          size="1.45rem"
-          onClick={handleLogout}
-        />
+      <div className="p-2 md:hidden  bg-neutral-200 ring ring-1   ring-neutral-300 rounded-full dark:ring-neutral-700 dark:bg-neutral-900">
+        <FaSignOutAlt size="1.45rem" onClick={handleLogout} />
       </div>
     </>
   );

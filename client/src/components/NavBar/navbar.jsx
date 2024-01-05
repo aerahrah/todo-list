@@ -21,15 +21,11 @@ const NavBar = () => {
 
   return (
     <div className="fixed w-full top-0 z-30 m-0 md:pr-72 shadow bg-white ">
-      <div className="w-full flex items-center relative bg-white dark:bg-neutral-800 z-30 px-4 md:px-6 shadow">
-        <div className="md:hidden block pr-4 border-r-[2px] py-5">
-          <FaBars
-            className="text-blue-950"
-            size="1.25rem"
-            onClick={() => handleToggleSideBar()}
-          />
+      <div className="w-full flex items-center relative bg-white dark:bg-neutral-800 z-30 shadow text-neutral-800 dark:text-neutral-300 relative px-3 md:px-4 lg:px-6">
+        <div className="md:hidden block pr-3 border-r-[2px] border-neutral-300 dark:border-neutral-700 py-5 mr-1.5">
+          <FaBars className=" h-5 w-5" onClick={() => handleToggleSideBar()} />
         </div>
-        <div className="flex items-center w-full gap-3 text-lg">
+        <div className="flex items-center w-full gap-1.5 md:gap-3 text-lg ">
           <DarkModeBtn />
           <TaskSortPopOver FaFilter={FaFilter} FaAngleDown={FaAngleDown} />
           <TaskSearchBar FaSearch={FaSearch} />

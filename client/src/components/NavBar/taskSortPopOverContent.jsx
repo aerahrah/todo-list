@@ -1,4 +1,6 @@
+import { useDispatch, useSelector } from "react-redux";
 const TaskSortPopOverContent = ({ handleSortChange, Popover, Transition }) => {
+  const { theme } = useSelector((state) => state.theme);
   const filterOption = ["all tasks", "completed", "incomplete"];
   return (
     <Transition
@@ -9,10 +11,20 @@ const TaskSortPopOverContent = ({ handleSortChange, Popover, Transition }) => {
       leaveFrom="transform scale-100 opacity-100"
       leaveTo="transform scale-95 opacity-0"
     >
-      <Popover.Panel className="absolute mt-2 border-[1px] bg-white p-4 shadow-md rounded-lg right-[50%] ring ring-1 ring-neutral-300 transform translate-x-[50%] ">
+      <Popover.Panel
+        className={`absolute mt-2   p-4 shadow-lg rounded-lg right-[50%] ring ring-1  transform translate-x-[50%] ${
+          theme === "light"
+            ? "bg-white ring-neutral-300"
+            : "bg-neutral-900  ring-neutral-800"
+        }`}
+      >
         {filterOption.map((option) => (
           <Popover.Button
-            className="hover:border-blue-950 border-b-[1px] w-full text-left pb-1.5 capitalize font-semibold"
+            className={`border-b-[1px] w-full text-left pb-1.5 capitalize font-semibold ${
+              theme === "light"
+                ? "border-neutral-300 hover:border-neutral-800"
+                : "border-neutral-800 hover:border-neutral-300 "
+            }`}
             key={option}
             onClick={() => handleSortChange(option)}
           >

@@ -17,6 +17,7 @@ import React from "react";
 
 const UpdateTaskModal = () => {
   const dispatch = useDispatch();
+  const { theme } = useSelector((state) => state.theme);
   const { singleTaskData } = useSelector((state) => state.fetch);
   const [isTaskComplete, setIsTaskComplete] = useState(
     () => singleTaskData.completed
@@ -66,9 +67,14 @@ const UpdateTaskModal = () => {
         singleTaskData={singleTaskData}
         handleSubmitFunction={handleUpdateTask}
         modalType="Update"
+        theme={theme}
       >
-        <div className=" transform absolute top-[.75rem] right-[5%] ">
-          <div className="flex items-center justify-center gap-3 bg-neutral-300/80 px-4 py-2 rounded-full">
+        <div className=" transform absolute top-[.75rem] right-[4%] ">
+          <div
+            className={`flex items-center justify-center gap-3  px-4 py-2 rounded-full ${
+              theme === "light" ? "bg-neutral-300" : "bg-neutral-900"
+            }`}
+          >
             <button
               type="button"
               onClick={() => handleDeleteTask(singleTaskData._id)}
@@ -87,7 +93,7 @@ const UpdateTaskModal = () => {
             </button>
           </div>
         </div>
-        <div className="w-full flex justify-between gap-6 items-center text-gray-800 px-2">
+        <div className="w-full flex justify-between gap-6 items-center text-gray-800 ">
           <button
             type="button"
             className=" w-full bg-neutral-300/80 rounded py-1.5"

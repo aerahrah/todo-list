@@ -20,6 +20,7 @@ import Notes from "./notes";
 
 const SideBarContent = ({ isMobileView }) => {
   const dispatch = useDispatch();
+  const { theme } = useSelector((state) => state.theme);
   const { refetchData, allProjectData } = useSelector((state) => state.project);
   const { taskType } = useSelector((state) => state.filter);
   const [hoveredProjectId, setHoveredProjectId] = useState("");
@@ -86,9 +87,17 @@ const SideBarContent = ({ isMobileView }) => {
     <div
       className={`${
         isMobileView
-          ? "md:hidden block relative"
-          : "hidden md:block fixed z-30 md:inset-y-0"
-      } bg-white dark:bg-neutral-800 w-72 text-neutral-800 dark:text-neutral-300 md:border-neutral-300 md:dark:border-neutral-700/70 md:border-r-[2px]  md:shadow-md`}
+          ? `md:hidden block relative ${
+              theme === "light"
+                ? "bg-white text-neutral-800"
+                : "bg-neutral-800 text-neutral-300"
+            }`
+          : `hidden md:block fixed z-30 md:inset-y-0 ${
+              theme === "light"
+                ? "bg-white text-neutral-800 border-neutral-300"
+                : "bg-neutral-800 text-neutral-300 border-neutral-700/70"
+            }`
+      }  inset-0 w-72 md:border-r-[2px]  md:shadow-md`}
     >
       <div className=" flex flex-col items-center">
         <h1 className="text-4xl font-black my-6 w-full pl-9 tracking-tight drop-shadow-sm shadow-blue-sm">
