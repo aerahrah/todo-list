@@ -1,12 +1,9 @@
-import { useState, useEffect } from "react";
-import { Popover, Transition } from "@headlessui/react";
+import { useEffect } from "react";
+import { getAllProject } from "../../api/projectAPI";
 import {
-  deleteProject,
-  getSingleProject,
-  updateProject,
-  getAllProject,
-} from "../../api/projectAPI";
-import { toggleRefetchProjectData } from "../../store/slices/projectSlice/fetchProjectSlice";
+  toggleRefetchProjectData,
+  setIsFocusProject,
+} from "../../store/slices/projectSlice/fetchProjectSlice";
 import { toggleRefetchTaskData } from "../../store/slices/taskSlice/fetchTaskSlice";
 import { setTaskType, setProjectId } from "../../store/slices/filterSlice";
 import { useDispatch, useSelector } from "react-redux";
@@ -23,10 +20,6 @@ const SideBarContent = ({ isMobileView }) => {
   const { theme } = useSelector((state) => state.theme);
   const { refetchData, allProjectData } = useSelector((state) => state.project);
   const { taskType } = useSelector((state) => state.filter);
-  const [hoveredProjectId, setHoveredProjectId] = useState("");
-  const [isDeleted, setIsDeleted] = useState(false);
-  const [title, setTitle] = useState("");
-  const [isProjectFocusId, setIsProjectFocusId] = useState("");
 
   const handleGetAllProject = async () => {
     try {
@@ -37,51 +30,25 @@ const SideBarContent = ({ isMobileView }) => {
     }
   };
 
-  const handleDeleteProject = (id) => {
-    deleteProject(id)
-      .then(() => {
-        dispatch(setProjectId(""));
-        dispatch(setTaskType("notes"));
-        dispatch(toggleRefetchTaskData());
-        dispatch(toggleRefetchProjectData());
-        setIsDeleted(!isDeleted);
-      })
-      .catch((err) => {
-        dispatch(setToastMessage(err.message));
-        dispatch(toggleDisplayToast());
-      });
+  const handleGetSingleProject = (project) => {
+    dispatch(setTaskType("project"));
+    dispatch(setProjectId(project._id));
+    dispatch(setIsFocusProject(project._id));
+    dispatch(toggleRefetchTaskData());
+    dispatch(toggleRefetchProjectData());
   };
 
-  const handleGetSingleProject = (id) => {
-    getSingleProject(id).then((data) => {
-      dispatch(setTaskType("project"));
-      dispatch(setProjectId(data.project._id));
-      dispatch(toggleRefetchTaskData());
-      dispatch(toggleRefetchProjectData());
-      setIsProjectFocusId(data.project._id);
-    });
-  };
   const handleGetNoteTasks = () => {
     dispatch(setTaskType("notes"));
     dispatch(setProjectId(""));
+    dispatch(setIsFocusProject(null));
     dispatch(toggleRefetchTaskData());
     dispatch(toggleRefetchProjectData());
-    setIsProjectFocusId(null);
   };
 
-  const handleUpdateProject = (id) => {
-    updateProject(title, id)
-      .then(() => {
-        setTitle("");
-      })
-      .catch((err) => {
-        dispatch(setToastMessage(err.message));
-        dispatch(toggleDisplayToast());
-      });
-  };
   useEffect(() => {
     handleGetAllProject();
-  }, [isDeleted, refetchData]);
+  }, [refetchData]);
 
   return (
     <div
@@ -112,22 +79,10 @@ const SideBarContent = ({ isMobileView }) => {
             <div
               className={`w-full md:max-h-[350px] max-h-[60vh] md:overflow-hidden md:hover:overflow-y-auto overflow-y-auto`}
             >
-              {console.log(allProjectData)}
-
               {allProjectData.map((project) => (
                 <ProjectItems
-                  hoveredProjectId={hoveredProjectId}
-                  setHoveredProjectId={setHoveredProjectId}
-                  handleDeleteProject={handleDeleteProject}
-                  handleGetSingleProject={handleGetSingleProject}
                   project={project}
-                  isProjectFocusId={isProjectFocusId}
-                  setIsProjectFocusId={setIsProjectFocusId}
-                  Popover={Popover}
-                  Transition={Transition}
-                  projectTitleName={title}
-                  setProjectTitleName={setTitle}
-                  handleUpdateProject={handleUpdateProject}
+                  handleGetSingleProject={handleGetSingleProject}
                   key={project._id}
                 />
               ))}

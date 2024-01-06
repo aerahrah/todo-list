@@ -1,9 +1,9 @@
 import { FaPlus } from "react-icons/fa";
+import { Popover, Transition } from "@headlessui/react";
+
 const UpdateProjectPopover = ({
-  projectTitleName,
-  setProjectTitleName,
-  Popover,
-  Transition,
+  title,
+  setTitle,
   handleUpdateProject,
   projectId,
 }) => {
@@ -21,9 +21,9 @@ const UpdateProjectPopover = ({
           <input
             className="outline-0 p-1  focus:border-blue-950 border-b-2 w-full"
             type="text"
-            placeholder={projectTitleName}
-            value={projectTitleName}
-            onChange={(e) => setProjectTitleName(e.target.value)}
+            placeholder={title}
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
           />
           <div className="mt-2 flex justify-between">
             <Popover.Button className="hover:text-red-500 transform hover:scale-[1.02] ">
