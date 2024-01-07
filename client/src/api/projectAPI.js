@@ -41,12 +41,3 @@ export const updateProject = createAsyncThunk(
     }
   }
 );
-
-export const getSingleProject = async (id) => {
-  try {
-    const response = await Axios.get(`${url}/projects/${id}`);
-    return response.data;
-  } catch (error) {
-    throw new Error(error.response.data.errors[0]);
-  }
-};

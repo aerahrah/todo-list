@@ -4,15 +4,13 @@ const authenticate = require("../middleware/authValidation");
 const {
   getAllTask,
   createTask,
-  getSingleTask,
   updateTask,
   deleteTask,
-} = require("../controllers/tasks");
+} = require("../controllers/tasksController");
 
 router.route("/").get(authenticate, getAllTask).post(authenticate, createTask);
 router
   .route("/:id")
-  .get(authenticate, getSingleTask)
   .delete(authenticate, deleteTask)
   .patch(authenticate, updateTask);
 

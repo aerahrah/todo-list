@@ -72,14 +72,7 @@ const createTask = tryCatch(async (req, res) => {
     .status(201)
     .json({ message: `Task: ${title} created successfully` });
 });
-const getSingleTask = tryCatch(async (req, res, next) => {
-  const { id: taskId } = req.params;
-  const task = await Task.findOne({ _id: taskId });
-  if (!task) {
-    return next(createCustomError(`No task with id : ${taskId}`, 404));
-  }
-  return res.status(200).json({ task });
-});
+
 const deleteTask = tryCatch(async (req, res, next) => {
   const { id: taskId } = req.params;
   const task = await Task.findOneAndDelete({ _id: taskId });
@@ -104,7 +97,6 @@ const updateTask = tryCatch(async (req, res, next) => {
 module.exports = {
   getAllTask,
   createTask,
-  getSingleTask,
   updateTask,
   deleteTask,
 };
