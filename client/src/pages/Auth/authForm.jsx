@@ -31,10 +31,13 @@ const AuthForm = ({ title, handleAuth }) => {
   });
 
   useEffect(() => {
-    if (message === "User registered successfully") {
+    if (
+      message === "User registered successfully" ||
+      message === "Successfully signed in"
+    ) {
       const timer = setTimeout(() => {
         dispatch(clearAuthMessage());
-      }, 2000);
+      }, 1000);
 
       return () => {
         clearTimeout(timer);
@@ -44,7 +47,7 @@ const AuthForm = ({ title, handleAuth }) => {
       const timer = setTimeout(() => {
         dispatch(clearAuthError());
         dispatch(clearAuthMessage());
-      }, 2000);
+      }, 1000);
 
       return () => {
         clearTimeout(timer);
@@ -66,7 +69,7 @@ const AuthForm = ({ title, handleAuth }) => {
           <div className="flex flex-col gap-8 relative">
             <div className="w-full relative text-lg ">
               <input
-                className={`text-lg border-b-2 capitalize min-w-[14rem] w-full outline-0 bg-white dark:bg-neutral-800 ${
+                className={`text-lg border-b-2 min-w-[14rem] w-full outline-0 bg-white dark:bg-neutral-800 ${
                   errors.username
                     ? "border-red-500"
                     : "border-neutral-300 dark:border-neutral-700 focus:border-blue-950"

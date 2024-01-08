@@ -9,7 +9,8 @@ import {
 } from "../../store/slices/projectSlice/fetchProjectSlice";
 import { FaEdit, FaTrash, FaTasks } from "react-icons/fa";
 import { Popover } from "@headlessui/react";
-import UpdateProjectPopover from "./updateProjectPopover";
+import { deleteProject, updateProject } from "../../api/projectAPI";
+import UpdateProjectPopover from "./updateProjectBtn";
 
 const ProjectItems = ({ handleGetSingleProject, project }) => {
   const dispatch = useDispatch();
@@ -21,7 +22,7 @@ const ProjectItems = ({ handleGetSingleProject, project }) => {
   const [title, setTitle] = useState("");
 
   const handleDeleteProject = (id) => {
-    deleteProject(id)
+    dispatch(deleteProject(id))
       .then(() => {
         dispatch(setProjectId(""));
         dispatch(setTaskType("notes"));
@@ -35,9 +36,11 @@ const ProjectItems = ({ handleGetSingleProject, project }) => {
   };
 
   const handleUpdateProject = (id) => {
-    updateProject(title, id)
+    dispatch(updateProject({ title, id }))
       .then(() => {
         setTitle("");
+        dispatch(toggleRefetchTaskData());
+        dispatch(toggleRefetchProjectData());
       })
       .catch((err) => {
         dispatch(setToastMessage(err.message));

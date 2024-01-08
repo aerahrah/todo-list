@@ -31,11 +31,13 @@ export const createProject = createAsyncThunk("addProject", async (title) => {
 });
 export const updateProject = createAsyncThunk(
   "updateProject",
-  async (title, id) => {
+  async ({ title, id }) => {
+    console.log(title, id);
     try {
-      await Axios.patch(`${url}/projects/${id}`, {
+      const response = await Axios.patch(`${url}/projects/${id}`, {
         projectTitle: title,
       });
+      console.log(response);
     } catch (error) {
       throw new Error(error.response.data.errors[0]);
     }
