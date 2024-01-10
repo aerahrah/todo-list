@@ -52,12 +52,13 @@ export const deleteTask = createAsyncThunk("delete", async (id) => {
 
 export const updateTask = createAsyncThunk(
   "update",
-  async ({ id, formData, isTaskComplete }) => {
+  async ({ id, formData, isTaskComplete, colorTheme }) => {
     try {
       await Axios.patch(`${url}/tasks/${id}`, {
         name: formData.content,
         title: formData.title,
         completed: isTaskComplete,
+        color: colorTheme,
       });
       console.log("hello");
     } catch (error) {

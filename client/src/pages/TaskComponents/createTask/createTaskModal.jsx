@@ -37,7 +37,7 @@ const CreateTaskModal = ({ handleToggleCreateModal }) => {
         theme={theme}
         modalType="Add"
       >
-        <div className="w-full flex justify-between gap-6 items-center text-gray-800 px-2">
+        <div className="w-full flex justify-between gap-6 items-center text-gray-800">
           <button
             type="button"
             className=" w-full bg-neutral-300/80 rounded py-1.5"

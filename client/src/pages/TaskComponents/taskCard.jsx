@@ -1,7 +1,7 @@
 import { FaRegCheckCircle, FaRegCircle } from "react-icons/fa";
 import { setSingleTaskData } from "../../store/slices/taskSlice/fetchTaskSlice";
 import { toggleUpdateTaskModal } from "../../store/slices/modalSlice";
-
+import { getColorOption, getTextColorOption } from "../../utils/getColorOption";
 import { useDispatch } from "react-redux";
 
 const TaskCard = ({ task }) => {
@@ -14,6 +14,10 @@ const TaskCard = ({ task }) => {
   return (
     <ul
       className="bg-white dark:bg-neutral-800 text-neutral-800 dark:text-neutral-300 ring ring-1 ring-neutral-300 dark:ring-neutral-700/70 min-w-full max-w-md py-2 md:px-4 rounded-xl   shadow hover:shadow mb-4 px-2 overflow-hidden max-h-96 cursor-pointer relative"
+      style={{
+        background: getColorOption(task.color),
+        color: getTextColorOption(task.color),
+      }}
       onClick={() => handleViewSpecificTask(task)}
     >
       <li className="my-2 text-lg font-semibold overflow-hidden">

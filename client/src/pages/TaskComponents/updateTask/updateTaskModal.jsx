@@ -10,7 +10,14 @@ import {
   setToastMessage,
   toggleDisplayToast,
 } from "../../../store/slices/toastSlice";
-import { FaTrash, FaRegCheckCircle, FaRegCircle } from "react-icons/fa";
+import {
+  FaTrash,
+  FaRegCheckCircle,
+  FaRegCircle,
+  FaPalette,
+} from "react-icons/fa";
+import { Popover } from "@headlessui/react";
+import TaskColorPalette from "../taskColorPalette";
 import TaskModal from "../../../components/taskModal";
 import TaskInputBox from "../taskInputBox";
 import React from "react";
@@ -22,6 +29,7 @@ const UpdateTaskModal = () => {
   const [isTaskComplete, setIsTaskComplete] = useState(
     () => singleTaskData.completed
   );
+  const [colorTheme, setColorTheme] = useState();
   const { updateTaskModal } = useSelector((state) => state.modal);
 
   useEffect(() => {
@@ -46,8 +54,7 @@ const UpdateTaskModal = () => {
   };
 
   const handleUpdateTask = (id, formData) => {
-    console.log(formData);
-    dispatch(updateTask({ id, formData, isTaskComplete }))
+    dispatch(updateTask({ id, formData, isTaskComplete, colorTheme }))
       .then(() => {
         dispatch(clearSingleTaskData());
         dispatch(toggleRefetchTaskData());
@@ -69,6 +76,7 @@ const UpdateTaskModal = () => {
         modalType="Update"
         theme={theme}
       >
+        <div className=" transform absolute top-[.75rem] left-[4%] "></div>
         <div className=" transform absolute top-[.75rem] right-[4%] ">
           <div
             className={`flex items-center justify-center gap-3  px-4 py-2 rounded-full ${
@@ -79,8 +87,15 @@ const UpdateTaskModal = () => {
               type="button"
               onClick={() => handleDeleteTask(singleTaskData._id)}
             >
-              <FaTrash className="hover:text-red-500 h-6 -6" />
+              <FaTrash className="hover:text-red-500 h-5 w-4" />
             </button>
+            <Popover>
+              <Popover.Button className="block">
+                <FaPalette className=" h-5 w-6 " />
+              </Popover.Button>
+              <TaskColorPalette theme={theme} setColorTheme={setColorTheme} />
+            </Popover>
+
             <button
               type="button"
               onClick={() => setIsTaskComplete(!isTaskComplete)}

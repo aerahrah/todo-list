@@ -1,9 +1,11 @@
 import { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 const TaskModal = ({ children, isModalOpen, toggleModal }) => {
+  const { singleTaskData } = useSelector((state) => state.fetch);
   const { theme } = useSelector((state) => state.theme);
+
   return (
     <Transition appear show={isModalOpen} as={Fragment}>
       <Dialog as="div" onClose={() => toggleModal()}>

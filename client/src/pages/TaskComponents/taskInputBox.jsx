@@ -43,7 +43,7 @@ const TaskInputBox = ({
           type="text"
           placeholder={singleTaskData?.title ? singleTaskData.title : "title"}
           {...register("title")}
-          className={`outline-0 mb-6 text-xl font-semibold text-center capitalize ${
+          className={`outline-0 mb-6 text-xl font-semibold  capitalize w-[60%]  ${
             theme === "light" ? "bg-white" : "bg-neutral-800"
           }`}
         />
@@ -54,7 +54,7 @@ const TaskInputBox = ({
           {...register("content")}
           rows={10}
           cols={60}
-          className={`outline-0 text-base p-1 mb-6 ${
+          className={`outline-0 text-base px-1 mb-6 ${
             theme === "light" ? "bg-white" : "bg-neutral-800"
           }`}
         />
