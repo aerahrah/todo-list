@@ -13,6 +13,7 @@ const CreateTaskModal = ({ handleToggleCreateModal }) => {
   const dispatch = useDispatch();
   const { taskType, projectId } = useSelector((state) => state.filter);
   const { createTaskModal } = useSelector((state) => state.modal);
+  const { theme } = useSelector((state) => state.theme);
 
   const handleCreateTask = (formData) => {
     dispatch(createTask({ projectId, formData, taskType }))
@@ -31,7 +32,11 @@ const CreateTaskModal = ({ handleToggleCreateModal }) => {
       isModalOpen={createTaskModal}
       toggleModal={handleToggleCreateModal}
     >
-      <TaskInputBox handleSubmitFunction={handleCreateTask} modalType="Add">
+      <TaskInputBox
+        handleSubmitFunction={handleCreateTask}
+        theme={theme}
+        modalType="Add"
+      >
         <div className="w-full flex justify-between gap-6 items-center text-gray-800 px-2">
           <button
             type="button"

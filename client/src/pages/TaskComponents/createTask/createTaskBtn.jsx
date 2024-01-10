@@ -10,10 +10,16 @@ const CreateTask = () => {
   };
 
   return (
-    <div className="fixed bottom-8 right-8">
+    <div className="fixed bottom-[3rem] right-[4rem]">
       <button onClick={() => handleToggleCreateModal()}>
-        <div className="transform transition duration-100 hover:-translate-y-[4px] hover:scale-[1.02] hover:bg-blue-400  bg-blue-300 p-4 rounded-full shadow-sm hover:shadow-md hover:shadow-gray-400 shadow-gray-400">
-          <FaPen size="34px" className="text-blue-950" />
+        <div
+          className="transform transition duration-100 hover:-translate-y-[4px] hover:scale-[1.02] bg-neutral-800 dark:bg-neutral-300 p-4 rounded-full shadow-sm hover:shadow-md hover:shadow-neutral-400
+        dark:hover:shadow-neutral-900  "
+        >
+          <FaPen
+            size="34px"
+            className="text-neutral-300 dark:text-neutral-800"
+          />
         </div>
       </button>
       <CreateTaskModal

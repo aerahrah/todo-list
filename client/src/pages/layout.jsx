@@ -47,7 +47,9 @@ const TaskNote = () => {
   return (
     <div>
       {isLoading ? (
-        <Spinner />
+        <div className="w-full h-screen bg-white dark:bg-neutral-900">
+          <Spinner />
+        </div>
       ) : (
         <div className="w-full">
           <SideBarContent isMobileView={false} />

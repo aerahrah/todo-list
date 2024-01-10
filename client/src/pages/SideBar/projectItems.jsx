@@ -12,7 +12,7 @@ import { Popover } from "@headlessui/react";
 import { deleteProject, updateProject } from "../../api/projectAPI";
 import UpdateProjectPopover from "./updateProjectBtn";
 
-const ProjectItems = ({ handleGetSingleProject, project }) => {
+const ProjectItems = ({ handleGetSingleProject, project, theme }) => {
   const dispatch = useDispatch();
 
   const { isHoverProject, isFocusProject } = useSelector(
@@ -57,9 +57,11 @@ const ProjectItems = ({ handleGetSingleProject, project }) => {
         onClick={() => dispatch(setIsHoverProject(project._id))}
       >
         <h3
-          className={`text-lg flex items-center  gap-4 hover:cursor-pointer pl-10 py-2 rounded-md mx-auto ${
+          className={`text-lg flex items-center gap-4 hover:cursor-pointer py-2 px-10  rounded-md mx-auto ${
             isFocusProject === project._id
-              ? "bg-neutral-300 dark:bg-neutral-900/50 font-semibold"
+              ? theme === "light"
+                ? "bg-neutral-300 font-semibold"
+                : "bg-neutral-900/50 font-semibold"
               : ""
           }`}
           onClick={() => handleGetSingleProject(project)}
@@ -67,7 +69,7 @@ const ProjectItems = ({ handleGetSingleProject, project }) => {
           <i>
             <FaTasks />
           </i>
-          {project.projectTitle}
+          <p> {project.projectTitle}</p>
         </h3>
         {isHoverProject === project._id && (
           <div className="flex absolute top-[50%] -translate-y-[50%] right-0">

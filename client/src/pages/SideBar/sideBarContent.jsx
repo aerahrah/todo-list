@@ -71,7 +71,11 @@ const SideBarContent = ({ isMobileView }) => {
           TaskNote
         </h1>
         <div className=" flex flex-col items-start flex-1 w-full">
-          <Notes handleGetNoteTasks={handleGetNoteTasks} taskType={taskType} />
+          <Notes
+            handleGetNoteTasks={handleGetNoteTasks}
+            taskType={taskType}
+            theme={theme}
+          />
           <h2 className=" text-3xl font-bold  mb-6 pl-10 tracking-tight">
             Projects
           </h2>
@@ -83,6 +87,7 @@ const SideBarContent = ({ isMobileView }) => {
                 <ProjectItems
                   project={project}
                   handleGetSingleProject={handleGetSingleProject}
+                  theme={theme}
                   key={project._id}
                 />
               ))}
