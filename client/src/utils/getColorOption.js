@@ -28,6 +28,21 @@ const colorEquivalent = {
   dark: "#262626",
 };
 
+const lighterColorEquivalent = {
+  red: "#fecaca",
+  orange: "#fed7aa",
+  yellow: "#fef08a",
+  green: "#bbf7d0",
+  sky: "#bae6fd",
+  blue: "#bfdbfe",
+  violet: "#ddd6fe",
+  purple: "#e9d5ff",
+  pink: "#fbcfe8",
+  rose: "#fecdd3",
+  white: "#ffffff",
+  dark: "#262626",
+};
+
 const textColorEquivalent = {
   red: "#450a0a",
   orange: "#431407",
@@ -44,7 +59,7 @@ const textColorEquivalent = {
 };
 
 export const getColorOption = (color) => {
-  return colorEquivalent[color];
+  return lighterColorEquivalent[color];
 };
 
 export const getTextColorOption = (textColor) => {

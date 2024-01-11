@@ -1,6 +1,7 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { toggleIsSidebarOpen } from "../../store/slices/modalSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { FaTimes } from "react-icons/fa";
 import SideBarContent from "./sideBarContent";
 
 const SideBarMobile = () => {
@@ -16,7 +17,7 @@ const SideBarMobile = () => {
       <Dialog
         as="div"
         onClose={() => handleToggleSideBar()}
-        className="md:hidden"
+        className="md:hidden relative"
       >
         <Transition.Child
           enter="transition ease-in-out duration-300 transform "
@@ -43,6 +44,14 @@ const SideBarMobile = () => {
           }`}
         >
           <div>
+            <i
+              className={`absolute top-[.5rem] right-[.5rem] z-50 p-1 ring ring-1 ring-neutral-700  rounded-full ring-neutral-500 ${
+                theme === "light" ? " text-neutral-600" : "text-neutral-400"
+              }`}
+              onClick={() => handleToggleSideBar()}
+            >
+              <FaTimes className="h-5 w-5" />
+            </i>
             <SideBarContent isMobileView={true} />
           </div>
         </Transition.Child>

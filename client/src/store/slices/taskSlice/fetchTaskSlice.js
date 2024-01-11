@@ -6,6 +6,7 @@ const fetchTaskSlice = createSlice({
   initialState: {
     status: "idle",
     singleTaskData: {},
+    singleTaskDataIsComplete: "",
     allTaskData: [],
     refetchData: false,
     error: false,
@@ -13,6 +14,9 @@ const fetchTaskSlice = createSlice({
   reducers: {
     setSingleTaskData: (state, action) => {
       state.singleTaskData = action.payload;
+    },
+    setSingleTaskDataIsComplete: (state, action) => {
+      state.singleTaskDataIsComplete = action.payload;
     },
     clearSingleTaskData: (state) => {
       state.singleTaskData = {};
@@ -39,6 +43,10 @@ const fetchTaskSlice = createSlice({
   },
 });
 
-export const { setSingleTaskData, clearSingleTaskData, toggleRefetchTaskData } =
-  fetchTaskSlice.actions;
+export const {
+  setSingleTaskData,
+  clearSingleTaskData,
+  toggleRefetchTaskData,
+  setSingleTaskDataIsComplete,
+} = fetchTaskSlice.actions;
 export default fetchTaskSlice.reducer;

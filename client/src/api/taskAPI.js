@@ -7,7 +7,6 @@ export const getAllTask = createAsyncThunk(
   "fetchAll",
   async ({ filterTask, sortTask, projectId, taskType }) => {
     try {
-      console.log(filterTask);
       const response = await Axios.get(`${url}/tasks`, {
         params: {
           searchTerm: filterTask,
@@ -26,14 +25,16 @@ export const getAllTask = createAsyncThunk(
 
 export const createTask = createAsyncThunk(
   "create",
-  async ({ projectId, formData, taskType }) => {
+  async ({ projectId, formData, taskType, isTaskComplete, colorTheme }) => {
     try {
-      console.log(formData);
+      console.log(colorTheme);
       const response = await Axios.post(`${url}/tasks`, {
         project: projectId,
         title: formData.title,
         name: formData.content,
         taskType: taskType,
+        completed: isTaskComplete,
+        color: colorTheme,
       });
       return response.data;
     } catch (error) {
@@ -52,12 +53,12 @@ export const deleteTask = createAsyncThunk("delete", async (id) => {
 
 export const updateTask = createAsyncThunk(
   "update",
-  async ({ id, formData, isTaskComplete, colorTheme }) => {
+  async ({ id, formData, singleTaskDataIsComplete, colorTheme }) => {
     try {
       await Axios.patch(`${url}/tasks/${id}`, {
         name: formData.content,
         title: formData.title,
-        completed: isTaskComplete,
+        completed: singleTaskDataIsComplete,
         color: colorTheme,
       });
       console.log("hello");

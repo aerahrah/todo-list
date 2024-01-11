@@ -1,5 +1,8 @@
 import { FaRegCheckCircle, FaRegCircle } from "react-icons/fa";
-import { setSingleTaskData } from "../../store/slices/taskSlice/fetchTaskSlice";
+import {
+  setSingleTaskData,
+  setSingleTaskDataIsComplete,
+} from "../../store/slices/taskSlice/fetchTaskSlice";
 import { toggleUpdateTaskModal } from "../../store/slices/modalSlice";
 import { getColorOption, getTextColorOption } from "../../utils/getColorOption";
 import { useDispatch } from "react-redux";
@@ -8,6 +11,7 @@ const TaskCard = ({ task }) => {
   const dispatch = useDispatch();
   const handleViewSpecificTask = (task) => {
     dispatch(setSingleTaskData(task));
+    dispatch(setSingleTaskDataIsComplete(task.completed));
     dispatch(toggleUpdateTaskModal());
   };
 

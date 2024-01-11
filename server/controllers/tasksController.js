@@ -52,7 +52,7 @@ const getAllTask = tryCatch(async (req, res) => {
   return res.status(200).json({ tasks });
 });
 const createTask = tryCatch(async (req, res) => {
-  const { title, name, project, taskType } = req.body;
+  const { title, name, project, taskType, completed, color } = req.body;
   const getId = req.user;
   let projectId;
   if (project && project.trim() !== "") {
@@ -66,7 +66,10 @@ const createTask = tryCatch(async (req, res) => {
     name: name,
     project: projectId,
     taskType: taskType,
+    completed,
+    color,
   });
+
   await createtask.save();
   return res
     .status(201)

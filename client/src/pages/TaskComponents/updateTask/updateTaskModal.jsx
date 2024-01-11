@@ -2,10 +2,11 @@ import { deleteTask, updateTask } from "../../../api/taskAPI";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  clearSingleTaskData,
   toggleRefetchTaskData,
+  setSingleTaskDataIsComplete,
 } from "../../../store/slices/taskSlice/fetchTaskSlice";
 import { toggleUpdateTaskModal } from "../../../store/slices/modalSlice";
+import { debounce } from "lodash";
 import {
   setToastMessage,
   toggleDisplayToast,
@@ -17,6 +18,8 @@ import {
   FaPalette,
 } from "react-icons/fa";
 import { Popover } from "@headlessui/react";
+import { getTextColorOption } from "../../../utils/getColorOption";
+import TaskModalBtn from "../taskModalBtn";
 import TaskColorPalette from "../taskColorPalette";
 import TaskModal from "../../../components/taskModal";
 import TaskInputBox from "../taskInputBox";
@@ -25,69 +28,79 @@ import React from "react";
 const UpdateTaskModal = () => {
   const dispatch = useDispatch();
   const { theme } = useSelector((state) => state.theme);
-  const { singleTaskData } = useSelector((state) => state.fetch);
-  const [isTaskComplete, setIsTaskComplete] = useState(
-    () => singleTaskData.completed
+  const { singleTaskData, singleTaskDataIsComplete } = useSelector(
+    (state) => state.fetch
   );
-  const [colorTheme, setColorTheme] = useState();
   const { updateTaskModal } = useSelector((state) => state.modal);
+  const [colorTheme, setColorTheme] = useState(singleTaskData.color);
+  const [isUpdating, setIsUpdating] = useState(false);
 
   useEffect(() => {
-    setIsTaskComplete(singleTaskData.completed);
-  }, [singleTaskData.completed]);
+    setColorTheme(singleTaskData.color);
+  }, [singleTaskData.color]);
 
   const handleToggleUpdateModal = () => {
     dispatch(toggleUpdateTaskModal());
   };
 
   const handleDeleteTask = (id) => {
+    setIsUpdating(true);
     dispatch(deleteTask(id))
       .then(() => {
-        dispatch(clearSingleTaskData());
-        dispatch(toggleRefetchTaskData());
         handleToggleUpdateModal();
       })
       .catch((err) => {
         dispatch(setToastMessage(err.message));
         dispatch(toggleDisplayToast());
+      })
+      .finally(() => {
+        setIsUpdating(false);
+        dispatch(toggleRefetchTaskData());
       });
   };
 
-  const handleUpdateTask = (id, formData) => {
-    dispatch(updateTask({ id, formData, isTaskComplete, colorTheme }))
+  const handleUpdateTask = debounce((id, formData) => {
+    setIsUpdating(true);
+    dispatch(updateTask({ id, formData, singleTaskDataIsComplete, colorTheme }))
       .then(() => {
-        dispatch(clearSingleTaskData());
-        dispatch(toggleRefetchTaskData());
         handleToggleUpdateModal();
       })
       .catch((err) => {
         dispatch(setToastMessage(err.message));
         dispatch(toggleDisplayToast());
+      })
+      .finally(() => {
+        setIsUpdating(false);
+        dispatch(toggleRefetchTaskData());
       });
-  };
+  }, 100);
+
   return (
     <TaskModal
       isModalOpen={updateTaskModal}
       toggleModal={handleToggleUpdateModal}
+      modalTheme={colorTheme}
     >
       <TaskInputBox
         singleTaskData={singleTaskData}
+        textColorTheme={colorTheme}
         handleSubmitFunction={handleUpdateTask}
         modalType="Update"
         theme={theme}
       >
-        <div className=" transform absolute top-[.75rem] left-[4%] "></div>
         <div className=" transform absolute top-[.75rem] right-[4%] ">
           <div
-            className={`flex items-center justify-center gap-3  px-4 py-2 rounded-full ${
-              theme === "light" ? "bg-neutral-300" : "bg-neutral-900"
-            }`}
+            className="flex items-center justify-center gap-3 px-4 py-2 rounded-full bg-neutral-600/30"
+            style={{
+              color: getTextColorOption(colorTheme),
+            }}
           >
             <button
               type="button"
+              disabled={isUpdating}
               onClick={() => handleDeleteTask(singleTaskData._id)}
             >
-              <FaTrash className="hover:text-red-500 h-5 w-4" />
+              <FaTrash className=" h-5 w-4" />
             </button>
             <Popover>
               <Popover.Button className="block">
@@ -98,30 +111,24 @@ const UpdateTaskModal = () => {
 
             <button
               type="button"
-              onClick={() => setIsTaskComplete(!isTaskComplete)}
+              onClick={() =>
+                dispatch(setSingleTaskDataIsComplete(!singleTaskDataIsComplete))
+              }
             >
-              {!isTaskComplete ? (
-                <FaRegCircle className="text-red-600 h-6 w-6" />
+              {!singleTaskDataIsComplete ? (
+                <FaRegCircle className=" h-6 w-6" />
               ) : (
-                <FaRegCheckCircle className="text-blue-600 h-6 w-6" />
+                <FaRegCheckCircle className=" h-6 w-6" />
               )}
             </button>
           </div>
         </div>
-        <div className="w-full flex justify-between gap-6 items-center text-gray-800 ">
-          <button
-            type="button"
-            className=" w-full bg-neutral-300/80 rounded py-1.5"
-            onClick={() => handleToggleUpdateModal()}
-          >
-            Cancel
-          </button>
-          <input
-            type="submit"
-            value="Update"
-            className="cursor-pointer w-full bg-blue-500 rounded py-1.5 text-neutral-100"
-          />
-        </div>
+        <TaskModalBtn
+          toggleModal={handleToggleUpdateModal}
+          colorTheme={colorTheme}
+          isDisbled={isUpdating}
+          btnName="Update"
+        />
       </TaskInputBox>
     </TaskModal>
   );

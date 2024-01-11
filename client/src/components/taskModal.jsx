@@ -1,9 +1,9 @@
 import { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { useSelector } from "react-redux";
+import { getColorOption, getTextColorOption } from "../utils/getColorOption";
 
-const TaskModal = ({ children, isModalOpen, toggleModal }) => {
-  const { singleTaskData } = useSelector((state) => state.fetch);
+const TaskModal = ({ children, isModalOpen, toggleModal, modalTheme }) => {
   const { theme } = useSelector((state) => state.theme);
 
   return (
@@ -18,7 +18,7 @@ const TaskModal = ({ children, isModalOpen, toggleModal }) => {
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <div className="fixed inset-0 z-30 bg-black/20 backdrop-blur-sm" />
+          <div className="fixed inset-0 z-30 bg-black/50 backdrop-blur-sm" />
         </Transition.Child>
         <div className="fixed inset-0 z-50">
           <div className="relative flex min-h-full items-center justify-center p-6 text-center">
@@ -32,9 +32,19 @@ const TaskModal = ({ children, isModalOpen, toggleModal }) => {
               leaveTo="opacity-0 scale-95"
             >
               <Dialog.Panel
-                className={`flex flex-col w-full max-w-[35rem]  p-4 rounded-lg relative ${
-                  theme === "light" ? "bg-white" : "bg-neutral-800"
-                }`}
+                className="flex flex-col w-full max-w-[35rem]  p-4 rounded-lg relative shadow-lg"
+                style={{
+                  background: modalTheme
+                    ? getColorOption(modalTheme)
+                    : theme === "light"
+                    ? "#fafafa"
+                    : "#262626",
+                  color: modalTheme
+                    ? getTextColorOption(modalTheme)
+                    : theme === "light"
+                    ? "#fafafa"
+                    : "#262626",
+                }}
               >
                 {children}
               </Dialog.Panel>
