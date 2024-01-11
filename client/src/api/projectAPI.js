@@ -20,7 +20,7 @@ export const deleteProject = createAsyncThunk("deleteProject", async (id) => {
     throw new Error(error.response.data.errors[0]);
   }
 });
-export const createProject = createAsyncThunk("addProject", async (title) => {
+export const createProject = createAsyncThunk("createProject", async (title) => {
   try {
     await Axios.post(`${url}/projects`, {
       projectTitle: title,

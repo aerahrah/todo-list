@@ -17,7 +17,7 @@ const TaskSortPopOver = ({ FaFilter, FaAngleDown }) => {
   return (
     <div>
       <Popover className="relative z-10 md:hidden">
-        <Popover.Button className="md:hidden w-full p-2.5 rounded-full bg-neutral-200 ring ring-1 ring-neutral-300 dark:ring-neutral-700 dark:bg-neutral-900">
+        <Popover.Button className="md:hidden w-full p-2.5 rounded-full bg-neutral-200 ring ring-1 ring-neutral-300 dark:ring-neutral-700 dark:bg-neutral-900 hover:bg-neutral-300/80 hover:dark:bg-neutral-900/60">
           <FaFilter className="h-5 w-5" />
         </Popover.Button>
         <TaskSortPopOverContent
@@ -27,7 +27,7 @@ const TaskSortPopOver = ({ FaFilter, FaAngleDown }) => {
         />
       </Popover>
       <Popover className="relative z-30 hidden md:block">
-        <Popover.Button className=" w-full p-1.5 px-2 ring ring-1 ring-neutral-300 bg-neutral-200 dark:bg-neutral-900 dark:ring-neutral-700/70 text-neutral-800 dark:text-neutral-300 text-lg  rounded-full font-semibold hidden md:block tracking-tight outline-0">
+        <Popover.Button className=" w-full p-1.5 px-2 ring ring-1 ring-neutral-300 bg-neutral-200 dark:bg-neutral-900 dark:ring-neutral-700/70 text-lg  rounded-full font-semibold hidden md:block tracking-tight outline-0 hover:bg-neutral-300/80 hover:dark:bg-neutral-900/60">
           <div className="flex items-center gap-2 justify-between">
             <p className="capitalize whitespace-nowrap w-[80px]">{sortBy}</p>
             <FaAngleDown />

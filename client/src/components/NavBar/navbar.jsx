@@ -25,7 +25,7 @@ const NavBar = () => {
         <div className="md:hidden block pr-3 border-r-[2px] border-neutral-300 dark:border-neutral-700 py-5 mr-1.5">
           <FaBars className=" h-5 w-5" onClick={() => handleToggleSideBar()} />
         </div>
-        <div className="flex items-center w-full gap-1.5 md:gap-3 text-lg ">
+        <div className="flex items-center w-full gap-1.5 md:gap-3 text-lg text-neutral-700 dark:text-neutral-300 ">
           <DarkModeBtn />
           <TaskSortPopOver FaFilter={FaFilter} FaAngleDown={FaAngleDown} />
           <TaskSearchBar FaSearch={FaSearch} />

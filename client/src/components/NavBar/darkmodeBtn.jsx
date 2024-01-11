@@ -12,7 +12,8 @@ const DarkModeBtn = () => {
   return (
     <div>
       <button
-        className="p-2 text-neutral-800 bg-neutral-200 rounded-full ring ring-1 ring-neutral-300 dark:bg-neutral-900 dark:ring-neutral-700/70 dark:text-neutral-300 outline-0"
+        className="p-2 bg-neutral-200 rounded-full ring ring-1 ring-neutral-300 dark:bg-neutral-900 dark:ring-neutral-700/70  outline-0 hover:bg-neutral-300/80 hover:dark:bg-neutral-900/60
+        "
         onClick={handleToggleDarkMode}
       >
         {theme == "light" ? (

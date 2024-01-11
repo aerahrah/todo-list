@@ -3,7 +3,6 @@ import { colorOption } from "../../utils/getColorOption";
 import { getColorOption } from "../../utils/getColorOption";
 
 const TaskColorPalette = ({ theme, setColorTheme }) => {
-  console.log(getColorOption("red"));
   return (
     <Transition
       enter="transition duration-100 ease-out"

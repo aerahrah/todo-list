@@ -10,6 +10,10 @@ import {
 import { FaEdit, FaTrash, FaTasks } from "react-icons/fa";
 import { Popover } from "@headlessui/react";
 import { deleteProject, updateProject } from "../../api/projectAPI";
+import {
+  setToastMessage,
+  toggleDisplayToast,
+} from "../../store/slices/toastSlice";
 import UpdateProjectPopover from "./updateProjectBtn";
 
 const ProjectItems = ({ handleGetSingleProject, project, theme }) => {
@@ -23,11 +27,16 @@ const ProjectItems = ({ handleGetSingleProject, project, theme }) => {
 
   const handleDeleteProject = (id) => {
     dispatch(deleteProject(id))
-      .then(() => {
-        dispatch(setProjectId(""));
-        dispatch(setTaskType("notes"));
-        dispatch(toggleRefetchTaskData());
-        dispatch(toggleRefetchProjectData());
+      .then((response) => {
+        if (response.type === "deleteProject/rejected") {
+          dispatch(setToastMessage(response.error.message));
+          dispatch(toggleDisplayToast());
+        } else {
+          dispatch(setProjectId(""));
+          dispatch(setTaskType("notes"));
+          dispatch(toggleRefetchTaskData());
+          dispatch(toggleRefetchProjectData());
+        }
       })
       .catch((err) => {
         dispatch(setToastMessage(err.message));
@@ -37,10 +46,16 @@ const ProjectItems = ({ handleGetSingleProject, project, theme }) => {
 
   const handleUpdateProject = (id) => {
     dispatch(updateProject({ title, id }))
-      .then(() => {
-        setTitle("");
-        dispatch(toggleRefetchTaskData());
-        dispatch(toggleRefetchProjectData());
+      .then((response) => {
+        console.log(response);
+        if (response.type === "updateProject/rejected") {
+          dispatch(setToastMessage(response.error.message));
+          dispatch(toggleDisplayToast());
+        } else {
+          setTitle("");
+          dispatch(toggleRefetchTaskData());
+          dispatch(toggleRefetchProjectData());
+        }
       })
       .catch((err) => {
         dispatch(setToastMessage(err.message));

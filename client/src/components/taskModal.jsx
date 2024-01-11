@@ -32,18 +32,12 @@ const TaskModal = ({ children, isModalOpen, toggleModal, modalTheme }) => {
               leaveTo="opacity-0 scale-95"
             >
               <Dialog.Panel
-                className="flex flex-col w-full max-w-[35rem]  p-4 rounded-lg relative shadow-lg"
+                className={`flex flex-col w-full max-w-[35rem]  p-4 rounded-lg relative shadow-lg ${
+                  theme === "light" ? "bg-white" : "bg-neutral-800"
+                }`}
                 style={{
-                  background: modalTheme
-                    ? getColorOption(modalTheme)
-                    : theme === "light"
-                    ? "#fafafa"
-                    : "#262626",
-                  color: modalTheme
-                    ? getTextColorOption(modalTheme)
-                    : theme === "light"
-                    ? "#fafafa"
-                    : "#262626",
+                  background: getColorOption(modalTheme),
+                  color: getTextColorOption(modalTheme),
                 }}
               >
                 {children}

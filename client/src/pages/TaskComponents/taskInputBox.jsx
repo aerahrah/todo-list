@@ -42,6 +42,7 @@ const TaskInputBox = ({
       >
         <input
           type="text"
+          required
           placeholder={singleTaskData?.title ? singleTaskData.title : "title"}
           {...register("title")}
           className={`outline-0 mb-6 text-xl font-semibold w-[60%] rounded p-1  ${

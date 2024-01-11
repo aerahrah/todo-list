@@ -41,15 +41,24 @@ const UpdateTaskModal = () => {
 
   const handleToggleUpdateModal = () => {
     dispatch(toggleUpdateTaskModal());
+    setTimeout(() => {
+      setColorTheme(singleTaskData.color);
+    }, 115);
   };
 
   const handleDeleteTask = (id) => {
     setIsUpdating(true);
     dispatch(deleteTask(id))
-      .then(() => {
-        handleToggleUpdateModal();
+      .then((response) => {
+        if (response.type === "deleteTask/rejected") {
+          dispatch(setToastMessage(response.error.message));
+          dispatch(toggleDisplayToast());
+        } else {
+          handleToggleUpdateModal();
+        }
       })
       .catch((err) => {
+        console.log(err);
         dispatch(setToastMessage(err.message));
         dispatch(toggleDisplayToast());
       })
@@ -62,8 +71,14 @@ const UpdateTaskModal = () => {
   const handleUpdateTask = debounce((id, formData) => {
     setIsUpdating(true);
     dispatch(updateTask({ id, formData, singleTaskDataIsComplete, colorTheme }))
-      .then(() => {
-        handleToggleUpdateModal();
+      .then((response) => {
+        console.log(response);
+        if (response.type === "updateTask/rejected") {
+          dispatch(setToastMessage(response.error.message));
+          dispatch(toggleDisplayToast());
+        } else {
+          handleToggleUpdateModal();
+        }
       })
       .catch((err) => {
         dispatch(setToastMessage(err.message));
@@ -80,6 +95,7 @@ const UpdateTaskModal = () => {
       isModalOpen={updateTaskModal}
       toggleModal={handleToggleUpdateModal}
       modalTheme={colorTheme}
+      setColorTheme={setColorTheme}
     >
       <TaskInputBox
         singleTaskData={singleTaskData}
@@ -98,12 +114,13 @@ const UpdateTaskModal = () => {
             <button
               type="button"
               disabled={isUpdating}
+              className="hover:opacity-[90%]"
               onClick={() => handleDeleteTask(singleTaskData._id)}
             >
               <FaTrash className=" h-5 w-4" />
             </button>
             <Popover>
-              <Popover.Button className="block">
+              <Popover.Button className="block hover:opacity-[90%]">
                 <FaPalette className=" h-5 w-6 " />
               </Popover.Button>
               <TaskColorPalette theme={theme} setColorTheme={setColorTheme} />
@@ -111,6 +128,7 @@ const UpdateTaskModal = () => {
 
             <button
               type="button"
+              className="hover:opacity-[90%]"
               onClick={() =>
                 dispatch(setSingleTaskDataIsComplete(!singleTaskDataIsComplete))
               }

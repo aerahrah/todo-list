@@ -12,9 +12,9 @@ const TaskSortPopOverContent = ({ handleSortChange, Popover, Transition }) => {
       leaveTo="transform scale-95 opacity-0"
     >
       <Popover.Panel
-        className={`absolute mt-2   p-4 shadow-lg rounded-lg right-[50%] ring ring-1  transform translate-x-[50%] ${
+        className={`absolute mt-2   p-4 shadow-lg rounded-lg right-[50%] ring ring-1 transform translate-x-[50%] ${
           theme === "light"
-            ? "bg-white ring-neutral-300"
+            ? "bg-neutral-200 ring-neutral-300"
             : "bg-neutral-900  ring-neutral-800"
         }`}
       >

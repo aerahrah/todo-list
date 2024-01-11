@@ -51,6 +51,7 @@ const getAllTask = tryCatch(async (req, res) => {
 
   return res.status(200).json({ tasks });
 });
+
 const createTask = tryCatch(async (req, res) => {
   const { title, name, project, taskType, completed, color } = req.body;
   const getId = req.user;
@@ -59,6 +60,9 @@ const createTask = tryCatch(async (req, res) => {
     projectId = project;
   } else {
     projectId = null;
+  }
+  if (!title) {
+    return next(createCustomError(`title must not be empty`, 401));
   }
   const createtask = new Task({
     user: getId,

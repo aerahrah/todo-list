@@ -4,7 +4,7 @@ import Axios from "../utils/axios";
 const url = "http://localhost:3500/api/v1";
 
 export const getAllTask = createAsyncThunk(
-  "fetchAll",
+  "getAllTask",
   async ({ filterTask, sortTask, projectId, taskType }) => {
     try {
       const response = await Axios.get(`${url}/tasks`, {
@@ -24,10 +24,9 @@ export const getAllTask = createAsyncThunk(
 );
 
 export const createTask = createAsyncThunk(
-  "create",
+  "createTask",
   async ({ projectId, formData, taskType, isTaskComplete, colorTheme }) => {
     try {
-      console.log(colorTheme);
       const response = await Axios.post(`${url}/tasks`, {
         project: projectId,
         title: formData.title,
@@ -36,14 +35,16 @@ export const createTask = createAsyncThunk(
         completed: isTaskComplete,
         color: colorTheme,
       });
+      console.log(response);
       return response.data;
     } catch (error) {
+      console.log(error);
       throw new Error(error.response.data.errors[0]);
     }
   }
 );
 
-export const deleteTask = createAsyncThunk("delete", async (id) => {
+export const deleteTask = createAsyncThunk("deleteTask", async (id) => {
   try {
     await Axios.delete(`${url}/tasks/${id}`);
   } catch (error) {
@@ -52,7 +53,7 @@ export const deleteTask = createAsyncThunk("delete", async (id) => {
 });
 
 export const updateTask = createAsyncThunk(
-  "update",
+  "updateTask",
   async ({ id, formData, singleTaskDataIsComplete, colorTheme }) => {
     try {
       await Axios.patch(`${url}/tasks/${id}`, {

@@ -4,6 +4,10 @@ import { toggleRefetchProjectData } from "../../store/slices/projectSlice/fetchP
 import { useDispatch, useSelector } from "react-redux";
 import { FaPlus } from "react-icons/fa";
 import { useState } from "react";
+import {
+  setToastMessage,
+  toggleDisplayToast,
+} from "../../store/slices/toastSlice";
 import PopoverCard from "./popoverCard";
 
 const CreateProject = () => {
@@ -13,9 +17,14 @@ const CreateProject = () => {
   const [title, setTitle] = useState("");
   const handleCreateProject = () => {
     dispatch(createProject(title))
-      .then(() => {
-        setTitle("");
-        dispatch(toggleRefetchProjectData());
+      .then((response) => {
+        if (response.type === "createProject/rejected") {
+          dispatch(setToastMessage(response.error.message));
+          dispatch(toggleDisplayToast());
+        } else {
+          setTitle("");
+          dispatch(toggleRefetchProjectData());
+        }
       })
       .catch((err) => {
         dispatch(setToastMessage(err.message));

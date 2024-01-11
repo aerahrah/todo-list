@@ -20,34 +20,48 @@ const CreateTaskModal = ({ handleToggleCreateModal }) => {
   const { createTaskModal } = useSelector((state) => state.modal);
   const { theme } = useSelector((state) => state.theme);
   const [colorTheme, setColorTheme] = useState("");
-  const [isCreating, setIsCreating] = useState(false);
   const [isTaskComplete, setIsTaskComplete] = useState(false);
+  const [isCreating, setIsCreating] = useState(false);
+
+  const handleToggleCloseCreateModal = async () => {
+    handleToggleCreateModal();
+    setTimeout(() => {
+      setIsTaskComplete(false);
+      setColorTheme("");
+    }, 115);
+  };
 
   const handleCreateTask = (formData) => {
     setIsCreating(true);
     dispatch(
       createTask({ projectId, formData, taskType, isTaskComplete, colorTheme })
     )
-      .then(() => {
-        handleToggleCreateModal();
+      .then((response) => {
+        if (response.type === "createTask/rejected") {
+          console.log(response);
+          dispatch(setToastMessage(response.error.message));
+          dispatch(toggleDisplayToast());
+        } else {
+          handleToggleCloseCreateModal();
+        }
       })
       .catch((err) => {
+        console.log(err);
         dispatch(setToastMessage(err.message));
         dispatch(toggleDisplayToast());
       })
       .finally(() => {
         setIsCreating(false);
         dispatch(toggleRefetchTaskData());
-        setIsTaskComplete(false);
-        setColorTheme("");
       });
   };
 
   return (
     <TaskModal
       isModalOpen={createTaskModal}
-      toggleModal={handleToggleCreateModal}
+      toggleModal={handleToggleCloseCreateModal}
       modalTheme={colorTheme}
+      setColorTheme={setColorTheme}
     >
       <TaskInputBox
         handleSubmitFunction={handleCreateTask}
@@ -64,12 +78,13 @@ const CreateTaskModal = ({ handleToggleCreateModal }) => {
           >
             <Popover>
               <Popover.Button className="block">
-                <FaPalette className=" h-5 w-6 " />
+                <FaPalette className=" h-5 w-6 hover:opacity-[90%]" />
               </Popover.Button>
               <TaskColorPalette theme={theme} setColorTheme={setColorTheme} />
             </Popover>
             <button
               type="button"
+              className="hover:opacity-[90%]"
               onClick={() => setIsTaskComplete(!isTaskComplete)}
             >
               {!isTaskComplete ? (
@@ -81,7 +96,7 @@ const CreateTaskModal = ({ handleToggleCreateModal }) => {
           </div>
         </div>
         <TaskModalBtn
-          toggleModal={handleToggleCreateModal}
+          toggleModal={handleToggleCloseCreateModal}
           colorTheme={colorTheme}
           isDisbled={isCreating}
           btnName="Add"
