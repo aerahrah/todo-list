@@ -1,7 +1,7 @@
 import { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { useSelector } from "react-redux";
-import { getColorOption, getTextColorOption } from "../utils/getColorOption";
+import { getColorOption, getTextColorOption } from "../../utils/getColorOption";
 
 const TaskModal = ({ children, isModalOpen, toggleModal, modalTheme }) => {
   const { theme } = useSelector((state) => state.theme);

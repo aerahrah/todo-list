@@ -21,7 +21,7 @@ import { Popover } from "@headlessui/react";
 import { getTextColorOption } from "../../../utils/getColorOption";
 import TaskModalBtn from "../taskModalBtn";
 import TaskColorPalette from "../taskColorPalette";
-import TaskModal from "../../../components/taskModal";
+import TaskModal from "../taskModal";
 import TaskInputBox from "../taskInputBox";
 import React from "react";
 
@@ -72,7 +72,6 @@ const UpdateTaskModal = () => {
     setIsUpdating(true);
     dispatch(updateTask({ id, formData, singleTaskDataIsComplete, colorTheme }))
       .then((response) => {
-        console.log(response);
         if (response.type === "updateTask/rejected") {
           dispatch(setToastMessage(response.error.message));
           dispatch(toggleDisplayToast());
@@ -81,6 +80,7 @@ const UpdateTaskModal = () => {
         }
       })
       .catch((err) => {
+        console.log(err);
         dispatch(setToastMessage(err.message));
         dispatch(toggleDisplayToast());
       })

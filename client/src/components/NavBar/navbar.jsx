@@ -7,10 +7,10 @@ import {
 } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { toggleIsSidebarOpen } from "../../store/slices/modalSlice";
-import TaskSortPopOver from "./taskSortPopOver";
-import TaskSearchBar from "./TaskSearchBar";
-import Signout from "./signout";
-import DarkModeBtn from "./darkmodeBtn";
+import TaskSortPopOver from "./navbarComponents/taskSortPopOver";
+import TaskSearchBar from "./navbarComponents/taskSearchBar";
+import Signout from "./navbarComponents/signout";
+import DarkModeBtn from "./navbarComponents/darkmodeBtn";
 
 const NavBar = () => {
   const dispatch = useDispatch();

@@ -10,7 +10,7 @@ import { useState } from "react";
 import { Popover } from "@headlessui/react";
 import { getTextColorOption } from "../../../utils/getColorOption";
 import TaskColorPalette from "../taskColorPalette";
-import TaskModal from "../../../components/taskModal";
+import TaskModal from "../taskModal";
 import TaskInputBox from "../taskInputBox";
 import TaskModalBtn from "../taskModalBtn";
 
@@ -38,7 +38,7 @@ const CreateTaskModal = ({ handleToggleCreateModal }) => {
     )
       .then((response) => {
         if (response.type === "createTask/rejected") {
-          console.log(response);
+         
           dispatch(setToastMessage(response.error.message));
           dispatch(toggleDisplayToast());
         } else {

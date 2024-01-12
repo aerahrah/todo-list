@@ -1,7 +1,7 @@
 import { useDispatch } from "react-redux";
 import { useState } from "react";
-import { setFilterTask } from "../../store/slices/filterSlice";
-import { toggleRefetchTaskData } from "../../store/slices/taskSlice/fetchTaskSlice";
+import { setFilterTask } from "../../../store/slices/filterSlice";
+import { toggleRefetchTaskData } from "../../../store/slices/taskSlice/fetchTaskSlice";
 
 const TaskSearchBar = ({ FaSearch }) => {
   const dispatch = useDispatch();

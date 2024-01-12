@@ -1,8 +1,9 @@
+import { useSelector } from "react-redux";
+import { Routes, Route } from "react-router-dom";
 import Signin from "./pages/auth/signin";
 import Signup from "./pages/auth/signup";
-import { Routes, Route } from "react-router-dom";
-import TaskNote from "./pages/layout";
-import { useSelector } from "react-redux";
+import Home from "./pages/Home/home";
+
 function App() {
   const { theme } = useSelector((state) => state.theme);
 
@@ -11,7 +12,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Signup />}></Route>
         <Route path="/signin" element={<Signin />}></Route>
-        <Route path="/notes" element={<TaskNote />}></Route>
+        <Route path="/notes" element={<Home />}></Route>
       </Routes>
     </div>
   );

@@ -38,7 +38,6 @@ const authSlice = createSlice({
       })
       .addCase(signup.fulfilled, (state, action) => {
         state.status = "succeeded";
-        console.log(action.payload);
         state.message = action.payload.message;
         state.error = false;
       })

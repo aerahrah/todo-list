@@ -31,7 +31,6 @@ const fetchTaskSlice = createSlice({
         state.status = "loading";
       })
       .addCase(getAllTask.fulfilled, (state, action) => {
-        console.log(action.payload.tasks.completed);
         state.allTaskData = action.payload.tasks;
         state.status = "succeeded";
         state.error = false;

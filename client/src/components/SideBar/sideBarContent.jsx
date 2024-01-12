@@ -11,9 +11,9 @@ import {
   setToastMessage,
   toggleDisplayToast,
 } from "../../store/slices/toastSlice";
+import { FaStickyNote } from "react-icons/fa";
 import ProjectItems from "./projectItems";
-import CreateProject from "./createProject";
-import Notes from "./notes";
+import CreateProject from "./createProjectBtn";
 
 const SideBarContent = ({ isMobileView }) => {
   const dispatch = useDispatch();
@@ -71,11 +71,19 @@ const SideBarContent = ({ isMobileView }) => {
           TaskNote
         </h1>
         <div className=" flex flex-col items-start flex-1 w-full">
-          <Notes
-            handleGetNoteTasks={handleGetNoteTasks}
-            taskType={taskType}
-            theme={theme}
-          />
+          <div
+            className={`flex mb-6 pl-10 rounded-md py-2 mx-auto w-[95%] tracking-tight gap-4 hover:bg-neutral-300 hover:dark:bg-neutral-900/50 items-center   hover:cursor-pointer ${
+              taskType === "notes"
+                ? theme === "light"
+                  ? "bg-neutral-300 hover:bg-neutral-300"
+                  : "bg-neutral-900/50 hover:bg-neutral-900/50"
+                : ""
+            }`}
+            onClick={handleGetNoteTasks}
+          >
+            <FaStickyNote />
+            <h2 className="text-2xl font-semibold  ">Notes</h2>
+          </div>
           <h2 className=" text-3xl font-bold  mb-6 pl-10 tracking-tight">
             Projects
           </h2>

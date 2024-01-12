@@ -10,7 +10,6 @@ const Signin = () => {
   const handleSignin = async (userInfo) => {
     try {
       const data = await dispatch(signin(userInfo));
-      console.log(data.type);
       if (data.type === "auth/signin/fulfilled") {
         navigate("/notes");
       }

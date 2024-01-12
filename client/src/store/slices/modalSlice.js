@@ -10,7 +10,6 @@ const modalSlice = createSlice({
   reducers: {
     toggleUpdateTaskModal: (state) => {
       state.updateTaskModal = !state.updateTaskModal;
-      console.log(state.updateTaskModal);
     },
     toggleCreateTaskModal: (state) => {
       state.createTaskModal = !state.createTaskModal;

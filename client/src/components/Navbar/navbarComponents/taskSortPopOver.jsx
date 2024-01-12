@@ -1,8 +1,8 @@
 import { Popover, Transition } from "@headlessui/react";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
-import { setSortTask } from "../../store/slices/filterSlice";
-import { toggleRefetchTaskData } from "../../store/slices/taskSlice/fetchTaskSlice";
+import { setSortTask } from "../../../store/slices/filterSlice";
+import { toggleRefetchTaskData } from "../../../store/slices/taskSlice/fetchTaskSlice";
 import TaskSortPopOverContent from "./taskSortPopOverContent";
 
 const TaskSortPopOver = ({ FaFilter, FaAngleDown }) => {

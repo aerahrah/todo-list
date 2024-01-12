@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import Axios from "../utils/axios";
 
-const url = "http://localhost:3500/api/v1";
+const url = import.meta.env.VITE_API_URL;
 
 export const getAllTask = createAsyncThunk(
   "getAllTask",
@@ -35,10 +35,9 @@ export const createTask = createAsyncThunk(
         completed: isTaskComplete,
         color: colorTheme,
       });
-      console.log(response);
+
       return response.data;
     } catch (error) {
-      console.log(error);
       throw new Error(error.response.data.errors[0]);
     }
   }
@@ -62,7 +61,6 @@ export const updateTask = createAsyncThunk(
         completed: singleTaskDataIsComplete,
         color: colorTheme,
       });
-      console.log("hello");
     } catch (error) {
       throw new Error(error.response.data.errors[0]);
     }

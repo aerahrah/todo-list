@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { toggleTheme } from "../../store/slices/darkModeSlice";
+import { toggleTheme } from "../../../store/slices/darkModeSlice";
 import { BiSolidMoon, BiSolidSun } from "react-icons/bi";
 
 const DarkModeBtn = () => {

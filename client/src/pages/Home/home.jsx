@@ -1,23 +1,22 @@
 import React, { useState, useEffect } from "react";
-import { getAllTask } from "../api/taskAPI";
+import { getAllTask } from "../../api/taskAPI";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setToastMessage,
   toggleDisplayToast,
-} from "../store/slices/toastSlice";
+} from "../../store/slices/toastSlice";
 
-import Axios from "../utils/axios";
-import Toast from "../components/toast";
-import UpdateTaskModal from "./TaskComponents/updateTask/updateTaskModal";
-import CreateTask from "../pages/TaskComponents/createTask/createTaskBtn";
-import Spinner from "../components/spinner";
-import SideBarContent from "./SideBar/sideBarContent";
-import SideBarMobile from "../pages/SideBar/sideBarMobile";
-import NavBar from "../components/NavBar/navbar";
-import TaskList from "../pages/taskComponents/taskList";
+import Axios from "../../utils/axios";
+import Toast from "../../components/toast";
+import UpdateTaskModal from "../../components/TaskComponents/updateTask/updateTaskModal";
+import CreateTask from "../../components/TaskComponents/createTask/createTaskBtn";
+import Spinner from "../../components/spinner";
+import SideBarContent from "../../components/SideBar/sideBarContent";
+import SideBarMobile from "../../components/SideBar/sideBarMobile";
+import NavBar from "../../components/NavBar/navbar";
+import TaskList from "../../components/taskComponents/taskList";
 
-const TaskNote = () => {
-  const url = "http://localhost:3500/api/v1";
+const Home = () => {
   const dispatch = useDispatch();
   const { filterTask, sortTask, taskType, projectId } = useSelector(
     (state) => state.filter
@@ -69,4 +68,4 @@ const TaskNote = () => {
   );
 };
 
-export default TaskNote;
+export default Home;

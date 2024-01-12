@@ -28,7 +28,7 @@ const fetchProjectSlice = createSlice({
         state.status = "loading";
       })
       .addCase(getAllProject.fulfilled, (state, action) => {
-        console.log(action.payload);
+      
         state.allProjectData = action.payload.project;
         state.status = "succeeded";
         state.error = false;

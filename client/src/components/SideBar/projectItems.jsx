@@ -47,7 +47,6 @@ const ProjectItems = ({ handleGetSingleProject, project, theme }) => {
   const handleUpdateProject = (id) => {
     dispatch(updateProject({ title, id }))
       .then((response) => {
-        console.log(response);
         if (response.type === "updateProject/rejected") {
           dispatch(setToastMessage(response.error.message));
           dispatch(toggleDisplayToast());
