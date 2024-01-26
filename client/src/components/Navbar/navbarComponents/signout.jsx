@@ -9,14 +9,7 @@ const Signout = ({ FaSignOutAlt }) => {
   };
   return (
     <>
-      <button
-        className="md:flex gap-1 ring ring-1 ring-neutral-300 bg-neutral-200 hover:bg-neutral-300/80 hover:dark:bg-neutral-900/60 rounded-full p-1.5 items-center tracking-tight whitespace-nowrap hidden dark:bg-neutral-900 dark:ring-neutral-700/70 "
-        onClick={handleLogout}
-      >
-        <FaSignOutAlt size="1.15rem" />
-        Log Out
-      </button>
-      <button className="p-2 md:hidden  bg-neutral-200 ring ring-1   ring-neutral-300 rounded-full dark:ring-neutral-700 dark:bg-neutral-900">
+      <button className="p-2 hover:bg-neutral-300/80 hover:dark:bg-neutral-900/60 bg-neutral-200 ring ring-1   ring-neutral-300 rounded-full dark:ring-neutral-700 dark:bg-neutral-900">
         <FaSignOutAlt size="1.45rem" onClick={handleLogout} />
       </button>
     </>
